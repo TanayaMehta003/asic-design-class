@@ -31,6 +31,8 @@ Compile using RISCV gcc compiler as shown below and run using emulator as shown:
 
 
 CASE 2: OFAST
+Compilation in this case gets optimised.
+
 
 **Output:**
 
