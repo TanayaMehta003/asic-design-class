@@ -20,6 +20,8 @@ Execute a C code that calculates the sum of numbers upto 23 is run on terminal o
 **Compile and Verify C Code using RISC-V GNU Compiler Toolchain**
 
 **CASE 1: O1**
+
+
 Compile using RISCV gcc compiler as shown below and run using emulator as shown:
 
 
@@ -30,7 +32,9 @@ Compile using RISCV gcc compiler as shown below and run using emulator as shown:
 ![2 8](https://github.com/user-attachments/assets/27ba1e93-9651-4404-9c8b-5e566ca3fd3f)
 
 
-CASE 2: OFAST
+**CASE 2: OFAST**
+
+
 Compilation in this case gets optimised.
 
 
