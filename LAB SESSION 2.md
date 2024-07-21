@@ -1,14 +1,15 @@
-AIM
+## AIM
 
 Compile sum1ton.c into sum1ton.o for RISC-V with -Ofast and -O1 optimizations, execute sum1ton.o using Spike, and run sum1ton.o on Spike in debug mode to observe register values.
 
-TOOLS USED:
+## TOOLS USED:
 
 GCC (GNU Compiler Collection), RISC-V GCC Compiler, Spike Simulator, Ubuntu OS
 
-PROCEDURE
+## PROCEDURE
 
 1. Compile a C source file (sum1ton.c) into an object file (sum1ton.o) for the RISC-V architecture, on -Ofast and -O1 levels of optimization.
+   
 Case 1: -Ofast level
 
 Screenshot of assembly code
