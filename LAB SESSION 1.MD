@@ -1,7 +1,7 @@
 ## **TASK 1:**
 ### **Compiling the C program using GCC and RISC-V**
 
-Execute a C code that calculates the sum of numbers upto 23 is run on terminal of virtual box as discussed.
+- Execute a C code that calculates the sum of numbers upto 23 is run on terminal of virtual box as discussed.
 
 ### **Code snippet:**
 
@@ -24,8 +24,7 @@ Compile using RISCV gcc compiler and run using emulator as shown:
 
 ![2 11](https://github.com/user-attachments/assets/2bcf76c7-2c62-4c78-8a79-4b755bd7fc9c)
 
-
- - **Output:**
+  - **Output:**
 
 ![2 8](https://github.com/user-attachments/assets/27ba1e93-9651-4404-9c8b-5e566ca3fd3f)
 
