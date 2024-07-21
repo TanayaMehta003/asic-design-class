@@ -39,7 +39,7 @@ GCC (GNU Compiler Collection), RISC-V GCC Compiler, Spike Simulator, Ubuntu OS
 
 - **Run the following Commands and Observe the Register Values:**
     - To go to next line of assembly code press `Enter`.
-    - Use the following command to verify the data in the register `a0` and `sp` before and after execution:
+    - Use the following command to verify the data in the register a0 and register sp before and after execution:
     ```bash
     reg 0 a0
     reg 0 sp
