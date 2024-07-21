@@ -19,7 +19,7 @@ GCC (GNU Compiler Collection), RISC-V GCC Compiler, Spike Simulator, Ubuntu OS
  ```
 - Screenshot of assembly code
  
- - ![2 10](https://github.com/user-attachments/assets/6d0da0aa-bcb3-41af-819f-621fa7ee2d38)
+  ![2 10](https://github.com/user-attachments/assets/6d0da0aa-bcb3-41af-819f-621fa7ee2d38)
 
 - **Step 2:** Execute the compiled RISC-V object file (sum1ton.o) using Spike.
   ```bash
@@ -27,7 +27,7 @@ GCC (GNU Compiler Collection), RISC-V GCC Compiler, Spike Simulator, Ubuntu OS
   ```
 - **Output:**
   
-- ![OUTPUT1](https://github.com/user-attachments/assets/5674491f-8685-4c44-8df7-4cac1321d6a2)
+ ![OUTPUT1](https://github.com/user-attachments/assets/5674491f-8685-4c44-8df7-4cac1321d6a2)
 
 - **Step 3:** Run the assembly code in sum1ton.o on the Spike simulator in debug mode inorder to observe the register values.
    ```bash
@@ -35,7 +35,7 @@ GCC (GNU Compiler Collection), RISC-V GCC Compiler, Spike Simulator, Ubuntu OS
     ```
 - **Output:**
 
-- ![OUTPUT2](https://github.com/user-attachments/assets/34665bb1-aea4-4e5f-8866-0446033972a3)
+ ![OUTPUT2](https://github.com/user-attachments/assets/34665bb1-aea4-4e5f-8866-0446033972a3)
 
 - **Run the following Commands and Observe the Register Values:**
     - To go to next line of assembly code press `Enter`.
