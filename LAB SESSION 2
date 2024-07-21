@@ -15,6 +15,7 @@ Screenshot of assembly code
 
 ![2 10](https://github.com/user-attachments/assets/6d0da0aa-bcb3-41af-819f-621fa7ee2d38)
 
+
 Step 1: 
 To execute the compiled RISC-V object file (sum1ton.o) using the Spike RISC-V simulator.
 To run the assembly code in sum1ton.o on the Spike simulator in debug mode in-order to observe the register values.
