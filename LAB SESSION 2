@@ -13,7 +13,7 @@ Case 1: -Ofast level
 
 Screenshot of assembly code
 
-![2 10](https://github.com/user-attachments/assets/6d0da0aa-bcb3-41af-819f-621fa7ee2d38
+![2 10](https://github.com/user-attachments/assets/6d0da0aa-bcb3-41af-819f-621fa7ee2d38)
 
 Step 1: 
 To execute the compiled RISC-V object file (sum1ton.o) using the Spike RISC-V simulator.
