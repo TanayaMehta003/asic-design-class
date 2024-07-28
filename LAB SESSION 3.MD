@@ -232,7 +232,7 @@ The instruction format is as follows:
     - **func7**: `0000000`
     - **R Type**
     - **32 Bit Instruction**: `0000000_00010_01011_001_01111_0110011`
-```
+
 Thus, each instruction has been associated with its respective type, and its 32-bit layout has been designed according to its format.
 
 ## Executing assembly instructions based on a given Verilog code in a RISC-V processor.
