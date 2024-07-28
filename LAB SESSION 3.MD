@@ -21,6 +21,10 @@ Instruction formats in RISC-V act as a "contract" between the assembly language 
   - `rd` (5 bits): Destination register.
   - `opcode` (7 bits): Basic operation code (e.g., 0110011 for integer operations).
 
+The instruction format is as follows:
+
+![rtype](https://github.com/user-attachments/assets/eb798598-352d-4120-8f51-8f5ed6c0ac6a)
+
 ### I Type
 
 - **Purpose**: Handles operations with an immediate value and one or two registers, such as arithmetic, load operations, and certain branches.
@@ -30,6 +34,10 @@ Instruction formats in RISC-V act as a "contract" between the assembly language 
   - `funct3` (3 bits): Instruction differentiation code.
   - `rd` (5 bits): Destination register.
   - `opcode` (7 bits): Basic operation code.
+
+The instruction format is as follows:
+
+![itype](https://github.com/user-attachments/assets/fad5185b-47ef-45b6-b0b1-aa65cc9490dd)
 
 ### S Type
 
@@ -41,6 +49,10 @@ Instruction formats in RISC-V act as a "contract" between the assembly language 
   - `funct3` (3 bits): Instruction differentiation code.
   - `imm[4:0]` (5 bits): Lower 5 bits of the immediate value.
   - `opcode` (7 bits): Basic operation code.
+
+The instruction format is as follows:
+
+![stype](https://github.com/user-attachments/assets/74bc4565-925a-419e-ae46-516b840feca0)
 
 ### B Type
 
@@ -55,6 +67,10 @@ Instruction formats in RISC-V act as a "contract" between the assembly language 
   - `imm[11]` (1 bit): 11th bit of the immediate value.
   - `opcode` (7 bits): Basic operation code.
 
+The instruction format is as follows:
+
+![btype](https://github.com/user-attachments/assets/eb8ac4cd-1676-4e75-b7bf-7f33727a9427)
+
 ### U Type
 
 - **Purpose**: For operations with large immediate values, like loading upper immediate values or address computations.
@@ -63,6 +79,10 @@ Instruction formats in RISC-V act as a "contract" between the assembly language 
   - `rd` (5 bits): Destination register.
   - `opcode` (7 bits): Operation code.
   - Note: Immediate value occupies the upper 20 bits of a 32-bit word; lower 12 bits are zero in calculations.
+
+The instruction format is as follows:
+
+![utype](https://github.com/user-attachments/assets/3fd90c56-54e9-4bc8-9e10-faf9c03b23d5)
 
 ### J Type
 
@@ -75,4 +95,8 @@ Instruction formats in RISC-V act as a "contract" between the assembly language 
   - `rd` (5 bits): Register for storing the return address.
   - `opcode` (7 bits): Operation code.
 
-**Example Instruction**: ADD r1, r2, r3
+The instruction format is as follows:
+
+![jtype](https://github.com/user-attachments/assets/f73f30b2-6e50-4c79-b444-145c819b8694)
+
+# Analyzing the provided instruction types:
