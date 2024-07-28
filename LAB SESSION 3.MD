@@ -14,10 +14,10 @@ Instruction formats in RISC-V act as a "contract" between the assembly language 
 - **Structure**: Consists of two source registers, one destination register, a function code for the operation, and an opcode.
 - **Examples**: ADD, SUB, OR, XOR, etc.
 - **Format**:
-  - `funct7` (7 bits): Function code for additional differentiation.
+  - `func7` (7 bits): Function code for additional differentiation.
   - `rs2` (5 bits): Second source register.
   - `rs1` (5 bits): First source register.
-  - `funct3` (3 bits): Primary function code.
+  - `func3` (3 bits): Primary function code.
   - `rd` (5 bits): Destination register.
   - `opcode` (7 bits): Basic operation code (e.g., 0110011 for integer operations).
 
@@ -44,7 +44,7 @@ The instruction format is as follows:
   - `imm[11:5]` (7 bits): Upper 7 bits of the immediate value.
   - `rs2` (5 bits): Data source register.
   - `rs1` (5 bits): Base address register.
-  - `funct3` (3 bits): Instruction differentiation code.
+  - `func3` (3 bits): Instruction differentiation code.
   - `imm[4:0]` (5 bits): Lower 5 bits of the immediate value.
   - `opcode` (7 bits): Basic operation code.
 
@@ -59,7 +59,7 @@ The instruction format is as follows:
   - `imm[10:5]` (6 bits): 10th to 5th bits of the immediate value.
   - `rs2` (5 bits): Second source register.
   - `rs1` (5 bits): First source register.
-  - `funct3` (3 bits): Instruction differentiation code.
+  - `func3` (3 bits): Instruction differentiation code.
   - `imm[4:1]` (4 bits): 4th to 1st bits of the immediate value.
   - `imm[11]` (1 bit): 11th bit of the immediate value.
   - `opcode` (7 bits): Basic operation code.
