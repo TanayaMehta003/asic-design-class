@@ -276,9 +276,9 @@ Below are the bit patterns and the corresponding ISA for the given Verilog code 
 
 1. Compile the Verilog Code using the below command
 
-   ```bash
-   iverilog -o iiitb_rv32i iiitb_rv32i.v iiitb_rv32i_tb.v
-   ```
+ ```bash
+ iverilog -o iiitb_rv32i iiitb_rv32i.v iiitb_rv32i_tb.v
+ ```
 2. Run this command to execute the test bench and generate a .vcd file:
  ```bash
   vvp iiitb_rv32i_tb
