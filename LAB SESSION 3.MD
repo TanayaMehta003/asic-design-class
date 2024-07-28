@@ -96,6 +96,7 @@ The instruction format is as follows:
 # Analyzing the provided instruction types:
 
 1. **ADD r7, r8, r9**
+
    - **Opcode for ADD**: `0110011`
    - **rd**: `r7 = 00111`
    - **rs1**: `r8 = 01000`
@@ -106,6 +107,7 @@ The instruction format is as follows:
    - **32 Bit Instruction**: `0000000_01001_01000_000_00111_0110011`
 
 2. **SUB r9, r7, r8**
+
    - **Opcode for SUB**: `0110011`
    - **rd**: `r9 = 01001`
    - **rs1**: `r7 = 00111`
@@ -116,6 +118,7 @@ The instruction format is as follows:
    - **32 Bit Instruction**: `0100000_01000_00111_000_01001_0110011`
 
 3. **AND r8, r7, r9**
+
    - **Opcode for AND**: `0110011`
    - **rd**: `r8 = 01000`
    - **rs1**: `r7 = 00111`
@@ -126,6 +129,7 @@ The instruction format is as follows:
    - **32 Bit Instruction**: `0000000_01001_00111_111_01000_0110011`
 
 4. **OR r8, r8, r5**
+
    - **Opcode for OR**: `0110011`
    - **rd**: `r8 = 01000`
    - **rs1**: `r8 = 01000`
@@ -136,6 +140,7 @@ The instruction format is as follows:
    - **32 Bit Instruction**: `0000000_00101_01000_110_01000_0110011`
 
 5. **XOR r8, r7, r4**
+
    - **Opcode for XOR**: `0110011`
    - **rd**: `r8 = 01000`
    - **rs1**: `r7 = 00111`
@@ -146,6 +151,7 @@ The instruction format is as follows:
    - **32 Bit Instruction**: `0000000_00100_00111_100_01000_0110011`
 
 6. **SLT r10, r2, r4**
+
    - **Opcode for SLT**: `0110011`
    - **rd**: `r10 = 01010`
    - **rs1**: `r2 = 00010`
@@ -155,7 +161,28 @@ The instruction format is as follows:
    - **R Type**
    - **32 Bit Instruction**: `0000000_00100_00010_010_01010_0110011`
 
-7. **SRL r16, r11, r2**
+7. **ADDI r12, r3, 5**
+
+   - **Opcode for ADDI**: `0010011`
+   - **rd**: `r12 = 01100`
+   - **rs1**: `r3 = 00011`
+   - **immediate**: `000000000101`
+   - **func3**: `000`
+   - **I Type**
+   - **32 Bit Instruction**: `000000000101_00011_000_01100_0010011`
+
+8. **SW r3, r1, 4**
+
+   - **Opcode for SW**: `0100011`
+   - **rs1**: `r1 = 00001`
+   - **rs2**: `r3 = 00011`
+   - **immediate**: `000000000100`
+   - **func3**: `010`
+   - **S Type**
+   - **32 Bit Instruction**: `0000000_00011_00001_010_00000_0100011`
+
+9. **SRL r16, r11, r2**
+
    - **Opcode for SRL**: `0110011`
    - **rd**: `r16 = 10000`
    - **rs1**: `r11 = 01011`
@@ -165,64 +192,44 @@ The instruction format is as follows:
    - **R Type**
    - **32 Bit Instruction**: `0000000_00010_01011_101_10000_0110011`
 
-8. **SLL r15, r11, r2**
-   - **Opcode for SLL**: `0110011`
-   - **rd**: `r15 = 01111`
-   - **rs1**: `r11 = 01011`
-   - **rs2**: `r2 = 00010`
-   - **func3**: `001`
-   - **func7**: `0000000`
-   - **R Type**
-   - **32 Bit Instruction**: `0000000_00010_01011_001_01111_0110011`
+10. **BNE r0, r1, 20**
 
-#### I Type Instructions
+    - **Opcode for BNE**: `1100011`
+    - **rs1**: `r0 = 00000`
+    - **rs2**: `r1 = 00001`
+    - **immediate**: `000000010100`
+    - **func3**: `001`
+    - **B Type**
+    - **32 Bit Instruction**: `0000000_00001_00000_001_00010_1100011`
 
-1. **ADDI r12, r3, 5**
-   - **Opcode for ADDI**: `0010011`
-   - **rd**: `r12 = 01100`
-   - **rs1**: `r3 = 00011`
-   - **func3**: `000`
-   - **Immediate**: `000000000101` (5 in binary)
-   - **I Type**
-   - **32 Bit Instruction**: `000000000101_00011_000_01100_0010011`
+11. **BEQ r0, r0, 15**
 
-2. **LW r13, r11, 2**
-   - **Opcode for LW**: `0000011`
-   - **rd**: `r13 = 01101`
-   - **rs1**: `r11 = 01011`
-   - **func3**: `010`
-   - **Immediate**: `000000000010` (2 in binary)
-   - **I Type**
-   - **32 Bit Instruction**: `000000000010_01011_010_01101_0000011`
+    - **Opcode for BEQ**: `1100011`
+    - **rs1**: `r0 = 00000`
+    - **rs2**: `r0 = 00000`
+    - **immediate**: `000000001111`
+    - **func3**: `000`
+    - **B Type**
+    - **32 Bit Instruction**: `0000000_00000_00000_000_00011_1100011`
 
-#### S Type Instructions
+12. **LW r13, r11, 2**
 
-1. **SW r3, r1, 4**
-   - **Opcode for SW**: `0100011`
-   - **rs1**: `r1 = 00001`
-   - **rs2**: `r3 = 00011`
-   - **func3**: `010`
-   - **Immediate**: `000000000100` (4 in binary, split as `imm[11:5]` and `imm[4:0]`)
-   - **S Type**
-   - **32 Bit Instruction**: `0000000_00011_00001_010_00100_0100011`
+    - **Opcode for LW**: `0000011`
+    - **rd**: `r13 = 01101`
+    - **rs1**: `r11 = 01011`
+    - **immediate**: `000000000010`
+    - **func3**: `010`
+    - **I Type**
+    - **32 Bit Instruction**: `000000000010_01011_010_01101_0000011`
 
-#### B Type Instructions
+13. **SLL r15, r11, r2**
 
-1. **BNE r0, r1, 20**
-   - **Opcode for BNE**: `1100011`
-   - **rs1**: `r0 = 00000`
-   - **rs2**: `r1 = 00001`
-   - **func3**: `001`
-   - **Immediate**: `0000000_01010` (20 in binary, split as `imm[12]`, `imm[10:5]`, `imm[4:1]`, `imm[11]`)
-   - **B Type**
-   - **32 Bit Instruction**: `0000000_00001_00000_001_01010_1100011`
-
-2. **BEQ r0, r0, 15**
-   - **Opcode for BEQ**: `1100011`
-   - **rs1**: `r0 = 00000`
-   - **rs2**: `r0 = 00000`
-   - **func3**: `000`
-   - **Immediate**: `0000000_01111` (15 in binary, split as `imm[12]`, `imm[10:5]`, `imm[4:1]`, `imm[11]`)
-   - **B Type**
-   - **32 Bit Instruction**: `0000000_00000_00000_000_01111_1100011`
-
+    - **Opcode for SLL**: `0110011`
+    - **rd**: `r15 = 01111`
+    - **rs1**: `r11 = 01011`
+    - **rs2**: `r2 = 00010`
+    - **func3**: `001`
+    - **func7**: `0000000`
+    - **R Type**
+    - **32 Bit Instruction**: `0000000_00010_01011_001_01111_0110011`
+```
