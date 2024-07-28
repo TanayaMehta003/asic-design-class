@@ -237,11 +237,11 @@ Thus, each instruction has been associated with its respective type, and its 32-
 
 ## Executing assembly instructions based on a given Verilog code in a RISC-V processor.
 
-The bit patterns of the provided instructions vary. Below are the bit patterns and the corresponding ISA for the given Verilog code and instructions.
+Below are the bit patterns and the corresponding ISA for the given Verilog code and instructions.
 
 | Operation  | Hardcoded ISA | Bit Pattern                        |
 |------------|---------------|------------------------------------|
-| ADD R6, R2, R1 | 32'h02208300 | 0000001 00010 00001 000 00110 0000000 |
+| ADD R6, R1, R2 | 32'h02208300 | 0000001 00010 00001 000 00110 0000000 |
 | SUB R7, R1, R2 | 32'h02209380 | 0000001 00010 00001 001 00111 0000000 |
 | AND R8, R1, R3 | 32'h0230a400 | 0000001 00011 00001 010 01000 0000000 |
 | OR R9, R2, R5  | 32'h02513480 | 0000001 00101 00010 011 01001 0000000 |
@@ -256,7 +256,7 @@ The bit patterns of the provided instructions vary. Below are the bit patterns a
 
 ### Custom RISC-V Instructions
 
-| Operation        | Type | Hardcoded ISA | Bit Pattern                        |
+| Operation        | Type | RISCV ISA | Bit Pattern                        |
 |------------------|------|---------------|------------------------------------|
 | ADD r6, r7, r8   | R    | 32'h00838033  | 0000000 01000 00111 000 00110 0110011 |
 | SUB r8, r6, r7   | R    | 32'h40E302B3  | 0100000 00111 00110 000 01000 0110011 |
@@ -272,3 +272,24 @@ The bit patterns of the provided instructions vary. Below are the bit patterns a
 | LW r13, r11, 2   | I    | 32'h0025A193  | 000000000010 01011 010 01101 0000011  |
 | SLL r15, r11, r2 | R    | 32'h0025B933  | 0000000 00010 01011 001 01111 0110011 |
 
+###  Implementaion through verilog.
+
+1. Compile the Verilog Code using the below command
+
+   ```bash
+   iverilog -o iiitb_rv32i iiitb_rv32i.v iiitb_rv32i_tb.v
+   ```
+2. Run this command to execute the test bench and generate a .vcd file:
+ ```bash
+  vvp iiitb_rv32i_tb
+ ```
+3.View the Test Bench in GTKWave:
+```bash
+gtkwave iiitb_rv32i.vcd
+```
+Test bench:
+![Screenshot from 2024-07-28 22-00-19](https://github.com/user-attachments/assets/701d5e56-1ec4-45ea-ba0d-49d20106a019)
+
+### Observation:
+
+We observe a variation between bit pattern of RISCV code and hardcoded ISA.
