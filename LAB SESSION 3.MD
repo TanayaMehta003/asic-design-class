@@ -288,34 +288,35 @@ Below are the bit patterns and the corresponding ISA for the given Verilog code 
 gtkwave iiitb_rv32i.vcd
 ```
 ###Analysing output waveforms of above given instructions:
-ADD R6, R2, R1
+
+`ADD R6, R2, R1`
 ![Screenshot from 2024-07-30 00-19-28](https://github.com/user-attachments/assets/4ce41c79-5d4d-4278-b7c1-0eea74b51adc)
 
-SUB R7, R1, R2
+`SUB R7, R1, R2`
 ![Screenshot from 2024-07-30 00-22-00](https://github.com/user-attachments/assets/1b86b7c1-1594-44ad-963e-14831c774bca)
 
-AND R8, R1, R3
+`AND R8, R1, R3`
 ![Screenshot from 2024-07-30 00-26-22](https://github.com/user-attachments/assets/877bdc98-f86e-40c4-8d5a-8365b0e64b5f)
 
-OR R9, R2, R5
+`OR R9, R2, R5`
 ![Screenshot from 2024-07-30 00-29-43](https://github.com/user-attachments/assets/bd10f36b-7f3d-40c1-9f55-f9a94d3da25c)
 
-xor r10,r1,r4
+`xor r10,r1,r4`
 ![Screenshot from 2024-07-30 00-30-53](https://github.com/user-attachments/assets/16d4d79b-b486-476c-a05a-d87db3d8c764)
 
-SLT R1, R2, R4
+`SLT R1, R2, R4`
 ![Screenshot from 2024-07-30 00-32-19](https://github.com/user-attachments/assets/5b82a335-31bd-4a92-bfc5-1c2611a1be4d)
 
-ADDI R12, R4, 5 
+`ADDI R12, R4, 5 `
 ![Screenshot from 2024-07-30 00-33-56](https://github.com/user-attachments/assets/f8b3a0e3-edfd-48d0-9a5f-11265f1e9db6)
 
-BEQ R0, R0, 15
+`BEQ R0, R0, 15`
 ![Screenshot from 2024-07-30 00-35-59](https://github.com/user-attachments/assets/e3b8004f-90ad-45eb-920a-e03dce40d408)
 
-SW R3, R1, 2 
+`SW R3, R1, 2 `
 ![Screenshot from 2024-07-30 00-38-42](https://github.com/user-attachments/assets/131e9c90-ae9c-4620-8726-d97f518a8249)
 
-LW R13, R1, 2
+`LW R13, R1, 2`
 ![Screenshot from 2024-07-30 00-40-03](https://github.com/user-attachments/assets/c55fcc30-e526-4052-8655-f6f63562798d)
 
 We observe a variation between bit pattern of RISCV code and hardcoded ISA.
