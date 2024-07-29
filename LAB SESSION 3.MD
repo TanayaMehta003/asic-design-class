@@ -287,7 +287,7 @@ Below are the bit patterns and the corresponding ISA for the given Verilog code 
 ```bash
 gtkwave iiitb_rv32i.vcd
 ```
-### Analysing output waveforms of above given instructions with the appropriate wafeforms:
+  ### PFB the appropriate wafeforms of hardcoded ISA:
 
 `ADD R6, R2, R1`
 ![Screenshot from 2024-07-30 00-19-28](https://github.com/user-attachments/assets/4ce41c79-5d4d-4278-b7c1-0eea74b51adc)
