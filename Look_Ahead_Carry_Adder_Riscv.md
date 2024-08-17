@@ -161,7 +161,7 @@ int main() {
     return 0;
 }
 ```
-##Compilation of the C-program with GCC compiler:
+##**Compilation of the C-program with GCC compiler:**
 
 ```bash
 gcc -Ofast -o cla cla.c
