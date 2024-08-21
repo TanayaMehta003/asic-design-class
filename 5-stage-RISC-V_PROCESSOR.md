@@ -109,8 +109,7 @@ Cycle_Calculator.tlv
 ```bash
 \m4_TLV_version 1d: tl-x.org
 \SV
-   // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
-   
+  
    m4_include_lib(['https://raw.githubusercontent.com/stevehoover/RISC-V_MYTH_Workshop/bd1f186fde018ff9e3fd80597b7397a1c862cf15/tlv_lib/calculator_shell_lib.tlv'])
 
 \SV
@@ -175,7 +174,6 @@ Below is a screenshot of a 2-cycle calculator, which alternately clears the outp
 ```bash
 \m4_TLV_version 1d: tl-x.org
 \SV
-   // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
    
    m4_include_lib(['https://raw.githubusercontent.com/stevehoover/RISC-V_MYTH_Workshop/bd1f186fde018ff9e3fd80597b7397a1c862cf15/tlv_lib/calculator_shell_lib.tlv'])
 
@@ -245,7 +243,6 @@ Fetch.tlv
 ```bash
 \m4_TLV_version 1d: tl-x.org
 \SV
-   // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
    
    m4_include_lib(['https://raw.githubusercontent.com/BalaDhinesh/RISC-V_MYTH_Workshop/master/tlv_lib/risc-v_shell_lib.tlv'])
 
@@ -337,8 +334,7 @@ Decode.tlv
 ```bash
 \m4_TLV_version 1d: tl-x.org
 \SV
-   // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
-   
+  
    m4_include_lib(['https://raw.githubusercontent.com/BalaDhinesh/RISC-V_MYTH_Workshop/master/tlv_lib/risc-v_shell_lib.tlv'])
 
 \SV
@@ -494,7 +490,6 @@ Register_File_Read_write.tlv
 ```bash
 \m4_TLV_version 1d: tl-x.org
 \SV
-   // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
    
    m4_include_lib(['https://raw.githubusercontent.com/BalaDhinesh/RISC-V_MYTH_Workshop/master/tlv_lib/risc-v_shell_lib.tlv'])
 
@@ -694,7 +689,6 @@ Pipelined_RISCV_CPU.tlv
 ```bash
 \m4_TLV_version 1d: tl-x.org
 \SV
-   // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
    
    m4_include_lib(['https://raw.githubusercontent.com/BalaDhinesh/RISC-V_MYTH_Workshop/master/tlv_lib/risc-v_shell_lib.tlv'])
 
