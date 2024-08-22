@@ -681,6 +681,11 @@ As shown in the screenshot, the output of the sum 1 to 9 program is observed in 
 
 ![image](https://github.com/user-attachments/assets/659127fe-b039-4497-97f0-5150ce277b19)
 
+The following shows the sum on waveform:
+
+![image](https://github.com/user-attachments/assets/af1a3a62-6e69-406a-b474-97a34a982ab1)
+
+
 The following screenshot shows the reset signal
 
 ![image](https://github.com/user-attachments/assets/9c9c0ef7-f299-43e9-a29a-2475d3c77f79)
