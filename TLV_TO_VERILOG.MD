@@ -68,7 +68,7 @@ gtkwave pre_synth_sim.vcd
 
 - **clk_tan**: Clock input to the RISC-V core.
 - **reset**: Input reset signal to the RISC-V core.
-- **OUT[9:0]**: 10-bit output port of the RISC-V core, originating from register #14.
+- **OUT[9:0]**: 10-bit output port of the RISC-V core.
 
 ---
 ![image](https://github.com/user-attachments/assets/6fc29cb4-9477-4d1a-8a07-3c7fbb70827d)
