@@ -26,7 +26,7 @@ cd VSDBabySoC
 ![image](https://github.com/user-attachments/assets/83f3bb63-c331-4a48-ab3e-8539feb6fcd6)
 
 ### 3. Replace the `rvmyth.tlv` File
-In the `VSDBabySoC` directory, navigate to `src/module` and replace the existing `rvmyth.tlv` file with your own.
+In the `VSDBabySoC` directory, navigate to `/home/vsduser/VSDBabySoC` and replace the existing `rvmyth.tlv` file with your own.
 
 ### 4. Convert `.tlv` to `.v` using Sandpiper-SaaS
 The TL-Verilog (`.tlv`) code needs to be converted to Verilog (`.v`). Run the following command:
@@ -66,10 +66,11 @@ gtkwave pre_synth_sim.vcd
 
 ## Key Signals in the Diagram
 
-- **clk_Gour**: Clock input to the RISC-V core.
+- **clk_tan**: Clock input to the RISC-V core.
 - **reset**: Input reset signal to the RISC-V core.
 - **OUT[9:0]**: 10-bit output port of the RISC-V core, originating from register #14.
 
 ---
+![image](https://github.com/user-attachments/assets/6fc29cb4-9477-4d1a-8a07-3c7fbb70827d)
 
-This guide outlines a straightforward approach for converting TL-Verilog code and validating it through Verilog simulation.
+This outlines a straightforward approach for converting TL-Verilog code and validating it through Verilog simulation.
