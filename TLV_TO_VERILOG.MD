@@ -6,7 +6,7 @@ This guide provides instructions on converting TLV code to Verilog and running p
 ## Steps
 
 ### 1. Install Necessary Packages
-Start by installing the required packages using `pip`:
+Start by installing the required packages:
 
 ```bash
 sudo apt install make python python3 python3-pip git iverilog gtkwave
