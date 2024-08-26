@@ -74,3 +74,20 @@ gtkwave pre_synth_sim.vcd
 ![image](https://github.com/user-attachments/assets/6fc29cb4-9477-4d1a-8a07-3c7fbb70827d)
 
 This outlines a straightforward approach for converting TL-Verilog code and validating it through Verilog simulation.
+
+## Waveforms from Makerchip platform IDE by running .tlv file for comparison
+
+As shown in the screenshot, the output of the sum 1 to 9 program is observed in register r10, which holds the value 45. It can be observed that the CPU took 56 cycles to execute the program for calculating the sum of numbers from 1 to 9.
+
+![image](https://github.com/user-attachments/assets/659127fe-b039-4497-97f0-5150ce277b19)
+
+The following shows the sum on waveform:
+
+![image](https://github.com/user-attachments/assets/af1a3a62-6e69-406a-b474-97a34a982ab1)
+
+
+The following screenshot shows the reset signal
+
+![image](https://github.com/user-attachments/assets/9c9c0ef7-f299-43e9-a29a-2475d3c77f79)
+
+
