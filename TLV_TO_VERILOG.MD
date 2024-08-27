@@ -73,6 +73,8 @@ gtkwave pre_synth_sim.vcd
 ---
 ![image](https://github.com/user-attachments/assets/6fc29cb4-9477-4d1a-8a07-3c7fbb70827d)
 
+![image](https://github.com/user-attachments/assets/8c75fbb3-a9bc-47ab-a0c2-b48b1fd5cf82)
+
 This outlines a straightforward approach for converting TL-Verilog code and validating it through Verilog simulation.
 
 ## Waveforms from Makerchip platform IDE by running .tlv file for comparison
