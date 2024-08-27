@@ -71,7 +71,6 @@ gtkwave pre_synth_sim.vcd
 - **OUT[9:0]**: 10-bit output port of the RISC-V core(highlighted both in binary value and decimal)
 
 ---
-![image](https://github.com/user-attachments/assets/6fc29cb4-9477-4d1a-8a07-3c7fbb70827d)
 
 ![image](https://github.com/user-attachments/assets/8c75fbb3-a9bc-47ab-a0c2-b48b1fd5cf82)
 
