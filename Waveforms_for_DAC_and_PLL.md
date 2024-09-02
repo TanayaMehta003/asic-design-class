@@ -31,7 +31,7 @@ git clone https://github.com/Subhasis-Sahu/BabySoC_Simulation.git
 ```bash
 cd BabySoC_Simulation
 ```
-![image](https://github.com/user-attachments/assets/0de14335-d23d-4182-a0de-d94c21ea6865)
+![image](https://github.com/user-attachments/assets/9f4509fd-0efa-4712-824b-122dae4a1b44)
 
 2. Udate the `rvmyth.v` file from the previous labs into existing folder Edit the clock name appended with your name in vsdbabysoc.v.
 
@@ -41,4 +41,15 @@ cd BabySoC_Simulation
 ```bash
 iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/
 ```
+4. Run the following commands:
+   ```
+   ./pre_synth_sim.out
+   gtkwave pre_synth_sim.vcd
+
+   ```
+![image](https://github.com/user-attachments/assets/b7ea917b-8aa9-4037-bbb2-3e8e588d2822)
+
+##Waveform
+
+![image](https://github.com/user-attachments/assets/f1aaffd4-039c-43a2-8aec-96c23a62fb22)
 
