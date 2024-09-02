@@ -35,8 +35,6 @@ cd BabySoC_Simulation
 
 2. Udate the `rvmyth.v` file from the previous labs into existing folder Edit the clock name appended with your name in vsdbabysoc.v.
 
-![image](https://github.com/user-attachments/assets/0eb7c4ec-d369-49ee-a6b4-b59b11f2d890)
-
 3.Commands used to run the rvmyth.v file
 ```bash
 iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/
