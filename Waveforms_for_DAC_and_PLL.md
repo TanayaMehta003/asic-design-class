@@ -50,6 +50,3 @@ iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/in
 ## Waveform
 
 ![image](https://github.com/user-attachments/assets/9f9d386c-6a59-4d37-bef8-6e388f3b13aa)
-
-![image](https://github.com/user-attachments/assets/f1aaffd4-039c-43a2-8aec-96c23a62fb22)
-
