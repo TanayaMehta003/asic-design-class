@@ -87,7 +87,7 @@ This tutorial demonstrates how to synthesize a Verilog design using Yosys, explo
 
 ### Yosys 
 
-1. Launches the Yosys tool.
+1. **Launches the Yosys tool.**
  ```
 yosys
 ```
