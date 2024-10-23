@@ -27,7 +27,7 @@
    gtkwave pre_synth_sim.vcd
 ```
 
-![Screenshot from 2024-10-24 02-38-12](https://github.com/user-attachments/assets/c86ba4a6-82f8-4175-9007-d5dca67a96ea)
+![Screenshot from 2024-10-24 03-36-49](https://github.com/user-attachments/assets/fcab4e06-60f4-4386-b137-e733e9ce42f0)
 
 
 ## Steps for Synthesizing the RISC-V Core
@@ -56,11 +56,14 @@ Netlist:
 
 ![Screenshot from 2024-10-24 03-21-08](https://github.com/user-attachments/assets/3789c276-f5d6-4b06-a4f5-870adf77d921)
 
-3. **Simulate the Synthesized Design**
+3. **Simulate the Synthesized Design:**
 Run the following commands:
 ```
    iverilog ../../my_lib/verilog_model/primitives.v ../../my_lib/verilog_model/sky130_fd_sc_hd.v rvmyth.v testbench.v vsdbabysoc.v avsddac.v avsdpll.v clk_gate.v  
    ./a.out  
    gtkwave dump.vcd
 ```
-![Screenshot from 2024-10-24 03-27-13](https://github.com/user-attachments/assets/8a2b38af-3fc4-43f5-9448-82fb71b554de)
+![Screenshot from 2024-10-24 03-33-01](https://github.com/user-attachments/assets/c086c985-49a5-4dce-9ce0-467ef233021a)
+
+
+
