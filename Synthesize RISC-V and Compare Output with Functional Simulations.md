@@ -53,6 +53,7 @@ write_verilog -noattr rvmyth_net.v
 ![Screenshot from 2024-10-24 03-19-03](https://github.com/user-attachments/assets/646f13a0-0989-4195-a235-adfea8c50e27)
 
 Netlist:
+![Screenshot from 2024-10-24 11-31-33](https://github.com/user-attachments/assets/641bddce-2fd8-4383-9a02-9892d330d44d)
 
 ![Screenshot from 2024-10-24 03-21-08](https://github.com/user-attachments/assets/3789c276-f5d6-4b06-a4f5-870adf77d921)
 
@@ -64,6 +65,7 @@ Run the following commands:
    gtkwave dump.vcd
 ```
 ![Screenshot from 2024-10-24 03-33-01](https://github.com/user-attachments/assets/c086c985-49a5-4dce-9ce0-467ef233021a)
+![Screenshot from 2024-10-24 11-33-51](https://github.com/user-attachments/assets/7a23bee9-51b6-40fe-8694-1ed81737b839)
 
 
 
