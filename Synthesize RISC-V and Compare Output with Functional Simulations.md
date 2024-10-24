@@ -14,7 +14,6 @@
  cd /Desktop/ASIC/sky130RTLDesignAndSynthesisWorkshop
 ```
 
-![Screenshot from 2024-10-24 02-42-53](https://github.com/user-attachments/assets/200ad7ad-b04d-4e55-b3d0-13f87f1d8e9b)
 ![Screenshot from 2024-10-24 02-45-57](https://github.com/user-attachments/assets/4a4940c0-fbaa-4984-8069-da429a21b729)
 
 3.**Run Pre-Synthesis Simulation:**
