@@ -28,6 +28,7 @@
 ```
 
 ![Screenshot from 2024-10-24 03-36-49](https://github.com/user-attachments/assets/fcab4e06-60f4-4386-b137-e733e9ce42f0)
+![Screenshot from 2024-10-24 11-44-26](https://github.com/user-attachments/assets/d47c8a69-e750-4b63-b777-9d9a204a0cc2)
 
 
 ## Steps for Synthesizing the RISC-V Core
@@ -68,5 +69,5 @@ Run the following commands:
 ![Screenshot from 2024-10-24 03-33-01](https://github.com/user-attachments/assets/c086c985-49a5-4dce-9ce0-467ef233021a)
 ![Screenshot from 2024-10-24 11-33-51](https://github.com/user-attachments/assets/7a23bee9-51b6-40fe-8694-1ed81737b839)
 
-
+We can see that pre-synthesis simulation and post-synthesis simulation, show the same results. Hence, verifying o1=o2.
 
