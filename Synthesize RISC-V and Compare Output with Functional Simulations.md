@@ -49,6 +49,7 @@ show
 write_verilog -noattr rvmyth_net.v
 !gvim rvmyth_net.v
 ```
+![Screenshot from 2024-10-24 11-36-48](https://github.com/user-attachments/assets/05913a5b-464c-4995-8b30-9778bee6eae1)
 
 ![Screenshot from 2024-10-24 03-19-03](https://github.com/user-attachments/assets/646f13a0-0989-4195-a235-adfea8c50e27)
 
