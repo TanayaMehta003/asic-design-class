@@ -2,8 +2,6 @@
 
 1. [Task 1](#task-1)
 
-#Task-1:
-
 ## **TASK 1:**
 ### **Compiling the C program using GCC and RISC-V**
 
