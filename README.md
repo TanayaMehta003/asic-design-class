@@ -7,7 +7,7 @@
 3. [TASK-3](#TASK-3)
 4. [TASK-4](#TASK-4)
 5. 
-## **TASK 1:**
+# **TASK 1:**
 
 ### **Compiling the C program using GCC and RISC-V**
 
