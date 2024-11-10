@@ -1,4 +1,4 @@
-## Task 10: Post Synthesis Static Timing Analysis using OpenSTA for all the sky130 lib files
+## Task 11: Post Synthesis Static Timing Analysis using OpenSTA for all the sky130 lib files
 
 ### Constraints
 ![Screenshot from 2024-11-05 00-55-54](https://github.com/user-attachments/assets/b6b2c115-8a79-4dde-bf26-b19391d26529)
