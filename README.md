@@ -1801,7 +1801,7 @@ iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/in
 ![image](https://github.com/user-attachments/assets/9f9d386c-6a59-4d37-bef8-6e388f3b13aa)
 
 
-# TASK-9
+# TASK-8
 
 # RTL design using Verilog with SKY130 Technology
 
@@ -3689,7 +3689,7 @@ Run the following commands:
 
 We can see that pre-synthesis simulation and post-synthesis simulation, show the same results. Hence, verifying o1=o2.
 
-# TASK-10
+# TASK-9
 
 # Synthesize RISC-V and Compare Output with Functional Simulations
 
