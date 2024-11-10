@@ -3615,80 +3615,6 @@ Yosys screenshot:
 ![Screenshot from 2024-10-22 01-21-07](https://github.com/user-attachments/assets/9bc04e56-4e4c-48de-a2ad-2b10315c9ec3)
 
 
-# TASK-10
-
-# Synthesize RISC-V and Compare Output with Functional Simulations
-
-
-
-## Steps before Synthesizing the RISC-V Core
-
-1. **Copy the `src` Folder:**  
-   Transfer the `src` folder from the **VSDBabySoC** directory to the **ASIC** directory.
-
-2. **Navigate to the Target Directory:**  
-   Change to the appropriate directory where the synthesis will be performed. Use the following command:
-
-``` 
- cd /Desktop/ASIC/sky130RTLDesignAndSynthesisWorkshop
-```
-
-![Screenshot from 2024-10-24 02-45-57](https://github.com/user-attachments/assets/4a4940c0-fbaa-4984-8069-da429a21b729)
-
-3.**Run Pre-Synthesis Simulation:**
-    Execute the simulation on the design prior to synthesis using the following command:
-    
-  ```
-    cd VSDBabySoC  
-   iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/  
-   ./pre_synth_sim.out  
-   gtkwave pre_synth_sim.vcd
-```
-
-![Screenshot from 2024-10-24 03-36-49](https://github.com/user-attachments/assets/fcab4e06-60f4-4386-b137-e733e9ce42f0)
-![Screenshot from 2024-10-24 11-44-26](https://github.com/user-attachments/assets/d47c8a69-e750-4b63-b777-9d9a204a0cc2)
-
-
-## Steps for Synthesizing the RISC-V Core
-
-1. **Navigate to the Target Directory:**
-```
-cd /Desktop/ASIC/sky130RTLDesignAndSynthesisWorkshop/src/module
-```
- 2. **Synthesis:**
-Run the following commands for synthesis
-```
-yosys
-read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
-read_verilog clk_gate.v
-read_verilog rvmyth.v
-synth -top rvmyth
-abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
-show
-write_verilog -noattr rvmyth_net.v
-!gvim rvmyth_net.v
-```
-![Screenshot from 2024-10-24 11-36-48](https://github.com/user-attachments/assets/05913a5b-464c-4995-8b30-9778bee6eae1)
-
-![Screenshot from 2024-10-24 03-19-03](https://github.com/user-attachments/assets/646f13a0-0989-4195-a235-adfea8c50e27)
-
-Netlist:
-![Screenshot from 2024-10-24 11-31-33](https://github.com/user-attachments/assets/641bddce-2fd8-4383-9a02-9892d330d44d)
-
-![Screenshot from 2024-10-24 03-21-08](https://github.com/user-attachments/assets/3789c276-f5d6-4b06-a4f5-870adf77d921)
-
-3. **Simulate the Synthesized Design:**
-Run the following commands:
-```
-   iverilog ../../my_lib/verilog_model/primitives.v ../../my_lib/verilog_model/sky130_fd_sc_hd.v rvmyth.v testbench.v vsdbabysoc.v avsddac.v avsdpll.v clk_gate.v  
-   ./a.out  
-   gtkwave dump.vcd
-```
-![Screenshot from 2024-10-24 03-33-01](https://github.com/user-attachments/assets/c086c985-49a5-4dce-9ce0-467ef233021a)
-![Screenshot from 2024-10-24 11-33-51](https://github.com/user-attachments/assets/7a23bee9-51b6-40fe-8694-1ed81737b839)
-
-We can see that pre-synthesis simulation and post-synthesis simulation, show the same results. Hence, verifying o1=o2.
-
 # TASK-9
 
 # Synthesize RISC-V and Compare Output with Functional Simulations
@@ -3762,6 +3688,283 @@ Run the following commands:
 ![Screenshot from 2024-10-24 11-33-51](https://github.com/user-attachments/assets/7a23bee9-51b6-40fe-8694-1ed81737b839)
 
 We can see that pre-synthesis simulation and post-synthesis simulation, show the same results. Hence, verifying o1=o2.
+
+# TASK-10
+
+# Synthesize RISC-V and Compare Output with Functional Simulations
+
+# Synthesize RISC-V and Compare Output with Functional Simulations
+
+
+
+## Steps before Synthesizing the RISC-V Core
+
+1. **Copy the `src` Folder:**  
+   Transfer the `src` folder from the **VSDBabySoC** directory to the **ASIC** directory.
+
+2. **Navigate to the Target Directory:**  
+   Change to the appropriate directory where the synthesis will be performed. Use the following command:
+
+``` 
+ cd /Desktop/ASIC/sky130RTLDesignAndSynthesisWorkshop
+```
+
+![Screenshot from 2024-10-24 02-45-57](https://github.com/user-attachments/assets/4a4940c0-fbaa-4984-8069-da429a21b729)
+
+3.**Run Pre-Synthesis Simulation:**
+    Execute the simulation on the design prior to synthesis using the following command:
+    
+  ```
+    cd VSDBabySoC  
+   iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/  
+   ./pre_synth_sim.out  
+   gtkwave pre_synth_sim.vcd
+```
+
+![Screenshot from 2024-10-24 03-36-49](https://github.com/user-attachments/assets/fcab4e06-60f4-4386-b137-e733e9ce42f0)
+![Screenshot from 2024-10-24 11-44-26](https://github.com/user-attachments/assets/d47c8a69-e750-4b63-b777-9d9a204a0cc2)
+
+
+## Steps for Synthesizing the RISC-V Core
+
+1. **Navigate to the Target Directory:**
+```
+cd /Desktop/ASIC/sky130RTLDesignAndSynthesisWorkshop/src/module
+```
+ 2. **Synthesis:**
+Run the following commands for synthesis
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog clk_gate.v
+read_verilog rvmyth.v
+synth -top rvmyth
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr rvmyth_net.v
+!gvim rvmyth_net.v
+```
+![Screenshot from 2024-10-24 11-36-48](https://github.com/user-attachments/assets/05913a5b-464c-4995-8b30-9778bee6eae1)
+
+![Screenshot from 2024-10-24 03-19-03](https://github.com/user-attachments/assets/646f13a0-0989-4195-a235-adfea8c50e27)
+
+Netlist:
+![Screenshot from 2024-10-24 11-31-33](https://github.com/user-attachments/assets/641bddce-2fd8-4383-9a02-9892d330d44d)
+
+![Screenshot from 2024-10-24 03-21-08](https://github.com/user-attachments/assets/3789c276-f5d6-4b06-a4f5-870adf77d921)
+
+3. **Simulate the Synthesized Design:**
+Run the following commands:
+```
+   iverilog ../../my_lib/verilog_model/primitives.v ../../my_lib/verilog_model/sky130_fd_sc_hd.v rvmyth.v testbench.v vsdbabysoc.v avsddac.v avsdpll.v clk_gate.v  
+   ./a.out  
+   gtkwave dump.vcd
+```
+![Screenshot from 2024-10-24 03-33-01](https://github.com/user-attachments/assets/c086c985-49a5-4dce-9ce0-467ef233021a)
+![Screenshot from 2024-10-24 11-33-51](https://github.com/user-attachments/assets/7a23bee9-51b6-40fe-8694-1ed81737b839)
+
+We can see that pre-synthesis simulation and post-synthesis simulation, show the same results. Hence, verifying o1=o2.
+
+# TASK-11
+
+## Task 11: Post Synthesis Static Timing Analysis using OpenSTA for all the sky130 lib files
+
+### Constraints
+![Screenshot from 2024-11-05 00-55-54](https://github.com/user-attachments/assets/b6b2c115-8a79-4dde-bf26-b19391d26529)
+
+### TCL
+![Screenshot from 2024-11-05 00-57-48](https://github.com/user-attachments/assets/857372e7-e369-4b12-bb3f-593e70b93683)
+
+### To perform STA
+![Screenshot from 2024-11-05 00-51-49](https://github.com/user-attachments/assets/a5f11cec-9226-45c8-bfce-539cd5af526d)
+
+### Total negative slack
+![Screenshot from 2024-11-05 01-27-15](https://github.com/user-attachments/assets/45ced20e-a7ad-4d55-af20-aa5f2bb6337b)
+
+### Worst negative slack
+![Screenshot from 2024-11-05 01-31-21](https://github.com/user-attachments/assets/637c16a1-4f06-4082-8228-10bcd8512ee2)
+
+### STA worst max slack
+![Screenshot from 2024-11-05 01-33-44](https://github.com/user-attachments/assets/38cba75d-72cc-437c-ba81-c7b7a363fee3)
+
+### STA worst min slack
+![Screenshot from 2024-11-05 01-43-04](https://github.com/user-attachments/assets/4c4aaf68-a52d-404e-b98e-debfb753ceab)
+
+
+
+
+
+
+## Steps before Synthesizing the RISC-V Core
+
+1. **Copy the `src` Folder:**  
+   Transfer the `src` folder from the **VSDBabySoC** directory to the **ASIC** directory.
+
+2. **Navigate to the Target Directory:**  
+   Change to the appropriate directory where the synthesis will be performed. Use the following command:
+
+``` 
+ cd /Desktop/ASIC/sky130RTLDesignAndSynthesisWorkshop
+```
+
+![Screenshot from 2024-10-24 02-45-57](https://github.com/user-attachments/assets/4a4940c0-fbaa-4984-8069-da429a21b729)
+
+3.**Run Pre-Synthesis Simulation:**
+    Execute the simulation on the design prior to synthesis using the following command:
+    
+  ```
+    cd VSDBabySoC  
+   iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/  
+   ./pre_synth_sim.out  
+   gtkwave pre_synth_sim.vcd
+```
+
+![Screenshot from 2024-10-24 03-36-49](https://github.com/user-attachments/assets/fcab4e06-60f4-4386-b137-e733e9ce42f0)
+![Screenshot from 2024-10-24 11-44-26](https://github.com/user-attachments/assets/d47c8a69-e750-4b63-b777-9d9a204a0cc2)
+
+
+## Steps for Synthesizing the RISC-V Core
+
+1. **Navigate to the Target Directory:**
+```
+cd /Desktop/ASIC/sky130RTLDesignAndSynthesisWorkshop/src/module
+```
+ 2. **Synthesis:**
+Run the following commands for synthesis
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog clk_gate.v
+read_verilog rvmyth.v
+synth -top rvmyth
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr rvmyth_net.v
+!gvim rvmyth_net.v
+```
+![Screenshot from 2024-10-24 11-36-48](https://github.com/user-attachments/assets/05913a5b-464c-4995-8b30-9778bee6eae1)
+
+![Screenshot from 2024-10-24 03-19-03](https://github.com/user-attachments/assets/646f13a0-0989-4195-a235-adfea8c50e27)
+
+Netlist:
+![Screenshot from 2024-10-24 11-31-33](https://github.com/user-attachments/assets/641bddce-2fd8-4383-9a02-9892d330d44d)
+
+![Screenshot from 2024-10-24 03-21-08](https://github.com/user-attachments/assets/3789c276-f5d6-4b06-a4f5-870adf77d921)
+
+3. **Simulate the Synthesized Design:**
+Run the following commands:
+```
+   iverilog ../../my_lib/verilog_model/primitives.v ../../my_lib/verilog_model/sky130_fd_sc_hd.v rvmyth.v testbench.v vsdbabysoc.v avsddac.v avsdpll.v clk_gate.v  
+   ./a.out  
+   gtkwave dump.vcd
+```
+![Screenshot from 2024-10-24 03-33-01](https://github.com/user-attachments/assets/c086c985-49a5-4dce-9ce0-467ef233021a)
+![Screenshot from 2024-10-24 11-33-51](https://github.com/user-attachments/assets/7a23bee9-51b6-40fe-8694-1ed81737b839)
+
+We can see that pre-synthesis simulation and post-synthesis simulation, show the same results. Hence, verifying o1=o2.
+
+# TASK-12
+
+# Static Timing Analysis for a Synthesized RISC-V Core with OpenSTA
+
+## Static Timing Analysis (STA) in ASIC Design
+
+**Static Timing Analysis (STA)** plays a vital role in ASIC design, ensuring that the circuit meets all timing requirements without needing to perform dynamic simulations of actual data. STA confirms that data paths meet specified constraints, ensuring proper circuit operation under varying conditions.
+
+## Timing Paths in STA
+
+The primary objective of STA is to analyze **timing paths** and confirm that data travels correctly between points within designated time limits. Key types of timing paths include:
+
+- **Setup Paths**: Ensure that data reaches the next stage before the triggering clock edge.
+- **Hold Paths**: Ensure that data remains stable for a required duration following the clock edge.
+
+## Clock Domains in STA
+
+STA divides the design into **clock domains** to analyze timing relationships between elements operating under the same or different clocks. The handling of these paths depends on the nature of the clock domains:
+
+- **Synchronous Domains**: Involves clocks with known relationships. Setup and hold checks are performed between these domains.
+- **Asynchronous Domains**: Involves unrelated clocks. Special mechanisms such as **synchronizers** or **FIFO buffers** are often required to ensure proper data transfer between domains.
+
+## Clock Skew and Jitter
+
+- **Clock Skew**: Refers to differences in the arrival time of a clock signal at multiple flip-flops. It affects both setup and hold timing and is critical to STA.
+- **Clock Jitter**: Represents variations in clock edge timing due to external factors like noise. STA incorporates jitter to ensure timing constraints are still met under such conditions.
+
+## Essential Timing Checks
+
+- **Setup Check**: Confirms that data arrives before the clock edge, leaving sufficient stabilization time.
+- **Hold Check**: Verifies that data remains stable long enough after the clock edge to avoid glitches.
+
+## Timing Margins and Slack
+
+- **Slack**: The margin between the required time and the actual signal arrival time.
+  - **Positive Slack**: Indicates that the timing constraints are satisfied.
+  - **Negative Slack**: Signals a timing violation.
+
+- **Setup Slack**: Measures how much time is left for setup constraints.
+- **Hold Slack**: Represents the margin for hold timing requirements.
+
+## Static Timing Analysis Tools
+
+Popular STA tools include:
+- **Synopsys PrimeTime**
+- **Cadence Tempus**
+
+These tools construct **timing graphs** to traverse all paths in the design, providing reports on **slack**, **critical paths**, and **violations**.
+
+## PVT Corners in Timing Analysis
+
+STA considers **Process, Voltage, and Temperature (PVT) variations** to ensure that the design meets timing constraints under all conditions, including worst-case scenarios.
+
+## Optimization Techniques
+
+- **Buffer Insertion**: Adds buffers to reduce delays in long paths.
+- **Gate Sizing**: Resizes gates to improve performance on critical paths.
+- **Clock Tree Optimization (CTO)**: Reduces clock skew and jitter within the distribution network.
+
+## Key Timing Paths
+
+### Reg2Reg Path
+
+A **register-to-register (reg2reg) path** connects two sequential elements, typically flip-flops or registers, via combinational logic. These paths are crucial in ensuring proper data synchronization and flow across clock cycles, especially in pipelined circuits. Analyzing reg2reg paths ensures the circuit functions reliably.
+
+### Clk2Reg Path
+
+A **clock-to-register (clk2reg) path** refers to the connection between the clock signal and a register (flip-flop). This path ensures that the register reacts appropriately to clock events, allowing sequential logic to operate correctly.
+
+## STA for the synthesized RISC-V Core:
+
+Install openSTA
+
+![Screenshot from 2024-10-28 22-37-16](https://github.com/user-attachments/assets/809e4293-f793-49c3-9b90-174bdaffaa86)
+
+
+
+```
+read_liberty /home/tanaya-mehta/OpenSTA/assignment10/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog /home/tanaya-mehta/OpenSTA/assignment10/rvmyth_net_list.v
+link_design rvmyth
+
+create_clock -name clk -period 9.35 [get_ports clk]
+set_clock_uncertainty [expr 0.05 * 9.35] -setup [get_clocks clk]
+set_clock_uncertainty [expr 0.08 * 9.35] -hold [get_clocks clk]
+set_clock_transition [expr 0.05 * 9.35] [get_clocks clk]
+set_input_transition [expr 0.08 * 9.35] [all_inputs]
+
+report_checks -path_delay max
+report_checks -path_delay min
+
+
+```
+
+![Screenshot from 2024-10-28 23-18-49](https://github.com/user-attachments/assets/df4a3883-40f0-4d99-a4b3-0d2c011dc0e1)
+
+![Screenshot from 2024-10-28 23-20-06](https://github.com/user-attachments/assets/0c21aebc-05bd-4d25-9cdd-72464f644d8f)
+
+![Screenshot from 2024-10-28 23-17-48](https://github.com/user-attachments/assets/538fc426-7b3f-4c5b-bce9-d405b0882e38)
+
+
+
 
 
 
