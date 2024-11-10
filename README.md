@@ -2,7 +2,7 @@
 
 ## CONTENTS
 
-1. [TASK 1](#task-1)
+1. [TASK-1](#task-1)
 2. [TASK-2](#TASK-2)
 3. [TASK-3](#TASK-3)
 4. [TASK-4](#TASK-4)
@@ -1648,6 +1648,2127 @@ Pipelined_RISCV_CPU.tlv
 \SV
    endmodule
 ```
+
+# TASK-6
+
+
+# Converting TLV to Verilog with Sandpiper-SaaS Compiler
+
+This guide provides instructions on converting TLV code to Verilog and running pre-synthesis simulations using the GTKWave tool to verify the design.
+
+## Steps
+
+### 1. Install Necessary Packages
+Start by installing the required packages:
+
+```bash
+sudo apt install make python python3 python3-pip git iverilog gtkwave
+sudo apt-get install python3-venv
+python3 -m venv .venv
+source ~/.venv/bin/activate
+pip3 install pyyaml click sandpiper-saas
+```
+
+### 2. Clone the Repository
+Download the VSDBabySoC design files and testbench by cloning the GitHub repository, then navigate to the project directory:
+
+```bash
+git clone https://github.com/manili/VSDBabySoC.git
+cd VSDBabySoC
+```
+![image](https://github.com/user-attachments/assets/83f3bb63-c331-4a48-ab3e-8539feb6fcd6)
+
+### 3. Replace the `rvmyth.tlv` File
+In the `VSDBabySoC` directory, navigate to `/home/vsduser/VSDBabySoC` and replace the existing `rvmyth.tlv` file with your own.
+
+### 4. Convert `.tlv` to `.v` using Sandpiper-SaaS
+The TL-Verilog (`.tlv`) code needs to be converted to Verilog (`.v`). Run the following command:
+
+```bash
+sandpiper-saas -i /home/vsduser/VSDBabySoC/tanaya_rvmyth.tlv -o tanaya_rvmyth.v --bestsv --noline -p verilog --outdir /home/vsduser/VSDBabySoC/
+```
+
+![image](https://github.com/user-attachments/assets/af068206-ee44-4fb2-8813-a1e60b4334c6)
+
+### 5. Generate Pre-Synthesis Simulation (`pre_synth_sim.vcd`)
+To create the simulation waveform file, run:
+
+```bash
+make pre_synth_sim
+```
+
+The output, `pre_synth_sim.vcd`, will be located in the `output/pre_synth_sim` directory.
+
+### 6. Compile and Simulate the RISC-V Design
+To compile and simulate the VSDBabySoC design, run:
+
+```bash
+iverilog -o output/pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module
+cd output
+./pre_synth_sim.out
+```
+
+This generates the `pre_synth_sim.vcd` file.
+
+### 7. Open the Simulation File in GTKWave
+Open the waveform file using GTKWave:
+
+```bash
+gtkwave pre_synth_sim.vcd
+```
+
+## Key Signals in the Diagram
+
+- **clk_tan**: Clock input to the RISC-V core.
+- **reset**: Input reset signal to the RISC-V core.
+- **OUT[9:0]**: 10-bit output port of the RISC-V core(highlighted both in binary value and decimal)
+
+---
+
+![image](https://github.com/user-attachments/assets/8c75fbb3-a9bc-47ab-a0c2-b48b1fd5cf82)
+
+This outlines a straightforward approach for converting TL-Verilog code and validating it through Verilog simulation.
+
+## Waveforms from Makerchip platform IDE by running .tlv file for comparison
+
+As shown in the screenshot, the output of the sum 1 to 9 program is observed in register r10, which holds the value 45. It can be observed that the CPU took 56 cycles to execute the program for calculating the sum of numbers from 1 to 9.
+
+![image](https://github.com/user-attachments/assets/659127fe-b039-4497-97f0-5150ce277b19)
+
+The following shows the sum on waveform:
+
+![image](https://github.com/user-attachments/assets/af1a3a62-6e69-406a-b474-97a34a982ab1)
+
+
+The following screenshot shows the reset signal
+
+![image](https://github.com/user-attachments/assets/9c9c0ef7-f299-43e9-a29a-2475d3c77f79)
+
+
+# TASK-7
+
+# Generating Waveforms for DAC and PLL Peripherals on RISC-V Processor
+
+## VSDBabySoC Overview
+
+The **VSDBabySoC** is a small but robust System on Chip (SoC) built around the **RISC-V architecture**. It is specifically designed to integrate and test three open-source IP cores together for the first time, with a focus on fine-tuning the analog components. The SoC features an **RVMYTH microprocessor**, an **8x Phase-Locked Loop (PLL)** for reliable clock generation, and a **10-bit Digital-to-Analog Converter (DAC)** for interfacing with external analog devices.
+
+# BabySoC Simulation
+
+Simulating and developing the entire micro-architecture of a RISC-V CPU is a challenging endeavor. For this simulation, we will concentrate on integrating two essential IP blocks: the Phase-Locked Loop (PLL) and the Digital-to-Analog Converter (DAC).
+
+## Phase-Locked Loop (PLL)
+
+A **Phase-Locked Loop (PLL)** is an electronic circuit that aligns the phase and frequency of its output signal with a reference signal. It consists of three core components:
+
+- **Phase Detector**: Compares the phase of the reference signal with the output signal and generates an error signal based on their phase difference.
+- **Loop Filter**: Smooths out the error signal to reduce noise and improve the stability of the system.
+- **Voltage-Controlled Oscillator (VCO)**: Adjusts its output frequency in response to the filtered error signal, working to minimize the phase difference between the signals.
+
+PLLs are widely utilized in applications like clock generation, frequency synthesis, and data recovery within communication systems.
+
+## Digital-to-Analog Converter (DAC)
+
+A **Digital-to-Analog Converter (DAC)** converts digital signals, typically in binary form, into analog signals such as voltage or current. This conversion is essential in systems where digital information must interface with analog devices or be presented in a format understandable by humans, such as audio or video outputs.
+
+DACs are commonly employed in a variety of applications, including audio playback, video display, and signal processing.
+
+1. Clone the given repo: https://github.com/Subhasis-Sahu/BabySoC_Simulation.git using the below command.
+```
+git clone https://github.com/Subhasis-Sahu/BabySoC_Simulation.git
+```
+```bash
+cd BabySoC_Simulation
+```
+![image](https://github.com/user-attachments/assets/9f4509fd-0efa-4712-824b-122dae4a1b44)
+
+2. Udate the `rvmyth.v` file from the previous labs into existing folder Edit the clock name appended with your name in vsdbabysoc.v.
+
+3.Commands used to run the rvmyth.v file
+```bash
+iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/
+```
+4. Run the following commands:
+   ```
+   ./pre_synth_sim.out
+   gtkwave pre_synth_sim.vcd
+
+   ```
+![image](https://github.com/user-attachments/assets/b7ea917b-8aa9-4037-bbb2-3e8e588d2822)
+
+## Waveform
+
+![image](https://github.com/user-attachments/assets/9f9d386c-6a59-4d37-bef8-6e388f3b13aa)
+
+
+# TASK-9
+
+# RTL design using Verilog with SKY130 Technology
+
+## Icarus Verilog-Based Simulation Flow
+
+A simulator is used to validate whether a design aligns with its intended specifications by running simulations on the code. It monitors changes in input signals, and whenever these inputs vary, the corresponding outputs are recalculated. RTL (Register Transfer Level) design refers to the Verilog code that describes the behavior and structure of a digital circuit. To ensure correctness, a testbench is developed to test the design through simulation using Icarus Verilog.
+
+During the simulation, a VCD (Value Change Dump) file is generated, which logs signal transitions. This file is analyzed using GTKWave, a waveform viewer that assists in debugging and verifying circuit behavior. GTKWave allows users to explore signal interactions, inspect timing relationships, and validate the overall operation of the design by visualizing the waveforms created during simulation.
+
+### Setup
+
+Enter the below command in the Ubuntu terminal:
+	  
+```
+sudo -i
+sudo apt-get install git
+ls
+cd Desktop
+mkdir ASIC
+cd ASIC
+git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
+cd sky130RTLDesignAndSynthesisWorkshop/verilog_files
+ls
+```
+
+We observe the following list of files present in the directory. 
+
+![Screenshot from 2024-10-21 00-30-37](https://github.com/user-attachments/assets/ff904975-c47a-4500-9228-0c8362e08bf9)
+
+## DAY 1
+		  
+
+### Introduction to Icarus Verilog and GTKWave
+
+This tutorial covers the basics of simulating a 2x1 multiplexer design along with its testbench using Icarus Verilog (iverilog). Additionally, it demonstrates how to view the generated waveforms using GTKWave for better analysis and verification of the design.
+
+   Run the following commands
+```
+iverilog good_mux.v tb_good_mux.v
+./a.out
+gtkwave tb_good_mux.vcd
+
+ ```	
+![Screenshot from 2024-10-21 00-51-22](https://github.com/user-attachments/assets/750fc0e4-2cfe-4de2-a4dc-1d004bcddaa6)
+
+
+  #### MUX.V
+
+```
+  module good_mux (input i0, input i1, input sel, output reg y);
+	  always@(*)
+	  begin
+	  	if(sel)
+			y<=i1;
+		else
+			y<=i0;
+	  end
+  endmodule
+```
+
+  #### MUX_TB.V
+
+  ```
+  module tb_good_mux;
+	reg i0,i1,sel;
+	wire y;
+
+     	good_mux uut(.sel(sel),.i0(i0),.i1(i1),.y(y));
+
+	initial begin
+		$dumpfile("tb_good_mux.vcd");
+		$dumpvars(0,tb_good_mux);
+		sel=0;
+		i0=0;
+		i1=0;
+		#300 $finish;
+	end
+	always #75 sel = ~sel;
+	always #10 i0 = ~i0;
+	always #55 i1 = ~i1;
+  endmodule
+  ```
+
+ 
+### Introduction to Yosys:
+
+This tutorial demonstrates how to synthesize a Verilog design using Yosys, explore the generated netlists, and examine the cells used for building the circuit. The following commands were utilized throughout the process:
+
+### Yosys 
+
+1. **Launches the Yosys tool.**
+ ```
+yosys
+```
+![Screenshot from 2024-10-21 01-40-30](https://github.com/user-attachments/assets/adbbd872-5a0a-4b95-81be-65e7d6eb61d3)
+
+2. **Load the Technology Library**
+   Load the technology library file (in Liberty format) required for synthesis from the designated path.
+   ```sh
+   read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+3. **Import the Verilog File**
+   Import the Verilog file `good_mux.v` for synthesis purposes.
+   ```sh
+   read_verilog good_mux.v
+   ```
+
+4. **Execute Synthesis**
+   Execute synthesis on the design, using `good_mux` as the top-level module.
+   ```sh
+   synth -top good_mux
+   ```
+
+5. **Enhance the Design**
+   Utilize the ABC tool to enhance the synthesized design with the provided technology library.
+   ```sh
+   abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+6. **Display the Synthesized Design**
+   Show the synthesized design in the form of a schematic.
+   ```sh
+   show
+   ```
+![Screenshot from 2024-10-21 01-19-13](https://github.com/user-attachments/assets/9f582f40-1115-419e-82ec-69a9eb27d97e)
+
+7. **Output the Synthesized Netlist**
+   Write the synthesized netlist to the file `good_mux_netlist.v`, omitting attributes.
+   ```sh
+   write_verilog -noattr good_mux_netlist.v
+   ```
+
+8. **Open the Netlist File**
+   Open the netlist file `good_mux_netlist.v` in the gvim text editor.
+   ```sh
+   !gvim good_mux_netlist.v
+
+### Netlist generated
+
+![Screenshot from 2024-10-21 01-20-27](https://github.com/user-attachments/assets/c5f94c7b-75c8-4be1-aebb-33c76a1e3864)
+  
+#### Yosys screenshots
+
+![Screenshot from 2024-10-21 01-44-12](https://github.com/user-attachments/assets/e657c68f-4b36-4b35-aeec-06ade4035573)
+![Screenshot from 2024-10-21 01-44-38](https://github.com/user-attachments/assets/81babc42-afdb-4cba-af14-efc23967fa77)
+![Screenshot from 2024-10-21 01-45-04](https://github.com/user-attachments/assets/b87e8608-76a5-44dd-82b5-1e63551477b7)
+ 
+ ## Day 2: Timing libs, hierarchical vs flat synthesis and efficient flop coding styles
+
+Run the commands mentioned to view the contents inside the .lib file:
+```
+cd ..
+ls
+cd lib
+vim sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+
+The (.lib) files contain PVT parameters—Process, Voltage, and Temperature. Variations in these parameters can have a substantial impact on circuit performance. Factors such as manufacturing inconsistencies, voltage fluctuations, and temperature shifts contribute to these effects.
+
+![Screenshot from 2024-10-21 13-05-37](https://github.com/user-attachments/assets/53c8af6f-105b-421b-b055-cf879c8394b5)
+
+
+### Hierarchical vs. Flat Synthesis
+
+**Hierarchical synthesis** breaks down a complex design into multiple sub-modules. 
+Each sub-module is synthesized separately into gate-level netlists, which are later 
+integrated to form the complete design. This approach promotes better organization, 
+enables the reuse of modules, and allows for incremental changes without impacting the entire system.
+
+In contrast, **flat synthesis** treats the entire design as a single, unified block 
+during the synthesis process, ignoring any hierarchical relationships. While this 
+method can optimize certain designs, it can make the design more challenging to maintain, 
+analyze, and modify due to the absence of modular structure.
+
+Consider the Verilog file `multiple_modules.v` located in the `verilog_files` directory 
+for a practical example of hierarchical synthesis.
+  
+### Yosys Synthesis for Multiple Modules
+
+Execute the below mentioned yosys commands for multiple modules
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog multiple_modules.v
+synth -top multiple_modules
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show multiple_modules
+write_verilog -noattr multiple_modules_netlist.v
+!gvim multiple_modules_netlist.v
+```
+
+
+#### multiple_modules.v
+
+```
+
+module sub_module2 (input a, input b, output y);
+	assign y = a | b;
+endmodule
+
+module sub_module1 (input a, input b, output y);
+	assign y = a&b;
+endmodule
+
+module multiple_modules (input a, input b, input c, output y);
+	wire net1;
+	sub_module1 u1(.a(a),.b(b),.y(net1)); //net1 = a&b
+	sub_module2 u2(.a(net1),.b(c),.y(y)); //y = netic,ie y = a&b + c;
+endmodule
+```
+
+#### Hierarchical generated Netlist
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module multiple_modules(a, b, c, y);
+  input a;
+  wire a;
+  input b;
+  wire b;
+  input c;
+  wire c;
+  wire net1;
+  output y;
+  wire y;
+  sub_module1 u1 (
+    .a(a),
+    .b(b),
+    .y(net1)
+  );
+  sub_module2 u2 (
+    .a(net1),
+    .b(c),
+    .y(y)
+  );
+endmodule
+
+module sub_module1(a, b, y);
+  wire _0_;
+  wire _1_;
+  wire _2_;
+  input a;
+  wire a;
+  input b;
+  wire b;
+  output y;
+  wire y;
+  sky130_fd_sc_hd__and2_0 _3_ (
+    .A(_1_),
+    .B(_0_),
+    .X(_2_)
+  );
+  assign _1_ = b;
+  assign _0_ = a;
+  assign y = _2_;
+endmodule
+
+module sub_module2(a, b, y);
+  wire _0_;
+  wire _1_;
+  wire _2_;
+  input a;
+  wire a;
+  input b;
+  wire b;
+  output y;
+  wire y;
+  sky130_fd_sc_hd__or2_0 _3_ (
+    .A(_1_),
+    .B(_0_),
+    .X(_2_)
+  );
+  assign _1_ = b;
+  assign _0_ = a;
+  assign y = _2_;
+endmodule
+```
+
+![Screenshot from 2024-10-21 01-53-12](https://github.com/user-attachments/assets/9180fbe6-6180-4ce6-a4ce-ef6f094555c0)
+
+Yosys screenshot
+
+![Screenshot from 2024-10-21 01-47-16](https://github.com/user-attachments/assets/6175c1ba-594f-43b1-8d36-474f891ffd7e)
+![Screenshot from 2024-10-21 01-48-35](https://github.com/user-attachments/assets/07488850-0aa4-4d79-b7e0-ccc79f2676d7)
+![Screenshot from 2024-10-21 01-49-06](https://github.com/user-attachments/assets/9e13a965-1026-454f-8bf9-fb55962e0ee1)
+![Screenshot from 2024-10-21 01-54-08](https://github.com/user-attachments/assets/758e640c-138a-4498-bc30-4e5b970b4189)
+
+To perform **flat synthesis** on the `multiple_modules.v` file, use the following commands:
+
+ Merges all hierarchical modules in the design into a single module to create a flat netlist.
+ 
+ ```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog multiple_modules.v
+4. synth -top multiple_modules
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. flatten
+7. show
+8. write_verilog -noattr multiple_modules_netlist.v
+9. !gvim multiple_modules_flat.v
+```
+
+![Screenshot from 2024-10-21 15-38-20](https://github.com/user-attachments/assets/fe06f2c7-ccb0-469f-afe8-35a4e5ef176a)
+
+
+#### Flat synthesis generated Netlist
+```
+/* Generated by Yosys 0.7 (git sha1 61f6811, gcc 6.2.0-11ubuntu1 -O2 -fdebug-prefix-map=/build/yosys-OIL3SR/yosys-0.7=. -fstack-protector-strong -fPIC -Os) */
+
+module multiple_modules(a, b, c, y);
+  wire _00_;
+  wire _01_;
+  wire _02_;
+  wire _03_;
+  wire _04_;
+  wire _05_;
+  wire _06_;
+  wire _07_;
+  input a;
+  input b;
+  input c;
+  wire net1;
+  wire \u1.a ;
+  wire \u1.b ;
+  wire \u1.y ;
+  wire \u2.a ;
+  wire \u2.b ;
+  wire \u2.y ;
+  output y;
+  sky130_fd_sc_hd__and2_2 _08_ (
+    .A(_00_),
+    .B(_01_),
+    .X(_02_)
+  );
+  sky130_fd_sc_hd__clkinv_1 _09_ (
+    .A(_03_),
+    .Y(_06_)
+  );
+  sky130_fd_sc_hd__clkinv_1 _10_ (
+    .A(_04_),
+    .Y(_07_)
+  );
+  sky130_fd_sc_hd__nand2_1 _11_ (
+    .A(_06_),
+    .B(_07_),
+    .Y(_05_)
+  );
+  assign \u1.a  = a;
+  assign \u1.b  = b;
+  assign net1 = \u1.y ;
+  assign _00_ = \u1.b ;
+  assign _01_ = \u1.a ;
+  assign \u1.y  = _02_;
+  assign \u2.a  = net1;
+  assign \u2.b  = c;
+  assign y = \u2.y ;
+  assign _03_ = \u2.b ;
+  assign _04_ = \u2.a ;
+  assign \u2.y  = _05_;
+endmodule
+```
+
+![Screenshot from 2024-10-21 15-46-44](https://github.com/user-attachments/assets/1b0b580f-b478-493a-aef6-18b18a55df57)
+![Screenshot from 2024-10-21 15-47-09](https://github.com/user-attachments/assets/913ee2f5-3d7d-41c5-87b1-38012444b84c)
+
+### Various Flip-Flop Coding Styles and Optimizations
+
+Flip-flops play a crucial role in sequential logic circuits. They are used to store intermediate values, ensuring that inputs to combinational circuits remain stable until the next clock edge. This stability helps prevent glitches, ensuring proper operation of the circuit. By capturing and holding data, flip-flops help maintain the integrity of signals and facilitate the correct sequencing of operations in digital systems.
+
+Simulations were conducted for three types of D-Flip-Flops:  
+1. **Asynchronous Reset**  
+2. **Asynchronous Set**  
+3. **Synchronous Reset**  
+
+These simulations demonstrate the behavior of each type, highlighting how they respond to different reset and set conditions, ensuring accurate storage and control of data during circuit operation.
+
+### Asynchronous Reset
+
+#### Verilog code:
+
+```
+module dff_asyncres(input clk, input async_reset, input d, output reg q);
+	always@(posedge clk, posedge async_reset)
+	begin
+		if(async_reset)
+			q <= 1'b0;
+		else
+			q <= d;
+	end
+endmodule
+```
+
+#### Testbench
+```
+module tb_dff_asyncres; 
+	reg clk, async_reset, d;
+	wire q;
+	dff_asyncres uut (.clk(clk),.async_reset (async_reset),.d(d),.q(q));
+
+	initial begin
+		$dumpfile("tb_dff_asyncres.vcd");
+		$dumpvars(0,tb_dff_asyncres);
+		// Initialize Inputs
+		clk = 0;
+		async_reset = 1;
+		d = 0;
+		#3000 $finish;
+	end
+		
+	always #10 clk = ~clk;
+	always #23 d = ~d;
+	always #547 async_reset=~async_reset; 
+endmodule
+```
+Run the below commands for simulation:
+
+```
+iverilog dff_asyncres.v tb_dff_asyncres.v
+./a.out
+gtkwave tb_dff_asyncres.vcd
+```
+Output:
+
+![Screenshot from 2024-10-21 16-44-26](https://github.com/user-attachments/assets/ea076a05-17d4-47aa-a94d-5f576a2ca9d4)
+
+From the waveform, it can be observed that the **Q** output transitions to zero when the **asynchronous reset** is set high, regardless of the positive or negative clock edge. This demonstrates the independent nature of the asynchronous reset, allowing it to override other inputs to reset the output immediately.
+
+Run the below commands to view netlist:
+
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog dff_asyncres.v
+4. synth -top dff_asyncres
+5. dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+7. show
+8. write_verilog -noattr dff_asyncres_netlist.v
+9. !gvim dff_asyncres_netlist.v
+
+Netlist:
+
+![Screenshot from 2024-10-21 16-48-44](https://github.com/user-attachments/assets/1ba4e1d6-c534-4a0e-8446-4998649e2635)
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module dff_asyncres(clk, async_reset, d, q);
+  wire _0_;
+  input async_reset;
+  wire async_reset;
+  input clk;
+  wire clk;
+  input d;
+  wire d;
+  output q;
+  wire q;
+  assign _0_ = ~async_reset;
+  sky130_fd_sc_hd__dfrtp_1 _2_ (
+    .CLK(clk),
+    .D(d),
+    .Q(q),
+    .RESET_B(_0_)
+  );
+endmodule
+```
+Yosys screenshot			
+
+![Screenshot from 2024-10-21 16-47-08](https://github.com/user-attachments/assets/29c16cd6-2b2a-4c0d-8633-281a4d956aea)
+
+### Synchronous Reset
+
+#### Verilog code:
+```
+module dff_syncres(input clk, input sync_reset, input d, output reg q);
+	always@(posedge clk)
+	begin
+		if(sync_reset)
+			q <= 1'b0;
+		else
+			q <= d;
+	end
+endmodule
+```
+
+#### Testbench
+
+```
+module tb_dff_syncres; 
+	reg clk, syncres, d;
+	wire q;
+	dff_asyncres uut (.clk(clk),.sync_reset (sync_reset),.d(d),.q(q));
+
+	initial begin
+		$dumpfile("tb_dff_syncres.vcd");
+		$dumpvars(0,tb_dff_syncres);
+		// Initialize Inputs
+		clk = 0;
+		sync_reset = 1;
+		d = 0;
+		#3000 $finish;
+	end
+		
+	always #10 clk = ~clk;
+	always #23 d = ~d;
+	always #547 sync_reset=~async_reset; 
+endmodule
+```
+
+Run the below commands for simulation:
+```
+iverilog dff_syncres.v tb_dff_syncres.v
+./a.out
+gtkwave tb_dff_syncres.vcd
+```
+Output
+
+![Screenshot from 2024-10-21 17-46-28](https://github.com/user-attachments/assets/f394c882-9dd1-4d79-8ae1-af4c75bf69ba)
+
+From the waveform, it can be observed that the **Q** output transitions to zero when the **synchronous reset** is set high, but only at the **positive clock edge**. This behavior illustrates that the synchronous reset affects the output in alignment with the clock, ensuring controlled and predictable operation.
+
+Run the below commands to view netlist:
+
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog dff_syncres.v
+4. synth -top dff_syncres
+5. dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+7. show
+8. write_verilog -noattr dff_syncres_netlist.v
+9. !gvim dff_syncres_netlist.v
+
+Netlist:
+
+![Screenshot from 2024-10-21 17-54-04](https://github.com/user-attachments/assets/268b6e9a-c895-41e4-b28f-fdddb9f2b33b)
+
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module dff_syncres(clk, async_reset, sync_reset, d, q);
+  wire _0_;
+  wire _1_;
+  wire _2_;
+  wire _3_;
+  input async_reset;
+  wire async_reset;
+  input clk;
+  wire clk;
+  input d;
+  wire d;
+  output q;
+  wire q;
+  input sync_reset;
+  wire sync_reset;
+  sky130_fd_sc_hd__nor2b_1 _4_ (
+    .A(_2_),
+    .B_N(_1_),
+    .Y(_0_)
+  );
+  sky130_fd_sc_hd__dfxtp_1 _5_ (
+    .CLK(clk),
+    .D(_3_),
+    .Q(q)
+  );
+  assign _1_ = d;
+  assign _2_ = sync_reset;
+  assign _3_ = _0_;
+endmodule
+```
+Yosys screenshot			
+
+![Screenshot from 2024-10-21 17-52-00](https://github.com/user-attachments/assets/e15240f9-8398-4104-b092-ff22cbd67dde)
+
+      
+### Asynchronous Set
+
+#### Verilog code
+```
+module dff_async_set(input clk, input async_set, input d, output reg q);
+	always@(posedge clk, posedge async_set)
+	begin
+		if(async_set)
+			q <= 1'b1;
+		else
+			q <= d;
+	end
+endmodule
+```
+
+#### Testbench
+```
+module tb_dff_async_set; 
+	reg clk, async_set, d;
+	wire q;
+	dff_async_set uut (.clk(clk),.async_set (async_set),.d(d),.q(q));
+
+	initial begin
+		$dumpfile("tb_dff_async_set.vcd");
+		$dumpvars(0,tb_dff_async_set);
+		// Initialize Inputs
+		clk = 0;
+		async_set = 1;
+		d = 0;
+		#3000 $finish;
+	end
+		
+	always #10 clk = ~clk;
+	always #23 d = ~d;
+	always #547 async_set=~async_set; 
+endmodule
+```
+Run the below commands for simulation:
+
+```
+iverilog dff_async_set.v tb_dff_async_set.v
+./a.out
+gtkwave tb_dff_async_set.vcd
+```
+
+Output:
+
+![Screenshot from 2024-10-21 17-59-15](https://github.com/user-attachments/assets/97adade9-b985-4314-86b8-445beaf752dc)
+
+From the waveform, it can be observed that the **Q** output transitions to one when the **asynchronous set** is set high, regardless of the positive or negative clock edge. This demonstrates the independent nature of the asynchronous set, allowing it to override other inputs and immediately set the output to one.
+
+Run the below commands to view netlist:
+
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog dff_async_set.v
+4. synth -top dff_async_set
+5. dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+7. show
+8. write_verilog -noattr dff_async_set_netlist.v
+9. !gvim dff_syncres_netlist.v
+
+Netlist:
+
+![Screenshot from 2024-10-21 18-04-46](https://github.com/user-attachments/assets/9fd6ec4e-3f43-4940-b150-b357df4ed341)
+
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module dff_syncres(clk, async_reset, sync_reset, d, q);
+  wire _0_;
+  wire _1_;
+  wire _2_;
+  wire _3_;
+  input async_reset;
+  wire async_reset;
+  input clk;
+  wire clk;
+  input d;
+  wire d;
+  output q;
+  wire q;
+  input sync_reset;
+  wire sync_reset;
+  sky130_fd_sc_hd__nor2b_1 _4_ (
+    .A(_2_),
+    .B_N(_1_),
+    .Y(_0_)
+  );
+  sky130_fd_sc_hd__dfxtp_1 _5_ (
+    .CLK(clk),
+    .D(_3_),
+    .Q(q)
+  );
+  assign _1_ = d;
+  assign _2_ = sync_reset;
+  assign _3_ = _0_;
+endmodule
+```
+Yosys screenshot			
+
+![Screenshot from 2024-10-21 18-03-10](https://github.com/user-attachments/assets/21046dca-e89f-45e9-b1fc-973d67cb1433)
+
+
+### Optimization
+
+#### Multiplication by 2
+
+In this tutorial, we learn that dedicated multiplier hardware is not necessary to multiply a number by 2. This operation can be efficiently performed by **concatenating a zero to the Least Significant Bit (LSB)** of the number, effectively shifting all bits to the left by one position.
+
+verilog code 
+```
+module mul2(input [2:0]a, output [3:0]y);
+	assign y=a*2;
+endmodule
+```
+
+Run the below commands to view netlist:
+
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog mult_2.v
+4. synth -top mul2
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. show
+7. write_verilog -noattr mul2_net.v
+8. !gvim mul2_net.v
+```
+
+Netlist:
+
+![Screenshot from 2024-10-21 18-19-39](https://github.com/user-attachments/assets/f0277ae9-b267-46b3-91db-da16e6d20259)
+
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module mul2(a, y);
+  input [2:0] a;
+  wire [2:0] a;
+  output [3:0] y;
+  wire [3:0] y;
+  assign y = { a, 1'h0 };
+endmodule
+```
+Yosys screenshot			
+
+![Screenshot from 2024-10-21 18-18-24](https://github.com/user-attachments/assets/f39d7cb5-f0a4-414d-bfa7-2ed9ef73ccd6)
+
+
+#### Multiplication by 9
+
+In this tutorial, we learn that dedicated multiplier hardware is not needed to multiply a number by 9. This can be efficiently achieved by **concatenating the number with itself**, effectively performing the multiplication through bit manipulation.
+
+verilog code 
+```
+module mult8 (input [2:0] a , output [5:0] y);
+	assign y = a * 9;
+endmodule
+```
+
+Run the below commands to view netlist:
+
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog mult_8.v
+4. synth -top mult8
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. show
+7. write_verilog -noattr mult_8_net.v
+8. !gvim mult_8_net.v
+```
+
+Netlist:
+
+![Screenshot from 2024-10-21 18-32-58](https://github.com/user-attachments/assets/24bd8001-1ae4-4539-adb3-6419da480f9a)
+
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module mult8(a, y);
+  input [2:0] a;
+  wire [2:0] a;
+  output [5:0] y;
+  wire [5:0] y;
+  assign y = { a, a };
+endmodule
+```
+Yosys screenshot			
+
+![Screenshot from 2024-10-21 18-30-32](https://github.com/user-attachments/assets/450c54c9-e7f3-41ba-b42a-b6a476e6ecd7)
+
+ 
+
+## Day 3: Combinational and sequential Optimizationsof Various Designs
+
+### Types of Optimizations: Combinational and Sequential
+
+These optimizations aim to create designs that are efficient in terms of **area**, **power**, and **performance**.
+
+#### Combinational Optimization  
+The techniques used in this type of optimization include:
+
+- **Constant Propagation (Direct Optimization):**  
+  Simplifies logic by directly substituting known constant values, reducing unnecessary gates.
+
+- **Boolean Logic Optimization:**  
+  Minimizes logic expressions using methods such as **Karnaugh Maps (K-Map)** or the **Quine-McCluskey algorithm**, leading to fewer gates and improved efficiency.
+
+
+ #### 2 input AND Gate:
+
+Verilog code: 
+```
+module opt_check(input a, input b, output y);
+	assign y = a?b:0;
+endmodule
+```
+Commands for netlist:
+
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog opt_check.v
+4. synth -top opt_check
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. opt_clean -purge
+7. show
+8. write_verilog -noattr opt_check.v
+9. !gvim opt_check.v
+```
+Netlist:
+
+![Screenshot from 2024-10-21 22-17-00](https://github.com/user-attachments/assets/a80371af-ef59-4bf0-b66c-2b0d3aa627c9)
+
+Netlist Code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module opt_check(a, b, y);
+  input a;
+  wire a;
+  input b;
+  wire b;
+  output y;
+  wire y;
+  sky130_fd_sc_hd__and2_0 _0_ (
+    .A(b),
+    .B(a),
+    .X(y)
+  );
+endmodule
+```
+
+Yosys screenshot
+
+![Screenshot from 2024-10-21 22-15-31](https://github.com/user-attachments/assets/b0790e92-f1a5-422f-b06f-136ca85d5727)
+
+
+#### 2 input OR Gate:
+
+Verilog code:
+```
+module opt_check2(input a, input b, output y);
+	assign y = a?1:b;
+endmodule
+```
+Commands for netlist:
+
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog opt_check2.v
+4. synth -top opt_check2
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. opt_clean -purge
+7. show
+7. write_verilog -noattr opt_check2.v
+8. !gvim opt_check2.v
+```
+Netlist:
+
+![Screenshot from 2024-10-21 22-37-20](https://github.com/user-attachments/assets/e2a830de-7377-43c8-80a7-f7b0ba08a211)
+
+Netlist Code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module opt_check2(a, b, y);
+  input a;
+  wire a;
+  input b;
+  wire b;
+  output y;
+  wire y;
+  sky130_fd_sc_hd__or2_0 _0_ (
+    .A(a),
+    .B(b),
+    .X(y)
+  );
+endmodule
+```
+
+Yosys screenshot
+
+![Screenshot from 2024-10-21 22-35-49](https://github.com/user-attachments/assets/8585191a-9453-4aed-9660-b3327e18a8e8)
+
+#### 3 input AND Gate:
+
+Verilog code:
+```
+module opt_check2(input a, input b, input c, output y);
+	assign y = a?(b?c:0):0;
+endmodule
+```
+Commands for netlist:
+
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog opt_check3.v
+4. synth -top opt_check3
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. opt_clean -purge
+7. show
+8. write_verilog -noattr opt_check3.v
+8. !gvim opt_check3.v
+```
+Netlist:
+
+![Screenshot from 2024-10-21 22-45-42](https://github.com/user-attachments/assets/14451574-cbb5-4aa9-a01f-a68a75ef7d28)
+
+
+Netlist Code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module opt_check3(a, b, c, y);
+  input a;
+  wire a;
+  input b;
+  wire b;
+  input c;
+  wire c;
+  output y;
+  wire y;
+  sky130_fd_sc_hd__and3_1 _0_ (
+    .A(b),
+    .B(c),
+    .C(a),
+    .X(y)
+  );
+endmodule
+```
+
+Yosys screenshot
+
+![Screenshot from 2024-10-21 22-44-13](https://github.com/user-attachments/assets/62d23c95-4675-4faf-9309-695a82b2ca46)
+
+
+### 2 input XNOR Gate
+
+Verilog code:
+```
+module opt_check2(input a, input b, input c, output y);
+	assign y = a ? (b ? ~c : c) : ~c;
+endmodule
+```
+Commands for netlist:
+
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog opt_check4.v
+4. synth -top opt_check4
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. opt_clean -purge
+7. show
+8. write_verilog -noattr opt_check4.v
+8. !gvim opt_check4.v
+
+```
+Netlist:
+
+![Screenshot from 2024-10-21 22-53-27](https://github.com/user-attachments/assets/9d5ec42c-bde1-49a6-86ee-7a7a5e415509)
+
+Netlist Code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module opt_check4(a, b, c, y);
+  input a;
+  wire a;
+  input b;
+  wire b;
+  input c;
+  wire c;
+  output y;
+  wire y;
+  sky130_fd_sc_hd__xnor2_1 _0_ (
+    .A(c),
+    .B(a),
+    .Y(y)
+  );
+endmodule
+```
+
+Yosys screenshot:
+![Screenshot from 2024-10-21 22-52-41](https://github.com/user-attachments/assets/eb555790-04b1-4668-8857-598df51826dd)
+
+
+#### Multiple Module Optimization-1
+
+Verilog code:
+```
+module sub_module1(input a, input b, output y);
+	assign y = a & b;
+endmodule
+
+module sub_module2 (input a, input b output y);
+	assign y = a^b;
+endmodule
+
+module multiple_module_opt(input a, input b input c, input d output y);
+	wire n1,n2, n3;
+
+	sub_module1 U1 (.a(a), .b(1'b1), .y(n1));
+	sub_module2 U2 (.a(n1), .b(1'b0), .y(n));
+	sub_module2 U3 (.a(b), .b(d), .y(n3));
+
+	assign y = c | (b & n1);
+endmodule
+```
+Commands for netlist:
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog multiple_module_opt.v
+4. synth -top multiple_module_opt
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. opt_clean -purge
+7. flatten
+8. show
+9. write_verilog -noattr multiple_module_opt.v
+10. !gvim multiple_module_opt.v
+```
+Netlist:
+
+![Screenshot from 2024-10-21 23-05-35](https://github.com/user-attachments/assets/15d75143-e1b3-48e5-ba30-15a69aff9b9a)
+
+Netlist Code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module multiple_module_opt(a, b, c, d, y);
+  wire \U1.a ;
+  wire \U1.b ;
+  wire \U1.y ;
+  input a;
+  wire a;
+  input b;
+  wire b;
+  input c;
+  wire c;
+  input d;
+  wire d;
+  wire n1;
+  output y;
+  wire y;
+  sky130_fd_sc_hd__a21o_1 _0_ (
+    .A1(n1),
+    .A2(b),
+    .B1(c),
+    .X(y)
+  );
+  sky130_fd_sc_hd__and2_0 _1_ (
+    .A(\U1.b ),
+    .B(\U1.a ),
+    .X(\U1.y )
+  );
+  assign \U1.a  = a;
+  assign \U1.b  = 1'h1;
+  assign n1 = \U1.y ;
+endmodule
+```
+
+Yosys screenshot:
+![Screenshot from 2024-10-21 23-01-06](https://github.com/user-attachments/assets/9a4684b9-78d6-43e2-b3ad-21f8ad9c43e6)
+
+#### Multiple Module Optimization-2
+
+Verilog code:
+
+```
+module sub_module(input a input b output y);
+	assign y = a & b;
+endmodule
+
+module multiple_module_opt2(input a, input b input c, input d, output y);
+	wire n1,n2, n3;
+
+	sub_module U1 (.a(a), .b(1'b0), y(n));
+	sub_module U2 (.a(b), .b(c), .y(n2));
+	sub_module U3 (.a(n2), .b(d), .y(n));
+	sub_module U4 (.a(n3), .b(n1), .y(y));
+endmodule
+```
+
+Commands for netlist:
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog multiple_module_opt2.v
+4. synth -top multiple_module_opt2
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. opt_clean -purge
+7. flatten
+8. show
+9. write_verilog -noattr multiple_module_opt2_net.v
+10. !gvim multiple_module_opt2.v
+```
+Netlist:
+![Screenshot from 2024-10-21 23-14-52](https://github.com/user-attachments/assets/061138ea-29c0-47c5-862d-6567af7ad2ca)
+
+Netlist code:
+```
+module sub_module(input a , input b , output y);
+ assign y = a & b;
+endmodule
+
+module multiple_module_opt2(input a , input b , input c , input d , output y);
+wire n1,n2,n3;
+
+sub_module U1 (.a(a) , .b(1'b0) , .y(n1));
+sub_module U2 (.a(b), .b(c) , .y(n2));
+sub_module U3 (.a(n2), .b(d) , .y(n3));
+sub_module U4 (.a(n3), .b(n1) , .y(y));
+
+endmodule
+```
+
+Yosys screenshot:
+![Screenshot from 2024-10-21 23-13-01](https://github.com/user-attachments/assets/a08cded3-dafe-4798-a073-fd347db8ed21)
+
+
+### Sequential Logic Optimizations
+
+
+#### D-Flipflop Constant 1 with Asynchronous Reset (active low)
+
+Verilog code:
+```
+module dff_const1(input clk, input reset, output reg q); 
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+		q <= 1'b0;
+	else
+		q <= 1'b1;
+end
+endmodule
+```
+
+Testbench:
+```
+module tb_dff_const1; 
+	reg clk, reset;
+	wire q;
+
+	dff_const1 uut (.clk(clk),.reset(reset),.q(q));
+
+	initial begin
+		$dumpfile("tb_dff_const1.vcd");
+		$dumpvars(0,tb_dff_const1);
+		// Initialize Inputs
+		clk = 0;
+		reset = 1;
+		#3000 $finish;
+	end
+
+	always #10 clk = ~clk;
+	always #1547 reset=~reset;
+endmodule
+```
+Simulation:
+
+```
+iverilog dff_const1.v tb_dff_const1.v
+./a.out
+gtkwave tb_dff_const1.vcd
+```
+![Screenshot from 2024-10-22 00-26-40](https://github.com/user-attachments/assets/06c70939-8c36-4324-b52b-932f9ecc8b42)
+
+Commands for netlist:
+   
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog dff_const1.v
+4. synth -top dff_const1
+5. dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+7. show
+8. write_verilog -noattr dff_const1_net.v
+9. !gvim dff_const1_net.v
+```
+
+Netlist:
+![Screenshot from 2024-10-22 00-28-41](https://github.com/user-attachments/assets/b72fe889-02fd-4492-ac6d-6cca10b54220)
+
+
+Netlist code:
+
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module dff_const1(clk, reset, q);
+  wire _0_;
+  input clk;
+  wire clk;
+  output q;
+  wire q;
+  input reset;
+  wire reset;
+  assign _0_ = ~reset;
+  sky130_fd_sc_hd__dfrtp_1 _2_ (
+    .CLK(clk),
+    .D(1'h1),
+    .Q(q),
+    .RESET_B(_0_)
+  );
+endmodule
+```
+
+Yosys screenshot:
+![Screenshot from 2024-10-22 00-28-02](https://github.com/user-attachments/assets/ea89c56d-6276-42ec-9041-d0c287531353)
+
+
+### D-Flipflop Constant 2 with Asynchronous Reset (active high)
+
+Verilog code:
+
+```
+module dff_const2(input clk, input reset, output reg q); 
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+		q <= 1'b1;
+	else
+		q <= 1'b1;
+end
+endmodule
+```
+Testbench
+```
+module tb_dff_const2; 
+	reg clk, reset;
+	wire q;
+
+	dff_const2 uut (.clk(clk),.reset(reset),.q(q));
+
+	initial begin
+		$dumpfile("tb_dff_const1.vcd");
+		$dumpvars(0,tb_dff_const1);
+		// Initialize Inputs
+clk = 0;
+		reset = 1;
+		#3000 $finish;
+	end
+
+	always #10 clk = ~clk;
+	always #1547 reset=~reset;
+endmodule
+```
+Simulation:
+
+```
+iverilog dff_const2.v tb_dff_const2.v
+./a.out
+gtkwave tb_dff_const2.vcd
+```
+![Screenshot from 2024-10-22 00-30-10](https://github.com/user-attachments/assets/9c5bfad3-0575-49db-b73d-e36a671779cd)
+
+Commands for netlist:
+
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog dff_const2.v
+4. synth -top dff_const2
+5. dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+7. show
+8. write_verilog -noattr dff_const2_net.v
+9. !gvim dff_const2_net.v
+```
+Netlist:
+![Screenshot from 2024-10-22 00-32-35](https://github.com/user-attachments/assets/da3ce576-1178-4de9-837f-278656e72ec4)
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module dff_const2(clk, reset, q);
+  input clk;
+  wire clk;
+  output q;
+  wire q;
+  input reset;
+  wire reset;
+  assign q = 1'h1;
+endmodule
+```
+Yosys screenshot:
+![Screenshot from 2024-10-22 00-31-40](https://github.com/user-attachments/assets/84dd7353-74e4-4ca3-9d0a-f7512a29287d)
+
+
+### D-Flipflop Constant 3 with Asynchronous Reset (active low)
+
+Verilog code:
+```
+module dff_const3(input clk, input reset, output reg q); 
+	reg q1;
+
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+		begin
+			q <= 1'b1;
+			q1 <= 1'b0;
+		end
+		else
+		begin	
+			q1 <= 1'b1;
+			q <= q1;
+		end
+	end
+endmodule
+```
+Simulation:
+```
+iverilog dff_const3.v tb_dff_const3.v
+./a.out
+gtkwave tb_dff_const3.vcd
+```
+![Screenshot from 2024-10-22 00-34-15](https://github.com/user-attachments/assets/014d8a8d-ae10-4144-943f-7636258b2459)
+
+Commands for netlist:
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog dff_const3.v
+4. synth -top dff_const3
+5. dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+7. show
+8. write_verilog -noattr dff_const3_net.v
+9. !gvim dff_const3_net.v
+```
+Netlist:
+![Screenshot from 2024-10-22 00-35-53](https://github.com/user-attachments/assets/548d896d-7faa-4753-a333-364dd0c014e0)
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module dff_const3(clk, reset, q);
+  wire _0_;
+  wire _1_;
+  input clk;
+  wire clk;
+  output q;
+  wire q;
+  wire q1;
+  input reset;
+  wire reset;
+  assign _0_ = ~reset;
+  assign _1_ = ~reset;
+  sky130_fd_sc_hd__dfstp_2 _4_ (
+    .CLK(clk),
+    .D(q1),
+    .Q(q),
+    .SET_B(_0_)
+  );
+  sky130_fd_sc_hd__dfrtp_1 _5_ (
+    .CLK(clk),
+    .D(1'h1),
+    .Q(q1),
+    .RESET_B(_1_)
+  );
+endmodule
+```
+
+Yosys screenshot:
+![Screenshot from 2024-10-22 00-35-11](https://github.com/user-attachments/assets/6d054b53-6717-4b2a-9db8-c50afebf7246)
+
+
+### D-Flipflop Constant 4 with Asynchronous Reset (active high)
+
+Verilog code:
+```
+module dff_const4(input clk, input reset, output reg q); 
+	reg q1;
+
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+		begin
+			q <= 1'b1;
+			q1 <= 1'b1;
+		end
+		else
+		begin	
+			q1 <= 1'b1;
+			q <= q1;
+		end
+	end
+endmodule
+```
+Simulation:
+```
+iverilog dff_const4.v tb_dff_const4.v
+./a.out
+gtkwave tb_dff_const4.vcd
+```
+![Screenshot from 2024-10-22 00-38-53](https://github.com/user-attachments/assets/ca850136-144c-46a7-8d28-f71a84ade6e4)
+
+
+Commands for netlist:
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog dff_const4.v
+4. synth -top dff_const4
+5. dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+7. show
+8. write_verilog -noattr dff_const4_net.v
+9. !gvim dff_const4_net.v
+```
+Netlist:
+![Screenshot from 2024-10-22 00-40-31](https://github.com/user-attachments/assets/701dffb3-979c-4fe6-8b69-14069bd30937)
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module dff_const4(clk, reset, q);
+  input clk;
+  wire clk;
+  output q;
+  wire q;
+  wire q1;
+  input reset;
+  wire reset;
+  assign q = 1'h1;
+  assign q1 = 1'h1;
+endmodule
+```
+Yosys screenshot:
+![Screenshot from 2024-10-22 00-39-56](https://github.com/user-attachments/assets/b23d4837-d1d7-440f-9831-ac3e7f17603f)
+
+#### D-Flipflop Constant 5 with Asynchronous Reset
+
+Verilog code:
+```
+module dff_const5(input clk, input reset, output reg q); 
+	reg q1;
+
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+		begin
+			q <= 1'b0;
+			q1 <= 1'b0;
+		end
+		else
+		begin	
+			q1 <= 1'b1;
+			q <= q1;
+		end
+	end
+endmodule
+```
+Simulation:
+```
+iverilog dff_const5.v tb_dff_const5.v
+./a.out
+gtkwave tb_dff_const5.vcd
+```
+![Screenshot from 2024-10-22 00-42-05](https://github.com/user-attachments/assets/0de40b49-cf03-4e78-9336-32a10b942d36)
+
+
+Commands for netlist:
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog dff_const5.v
+4. synth -top dff_const5
+5. dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+7. show
+8. write_verilog -noattr dff_const5_net.v
+9. !gvim dff_const5_net.v
+```
+Netlist:
+![Screenshot from 2024-10-22 00-43-33](https://github.com/user-attachments/assets/fcd3a37b-ff8f-4b2d-81e2-b545cc87389f)
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module dff_const5(clk, reset, q);
+  wire _0_;
+  wire _1_;
+  input clk;
+  wire clk;
+  output q;
+  wire q;
+  wire q1;
+  input reset;
+  wire reset;
+  assign _0_ = ~reset;
+  assign _1_ = ~reset;
+  sky130_fd_sc_hd__dfrtp_1 _4_ (
+    .CLK(clk),
+    .D(q1),
+    .Q(q),
+    .RESET_B(_0_)
+  );
+  sky130_fd_sc_hd__dfrtp_1 _5_ (
+    .CLK(clk),
+    .D(1'h1),
+    .Q(q1),
+    .RESET_B(_1_)
+  );
+endmodule
+```
+Yosys screenshot:
+![Screenshot from 2024-10-22 00-42-51](https://github.com/user-attachments/assets/8229febb-ecef-455d-bd58-5e565926b1af)
+
+### Counter Optimization 1:
+
+Verilog code:
+```
+module counter_opt (input clk, input reset, output q);
+	reg [2:0] count;
+	assign q = count[0];
+	
+	always @(posedge clk,posedge reset)
+	begin
+		if(reset)
+			count <= 3'b000;
+		else
+			count <= count + 1;
+	end
+endmodule
+```
+Simulation:
+
+```
+iverilog counter_opt.v tb_counter_opt.v
+./a.out
+gtkwave tb_counter_opt.vcd
+```
+Commands for netlist:
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog counter_opt.v
+4. synth -top counter_opt
+5. dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+7. show
+8. write_verilog -noattr counter_opt.v
+9. !gvim counter_opt.v
+
+```
+
+Netlist:
+![Screenshot from 2024-10-22 00-47-14](https://github.com/user-attachments/assets/4f1711a2-c2ad-4fbf-b745-4c1b0d359519)
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module counter_opt(clk, reset, q);
+  wire [2:0] _0_;
+  wire _1_;
+  input clk;
+  wire clk;
+  wire [2:0] count;
+  output q;
+  wire q;
+  input reset;
+  wire reset;
+  assign _0_[0] = ~count[0];
+  assign _1_ = ~reset;
+  sky130_fd_sc_hd__dfrtp_1 _4_ (
+    .CLK(clk),
+    .D(_0_[0]),
+    .Q(count[0]),
+    .RESET_B(_1_)
+  );
+  assign _0_[2:1] = count[2:1];
+  assign q = count[0];
+endmodule
+```
+
+Yosys screenshot:
+![Screenshot from 2024-10-22 00-46-29](https://github.com/user-attachments/assets/9ed0a88c-fede-433f-910b-d120d0a18880)
+
+
+#### Counter Optimization 2:
+
+Verilog code:
+```
+module counter_opt2 (input clk, input reset, output q);
+	reg [2:0] count;
+	assign q = (count[2:0] == 3'b100);
+	
+	always @(posedge clk,posedge reset)
+	begin
+		if(reset)
+			count <= 3'b000;
+		else
+			count <= count + 1;
+	end
+endmodule
+```
+
+Commands for netlist:
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog counter_opt2.v
+4. synth -top counter_opt
+5. dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+7. show
+
+```
+Netlist:
+![Screenshot from 2024-10-22 00-56-48](https://github.com/user-attachments/assets/7e40c3a3-8881-4fe1-8bda-20f80b12a0c4)
+
+Yosys screenshot:
+![Screenshot from 2024-10-22 00-59-27](https://github.com/user-attachments/assets/784e3172-5954-4502-8aad-ba1f496d8c39)
+
+
+### Day 4: GLS, blocking vs non-blocking and Synthesis-Simulation mismatch
+
+Verilog code	
+```
+module ternary_operator_mux(input i0, input i1, input sel, output y);
+	assign y = sel?i1:i0;
+endmodule
+```
+Simulation:
+```
+iverilog ternary_operator_mux.v tb_ternary_operator_mux.v
+./a.out
+gtkwave tb_ternary_operator_mux.vcd
+```
+![Screenshot from 2024-10-22 01-12-39](https://github.com/user-attachments/assets/e7b2e3e5-c54e-44f5-b6f1-a63dab9cf3a6)
+
+Commands for netlist:
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog ternary_operator_mux.v
+4. synth -top ternary_operator_mux
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. opt_clean -purge
+7. show
+8. write_verilog -noattr ternary_operator_mux_net.v
+9. !gvim ternary_operator_mux_net.v
+
+```
+Netlist:
+![Screenshot from 2024-10-22 01-15-19](https://github.com/user-attachments/assets/d66b463b-d387-4a0e-8d6f-fa42f94e43b4)
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module ternary_operator_mux(i0, i1, sel, y);
+  input i0;
+  wire i0;
+  input i1;
+  wire i1;
+  input sel;
+  wire sel;
+  output y;
+  wire y;
+  sky130_fd_sc_hd__mux2_1 _0_ (
+    .A0(i0),
+    .A1(i1),
+    .S(sel),
+    .X(y)
+  );
+endmodule
+```
+Yosys screenshot:
+![Screenshot from 2024-10-22 01-13-25](https://github.com/user-attachments/assets/6ddb8b06-eaf2-4675-ba18-fdb7afba43af)
+
+
+#### Bad 2x1 MUX:
+
+Verilog code:
+```
+module bad_mux(input i0, input i1, input sel, output reg y);
+	always@(sel)
+	begin
+		if(sel)
+			y <= i1;
+		else
+			y <= i0;
+	end
+endmodule
+```
+Simulation:
+```
+iverilog bad_mux.v tb_bad_mux.v
+./a.out
+gtkwave tb_bad_mux.vcd
+```
+![Screenshot from 2024-10-22 01-16-08](https://github.com/user-attachments/assets/657ca9fa-3db2-40ad-a147-ce4d8431ac44)
+
+Commands for netlist:
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog bad_mux.v
+4. synth -top bad_mux
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. opt_clean -purge
+7. show
+8. write_verilog -noattr bad_mux_net.v
+9. !gvim bad_mux_net.v
+
+```
+Netlist:
+![Screenshot from 2024-10-22 01-17-45](https://github.com/user-attachments/assets/d293eda8-6d1b-4df2-8129-a83caf9e13aa)
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module bad_mux(i0, i1, sel, y);
+  input i0;
+  wire i0;
+  input i1;
+  wire i1;
+  input sel;
+  wire sel;
+  output y;
+  wire y;
+  sky130_fd_sc_hd__mux2_1 _0_ (
+    .A0(i0),
+    .A1(i1),
+    .S(sel),
+    .X(y)
+  );
+endmodule
+```
+Yosys screenshot:
+![Screenshot from 2024-10-22 01-17-05](https://github.com/user-attachments/assets/074edc54-eef7-4364-aa42-ce98fd7f3d58)
+
+#### Blocking Caveat:
+
+Verilog code:
+
+```
+module blocking_caveat(input a, input b, input c, output reg d);
+	reg x;
+
+	always@(*)
+	begin
+		d = x & c;
+		x = a | b;
+	end
+endmodule
+```
+Simulation:
+```
+iverilog blocking_caveat.v tb_blocking_caveat.v
+./a.out
+gtkwave tb_blocking_caveat.vcd
+```
+![Screenshot from 2024-10-22 01-19-40](https://github.com/user-attachments/assets/55dbb101-95ad-4bba-abb7-2d8791e84677)
+
+Commands for netlist:
+```
+1. yosys
+2. read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. read_verilog blocking_caveat.v
+4. synth -top blocking_caveat
+5. abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. opt_clean -purge
+7. show
+8. write_verilog -noattr blocking_caveat_net.v
+9. !gvim blocking_caveat_net.v
+```
+
+Netlist:
+![Screenshot from 2024-10-22 01-22-33](https://github.com/user-attachments/assets/b617df30-9ebf-4c75-b6cf-7a9629938dd1)
+
+Netlist code:
+```
+/* Generated by Yosys 0.23 (git sha1 7ce5011c24b) */
+
+module blocking_caveat(a, b, c, d);
+  input a;
+  wire a;
+  input b;
+  wire b;
+  input c;
+  wire c;
+  output d;
+  wire d;
+  sky130_fd_sc_hd__o21a_1 _0_ (
+    .A1(b),
+    .A2(a),
+    .B1(c),
+    .X(d)
+  );
+endmodule
+```
+
+Yosys screenshot:
+![Screenshot from 2024-10-22 01-21-07](https://github.com/user-attachments/assets/9bc04e56-4e4c-48de-a2ad-2b10315c9ec3)
+
+
+# TASK-10
+
+# Synthesize RISC-V and Compare Output with Functional Simulations
+
+
+
+## Steps before Synthesizing the RISC-V Core
+
+1. **Copy the `src` Folder:**  
+   Transfer the `src` folder from the **VSDBabySoC** directory to the **ASIC** directory.
+
+2. **Navigate to the Target Directory:**  
+   Change to the appropriate directory where the synthesis will be performed. Use the following command:
+
+``` 
+ cd /Desktop/ASIC/sky130RTLDesignAndSynthesisWorkshop
+```
+
+![Screenshot from 2024-10-24 02-45-57](https://github.com/user-attachments/assets/4a4940c0-fbaa-4984-8069-da429a21b729)
+
+3.**Run Pre-Synthesis Simulation:**
+    Execute the simulation on the design prior to synthesis using the following command:
+    
+  ```
+    cd VSDBabySoC  
+   iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/  
+   ./pre_synth_sim.out  
+   gtkwave pre_synth_sim.vcd
+```
+
+![Screenshot from 2024-10-24 03-36-49](https://github.com/user-attachments/assets/fcab4e06-60f4-4386-b137-e733e9ce42f0)
+![Screenshot from 2024-10-24 11-44-26](https://github.com/user-attachments/assets/d47c8a69-e750-4b63-b777-9d9a204a0cc2)
+
+
+## Steps for Synthesizing the RISC-V Core
+
+1. **Navigate to the Target Directory:**
+```
+cd /Desktop/ASIC/sky130RTLDesignAndSynthesisWorkshop/src/module
+```
+ 2. **Synthesis:**
+Run the following commands for synthesis
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog clk_gate.v
+read_verilog rvmyth.v
+synth -top rvmyth
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr rvmyth_net.v
+!gvim rvmyth_net.v
+```
+![Screenshot from 2024-10-24 11-36-48](https://github.com/user-attachments/assets/05913a5b-464c-4995-8b30-9778bee6eae1)
+
+![Screenshot from 2024-10-24 03-19-03](https://github.com/user-attachments/assets/646f13a0-0989-4195-a235-adfea8c50e27)
+
+Netlist:
+![Screenshot from 2024-10-24 11-31-33](https://github.com/user-attachments/assets/641bddce-2fd8-4383-9a02-9892d330d44d)
+
+![Screenshot from 2024-10-24 03-21-08](https://github.com/user-attachments/assets/3789c276-f5d6-4b06-a4f5-870adf77d921)
+
+3. **Simulate the Synthesized Design:**
+Run the following commands:
+```
+   iverilog ../../my_lib/verilog_model/primitives.v ../../my_lib/verilog_model/sky130_fd_sc_hd.v rvmyth.v testbench.v vsdbabysoc.v avsddac.v avsdpll.v clk_gate.v  
+   ./a.out  
+   gtkwave dump.vcd
+```
+![Screenshot from 2024-10-24 03-33-01](https://github.com/user-attachments/assets/c086c985-49a5-4dce-9ce0-467ef233021a)
+![Screenshot from 2024-10-24 11-33-51](https://github.com/user-attachments/assets/7a23bee9-51b6-40fe-8694-1ed81737b839)
+
+We can see that pre-synthesis simulation and post-synthesis simulation, show the same results. Hence, verifying o1=o2.
+
+# TASK-10
+
+# Synthesize RISC-V and Compare Output with Functional Simulations
+
+
+
+## Steps before Synthesizing the RISC-V Core
+
+1. **Copy the `src` Folder:**  
+   Transfer the `src` folder from the **VSDBabySoC** directory to the **ASIC** directory.
+
+2. **Navigate to the Target Directory:**  
+   Change to the appropriate directory where the synthesis will be performed. Use the following command:
+
+``` 
+ cd /Desktop/ASIC/sky130RTLDesignAndSynthesisWorkshop
+```
+
+![Screenshot from 2024-10-24 02-45-57](https://github.com/user-attachments/assets/4a4940c0-fbaa-4984-8069-da429a21b729)
+
+3.**Run Pre-Synthesis Simulation:**
+    Execute the simulation on the design prior to synthesis using the following command:
+    
+  ```
+    cd VSDBabySoC  
+   iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/  
+   ./pre_synth_sim.out  
+   gtkwave pre_synth_sim.vcd
+```
+
+![Screenshot from 2024-10-24 03-36-49](https://github.com/user-attachments/assets/fcab4e06-60f4-4386-b137-e733e9ce42f0)
+![Screenshot from 2024-10-24 11-44-26](https://github.com/user-attachments/assets/d47c8a69-e750-4b63-b777-9d9a204a0cc2)
+
+
+## Steps for Synthesizing the RISC-V Core
+
+1. **Navigate to the Target Directory:**
+```
+cd /Desktop/ASIC/sky130RTLDesignAndSynthesisWorkshop/src/module
+```
+ 2. **Synthesis:**
+Run the following commands for synthesis
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog clk_gate.v
+read_verilog rvmyth.v
+synth -top rvmyth
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr rvmyth_net.v
+!gvim rvmyth_net.v
+```
+![Screenshot from 2024-10-24 11-36-48](https://github.com/user-attachments/assets/05913a5b-464c-4995-8b30-9778bee6eae1)
+
+![Screenshot from 2024-10-24 03-19-03](https://github.com/user-attachments/assets/646f13a0-0989-4195-a235-adfea8c50e27)
+
+Netlist:
+![Screenshot from 2024-10-24 11-31-33](https://github.com/user-attachments/assets/641bddce-2fd8-4383-9a02-9892d330d44d)
+
+![Screenshot from 2024-10-24 03-21-08](https://github.com/user-attachments/assets/3789c276-f5d6-4b06-a4f5-870adf77d921)
+
+3. **Simulate the Synthesized Design:**
+Run the following commands:
+```
+   iverilog ../../my_lib/verilog_model/primitives.v ../../my_lib/verilog_model/sky130_fd_sc_hd.v rvmyth.v testbench.v vsdbabysoc.v avsddac.v avsdpll.v clk_gate.v  
+   ./a.out  
+   gtkwave dump.vcd
+```
+![Screenshot from 2024-10-24 03-33-01](https://github.com/user-attachments/assets/c086c985-49a5-4dce-9ce0-467ef233021a)
+![Screenshot from 2024-10-24 11-33-51](https://github.com/user-attachments/assets/7a23bee9-51b6-40fe-8694-1ed81737b839)
+
+We can see that pre-synthesis simulation and post-synthesis simulation, show the same results. Hence, verifying o1=o2.
+
+
+
+
+
+
+
 
 
 
