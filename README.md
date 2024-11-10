@@ -4,8 +4,6 @@
 
 ## **TASK 1:**
 
-<details>
-  <summary>Task 1</summary>summary>
 ### **Compiling the C program using GCC and RISC-V**
 
 - Execute a C code that calculates the sum of numbers upto 23 is run on terminal of virtual box as discussed.
@@ -48,7 +46,7 @@ Compilation in this case gets optimised.
 ![2 10](https://github.com/user-attachments/assets/d060345c-7af3-4804-8b4b-2b47833c38f5)
 
 
-</details>
+
 
 2. [TASK-2](#TASK-2)
 
