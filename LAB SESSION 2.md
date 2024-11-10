@@ -1,3 +1,7 @@
+2. [TASK-2](#TASK-2)
+
+# TASK-2
+
 ## AIM
 
 Compile sum1ton.c into sum1ton.o for RISC-V with -Ofast optimization, execute sum1ton.o using Spike, and run sum1ton.o on Spike in debug mode to observe register values.
