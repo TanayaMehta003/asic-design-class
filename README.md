@@ -2,7 +2,7 @@
 
 ## CONTENTS
 
-1. [Task 1](#task-1)
+1. [TASK 1](#task-1)
 2. [TASK-2](#TASK-2)
 3. 
 ## **TASK 1:**
