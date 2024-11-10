@@ -1,7 +1,10 @@
 # asic-design-class
 
-1. [Task 1](#task-1)
+## CONTENTS
 
+1. [Task 1](#task-1)
+2. [TASK-2](#TASK-2)
+3. 
 ## **TASK 1:**
 
 ### **Compiling the C program using GCC and RISC-V**
@@ -48,7 +51,7 @@ Compilation in this case gets optimised.
 
 
 
-2. [TASK-2](#TASK-2)
+
 
 # TASK-2
 
