@@ -4032,4 +4032,8 @@ Yosys report:
 cd /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/11-11_19-02/reports/synthesis
 gedit 1-yosys_4.stat.rpt
 ```
+![image](https://github.com/user-attachments/assets/e951e4ba-66ae-4629-a834-8a406abb8013)
+
+![image](https://github.com/user-attachments/assets/5ff64986-6056-4efb-a064-8d46fcc1922d)
+
 
