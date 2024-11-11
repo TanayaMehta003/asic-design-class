@@ -4111,4 +4111,12 @@ Report:
      sky130_fd_sc_hd__or4bb_2        2
 
    Chip area for module '\picorv32a': 147712.918400
+
+
+### Flop Ratio and Percentage of Flip Flops
+
+```
+-Flop Ratio: 1613/14876 = 0.108429685
+
+-Percentage of Flip Flops: 0.108429685* 100 = 10.84296854%
 ```
