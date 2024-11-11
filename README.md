@@ -4041,9 +4041,7 @@ gedit 1-yosys_4.stat.rpt
 
 ![image](https://github.com/user-attachments/assets/e951e4ba-66ae-4629-a834-8a406abb8013)
 
-![image](https://github.com/user-attachments/assets/5ff64986-6056-4efb-a064-8d46fcc1922d)
-
-Report:
+### Report:
 
 ![image](https://github.com/user-attachments/assets/1f6d202b-97b1-4407-828e-15951562b57a)
 
