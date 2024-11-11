@@ -4029,8 +4029,7 @@ Netlist Code:
 Yosys report:
 
 ```
-cd ../..
-cd reports/synthesis
+cd /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/11-11_19-02/reports/synthesis
 gedit 1-yosys_4.stat.rpt
 ```
 
