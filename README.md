@@ -4029,7 +4029,7 @@ gedit picorv32a.synthesis.v
 
 Netlist Code:
 
-![image](https://github.com/user-attachments/assets/6214ad3b-d453-4e59-906f-f6e579949042)
+![Screenshot 2024-11-12 004552](https://github.com/user-attachments/assets/367450ce-ac5e-4af0-bca3-c9b7078b2c5a)
 
 
 Yosys report:
@@ -4045,8 +4045,7 @@ gedit 1-yosys_4.stat.rpt
 
 Report:
 
-![Uploading image.png…]()
-
+![image](https://github.com/user-attachments/assets/1f6d202b-97b1-4407-828e-15951562b57a)
 
 ```
 28. Printing statistics.
