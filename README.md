@@ -4002,14 +4002,16 @@ To execute commands in the VSD Virtual Box, follow these steps:
 1. **Open the VSD Virtual Box**: Ensure that the virtual machine is running.
 2. **Run the following commands**:
 
-   ```
-   cd Desktop/work/tools/openlane_working_dir/openlane
+   
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
 docker
 ./flow.tcl -interactive
 package require openlane 0.9
 prep -design picorv32a
 run_synthesis
-   ```
+```
+
 ![image](https://github.com/user-attachments/assets/89e518d7-1221-4828-ad90-43d4b36d47db)
 
 ![image](https://github.com/user-attachments/assets/4fd9a13e-d70d-4d69-a131-0cf2280bd296)
@@ -4020,11 +4022,14 @@ To view the netlist:
 cd designs/picorv32a/runs/11-11_19-02/results/synthesis/
 gedit picorv32a.synthesis.v
 ```
+
 ![image](https://github.com/user-attachments/assets/85d4e2a8-b690-4da9-bea4-ad57f70220b4)
+
+
 
 Netlist Code:
 
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/6214ad3b-d453-4e59-906f-f6e579949042)
 
 
 Yosys report:
@@ -4033,11 +4038,15 @@ Yosys report:
 cd /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/11-11_19-02/reports/synthesis
 gedit 1-yosys_4.stat.rpt
 ```
+
 ![image](https://github.com/user-attachments/assets/e951e4ba-66ae-4629-a834-8a406abb8013)
 
 ![image](https://github.com/user-attachments/assets/5ff64986-6056-4efb-a064-8d46fcc1922d)
 
 Report:
+
+![Uploading image.png…]()
+
 
 ```
 28. Printing statistics.
@@ -4112,7 +4121,7 @@ Report:
      sky130_fd_sc_hd__or4bb_2        2
 
    Chip area for module '\picorv32a': 147712.918400
-
+```
 
 ### Flop Ratio and Percentage of Flip Flops
 
