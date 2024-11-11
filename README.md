@@ -3820,3 +3820,217 @@ report_checks -path_delay min
 
 
 # TASK-12
+
+## Theory
+
+On an embedded board, what is commonly referred to as the "chip" is actually the package that houses the real chip. This package acts as a protective enclosure. The actual chip, manufactured separately, sits at the center of this package. Connections between the package and the chip are made using wire bonding, which involves basic wired connections.
+
+![image](https://github.com/user-attachments/assets/cbae394d-b11c-4a98-98cb-9d12b8c1e757)
+
+### Day-1: Inception of open-source EDA, OpenLane and Sky130 PDK
+
+### QFN-48 Package
+
+The Quad Flat No-leads (QFN) 48 package is a type of leadless integrated circuit (IC) package that features 48 connection pads along its perimeter. This design enhances thermal and electrical performance while maintaining a compact form factor, making it highly suitable for applications requiring high-density integration.
+
+![image](https://github.com/user-attachments/assets/7ea9ae0c-e817-402f-820f-9a83fdd0802f)
+
+### Chip
+
+A chip, also known as an integrated circuit (IC), incorporates various functional blocks such as memory, processing units, and input/output (I/O) components within a silicon substrate. These chips are designed for specific applications in electronics.
+
+![image](https://github.com/user-attachments/assets/2c3631bf-4393-4225-b126-86bbae179fab)
+
+### Pads
+
+Pads are small metallic areas on a chip or package that connect internal circuitry to external connections, facilitating the transfer of signals to and from the integrated circuit (IC).
+
+### Core
+
+The core is the central part of a chip that includes the main processing unit and functional logic. It is typically optimized for power and performance.
+
+### Die
+
+A die is a section of a silicon wafer containing an individual IC before it is packaged. It houses all the active circuits and elements necessary for the chip's functions.
+
+![image](https://github.com/user-attachments/assets/97fbc8dd-c1dc-4389-b499-0bf4bce592c8)
+
+### Foundry
+
+A foundry is a facility where semiconductor chips are manufactured. Foundry IPs (Intellectual Properties) are specific to each foundry and require a certain level of expertise to produce. In this context, repeatable digital logic blocks are referred to as macros.
+
+![image](https://github.com/user-attachments/assets/2eba1d13-c765-4333-b39c-2b5157cdc6d1)
+
+### From Software Applications to Hardware Execution
+
+Running an application on hardware involves several key steps. Initially, the application enters the system software layer, which prepares it for execution by converting the application program into a binary format that the hardware can understand. The main components of the system software include the Operating System (OS), Compiler, and Assembler.
+
+1. **Operating System (OS)**: The OS starts the process by breaking down application functions written in high-level languages such as C, C++, Java, or Visual Basic.
+2. **Compiler**: These functions are then passed to a compiler, which translates them into low-level instructions specific to the hardware architecture.
+3. **Assembler**: The assembler converts these low-level instructions into binary format, known as machine language.
+4. **Hardware Execution**: Finally, the binary code is fed to the hardware, enabling it to perform the tasks defined by the instructions.
+
+This sequence ensures that high-level application code can be effectively executed by the hardware.
+
+![image](https://github.com/user-attachments/assets/9bf73acb-aee1-472a-b425-c58545a07c05)
+
+### Example: Stopwatch App on a RISC-V Core
+
+Consider a stopwatch application running on a RISC-V core. The process involves several steps:
+
+1. **Operating System (OS)**: The OS generates a small function written in C.
+2. **Compiler**: This function is passed to a compiler, which produces RISC-V-specific instructions tailored to the architecture.
+3. **Assembler**: These instructions are then processed by the assembler, converting them into binary code.
+4. **Hardware Execution**: The binary code is fed into the chip layout, where the hardware executes the desired functionality.
+
+This sequence ensures that the stopwatch app can effectively run on the RISC-V hardware.
+
+![image](https://github.com/user-attachments/assets/c5f251b2-0690-4226-81fd-5c4996b0a4ff)
+
+For the above stopwatch the below figure shows the input and output of the compiler and assembler.
+
+![image](https://github.com/user-attachments/assets/233facdf-7f1c-41f8-b541-481ee5b15577)
+
+The compiler generates instructions specific to the architecture, while the assembler converts these instructions into binary patterns. To execute these instructions on hardware, an RTL (Register Transfer Level) design, written in a Hardware Description Language (HDL), is used to interpret and implement the instructions. This RTL design is then synthesized into a netlist, which represents interconnected logic gates. Finally, the netlist undergoes physical design implementation to be fabricated onto the chip.
+
+![image](https://github.com/user-attachments/assets/eca48de1-887b-4249-8ddd-5413a3ea1798)
+
+## Components of ASIC Design
+
+![image](https://github.com/user-attachments/assets/5bef3ab0-7e3b-42f7-a228-a687daf051c6)
+
+### RTL IPs
+Pre-designed and verified digital circuit blocks, such as adders, flip-flops, and memory, written in Hardware Description Languages (HDL) like Verilog or VHDL. These IPs save design time by providing ready-to-use components for complex circuits.
+
+### EDA Tools
+Software that automates various ASIC design tasks, including synthesis, optimization, placement, and timing analysis. These tools are essential for improving productivity and ensuring that performance and power requirements are met.
+
+### PDK Data
+A set of files and parameters provided by a semiconductor foundry, detailing its manufacturing process. This includes transistor models and design rules. PDKs ensure that ASIC designs are compatible with the foundry’s fabrication process.
+
+### Simplified RTL to GDS flow
+
+![image](https://github.com/user-attachments/assets/6c7e6fec-1bd5-47a2-bf9a-73650870f7d8)
+
+### RTL Design
+Describes the circuit's functional behavior using Hardware Description Languages (HDLs) like Verilog or VHDL, defining its logic and data paths.
+
+### RTL Synthesis
+Converts RTL code into a gate-level netlist, which is a collection of standard cells such as AND gates, flip-flops, and multiplexers. This process maps the RTL code to standard cells and optimizes for area, power, and timing.
+
+### Floor and Power Planning
+Partitions the chip area, places major components, and defines the power grid and I/O placement. This step optimizes the physical layout to reduce power consumption and improve signal integrity by considering the placement of I/O pads and power distribution cells.
+
+### Placement
+Assigns physical locations to cells, aiming to minimize wirelength, reduce signal delay, and meet design constraints. The placement tool arranges the cells to balance the overall chip design for optimal performance and area utilization.
+
+### Clock Tree Synthesis (CTS)
+Focuses on creating an optimized clock distribution network. CTS ensures the clock is distributed evenly to all flip-flops and registers, building an optimized clock network to balance clock signal distribution and reduce clock skew.
+
+### Routing
+Connects components based on placement, optimizing wire paths to ensure signal integrity, minimize congestion, and meet design rules.
+
+### Sign-off
+The final verification stage, ensuring the design meets functionality, performance, power, and reliability targets. Timing analysis checks setup and hold times, power analysis ensures the design doesn’t exceed power limits, and physical verification checks that the layout meets manufacturing rules. This stage confirms the design is ready for fabrication.
+
+### GDSII File Generation
+Creates the GDSII file containing the complete layout details needed for chip fabrication. This file represents the final physical design and is used by manufacturers to create the photomasks required for chip production. The GDSII file serves as the blueprint for the actual fabrication of the chip.
+
+### OpenLane ASIC Flow:
+
+![image](https://github.com/user-attachments/assets/a93ccf1c-cd36-4e01-8fb6-ffe832b47372)
+
+### RTL Synthesis, Technology Mapping, and Formal Verification
+- **Tools Used**: Yosys (for RTL synthesis), ABC (for technology mapping and formal verification).
+
+### Static Timing Analysis
+- **Tools Used**: OpenSTA (for static timing analysis).
+
+### Floor Planning
+- **Tools Used**: init_fp (initial floorplanning), ioPlacer (I/O placement), pdn (power distribution network planning), tapcell (tap cell insertion).
+
+### Placement
+- **Tools Used**: RePLace (global placement), Resizer (optional for resizing cells), OpenPhySyn (formerly used for placement), OpenDP (detailed placement).
+
+### Clock Tree Synthesis
+- **Tools Used**: TritonCTS (for clock tree synthesis).
+
+### Fill Insertion
+- **Tools Used**: OpenDP (for filler placement).
+
+### Routing
+- **Tools Used**: FastRoute or CU-GR (formerly used) for global routing, TritonRoute (for detailed routing) or DR-CU (formerly used).
+
+### SPEF Extraction
+- **Tools Used**: OpenRCX (or SPEF-Extractor, formerly used) for Standard Parasitic Exchange Format (SPEF) extraction.
+
+### GDSII Streaming Out
+- **Tools Used**: Magic and KLayout (for viewing and editing GDSII files).
+
+### Design Rule Checking (DRC) Checks
+- **Tools Used**: Magic and KLayout (for DRC checks).
+
+### Layout vs. Schematic (LVS) Check
+- **Tools Used**: Netgen (for LVS checks).
+
+### Antenna Checks
+- **Tools Used**: Magic (for antenna checks).
+
+## OpenLANE Directory structure
+
+```
+├── OOpenLane             -> directory where the tool can be invoked (run docker first)
+│   ├── designs          -> All designs must be extracted from this folder
+│   │   │   ├── picorv32a -> Design used as case study for this workshop
+│   |   |   ├── ...
+|   |   ├── ...
+├── pdks                 -> contains pdk related files 
+│   ├── skywater-pdk     -> all Skywater 130nm PDKs
+│   ├── open-pdks        -> contains scripts that makes the commerical PDK (which is normally just compatible to commercial tools) to also be compatible with the open-source EDA tool
+│   ├── sky130A          -> pdk variant made especially compatible for open-source tools
+│   │   │  ├── libs.ref  -> files specific to node process (timing lib, cell lef, tech lef) for example is `sky130_fd_sc_hd` (Sky130nm Foundry Standard Cell High Density)  
+│   │   │  ├── libs.tech -> files specific for the tool (klayout,netgen,magic...) 
+```
+## Implementation
+
+## Synthesis in Openlane
+
+### Running Commands in VSD Virtual Box
+
+To execute commands in the VSD Virtual Box, follow these steps:
+
+1. **Open the VSD Virtual Box**: Ensure that the virtual machine is running.
+2. **Run the following commands**:
+
+   ```
+   cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+run_synthesis
+   ```
+![image](https://github.com/user-attachments/assets/89e518d7-1221-4828-ad90-43d4b36d47db)
+
+![image](https://github.com/user-attachments/assets/4fd9a13e-d70d-4d69-a131-0cf2280bd296)
+
+To view the netlist:
+
+```
+cd designs/picorv32a/runs/11-11_19-02/results/synthesis/
+gedit picorv32a.synthesis.v
+```
+![image](https://github.com/user-attachments/assets/85d4e2a8-b690-4da9-bea4-ad57f70220b4)
+
+Netlist Code:
+
+![image](https://github.com/user-attachments/assets/573b461f-8b11-472a-98c8-eb7216aa7ad9)
+
+Yosys report:
+
+```
+cd ../..
+cd reports/synthesis
+gedit 1-yosys_4.stat.rpt
+```
+
