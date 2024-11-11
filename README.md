@@ -4024,7 +4024,8 @@ gedit picorv32a.synthesis.v
 
 Netlist Code:
 
-![image](https://github.com/user-attachments/assets/573b461f-8b11-472a-98c8-eb7216aa7ad9)
+![Uploading image.png…]()
+
 
 Yosys report:
 
