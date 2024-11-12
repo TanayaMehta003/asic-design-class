@@ -4190,3 +4190,29 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 
 ![Screenshot 2024-11-12 162617](https://github.com/user-attachments/assets/eedbf3d8-464e-445f-bda6-12bc16877a32)
 
+![image](https://github.com/user-attachments/assets/2f0e204b-b90a-41e8-81fe-6e62b84e9705)
+
+Equidistant placement of ports:
+
+![image](https://github.com/user-attachments/assets/eb62f673-fcdf-466d-ad5e-b61ff8e21573)
+
+Unplaced standard cells at origin:
+
+Diagonally equidistant Tap cells
+![image](https://github.com/user-attachments/assets/6f9a6cdc-84cb-4b2c-adaa-4ca1c1a06bd1)
+
+![image](https://github.com/user-attachments/assets/84b4285a-d828-46c3-aae8-8a79e95f4668)
+
+![image](https://github.com/user-attachments/assets/ca7d5e2b-90f2-4429-b9a0-0a341edb50c5)
+
+![image](https://github.com/user-attachments/assets/0a34e930-2f36-428e-a05a-9ecfb4ee0a3b)
+
+Command to run placement:
+
+```
+run_placement
+```
+
+![image](https://github.com/user-attachments/assets/729a3b90-e4e3-43ec-8a7e-2d4e5325571f)
+
+
