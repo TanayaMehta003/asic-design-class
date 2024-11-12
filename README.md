@@ -4180,3 +4180,13 @@ Run the below commands in a new terminal:
 cd /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/12-11_09-39/results/floorplan
 gedit picorv32a.floorplan.def
 ```
+
+![Screenshot 2024-11-12 151931](https://github.com/user-attachments/assets/5b7604eb-f60a-426c-a274-1a9d1e4dc449)
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/12-11_09-39/results/floorplan/
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
+```
+
+![Screenshot 2024-11-12 162617](https://github.com/user-attachments/assets/eedbf3d8-464e-445f-bda6-12bc16877a32)
+
