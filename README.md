@@ -4222,4 +4222,215 @@ run_placement
 
 ![image](https://github.com/user-attachments/assets/729a3b90-e4e3-43ec-8a7e-2d4e5325571f)
 
+![image](https://github.com/user-attachments/assets/13d7a9be-5cfc-4881-81a6-4de294a6c25b)
 
+To view the placement in magic:
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/12-11_13-18/results/placement/
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+```
+![image](https://github.com/user-attachments/assets/1d2382d4-57c9-406b-969b-22db474e9eb1)
+
+![image](https://github.com/user-attachments/assets/801e2bf3-66ab-4089-8ff0-72d65ca0629c)
+
+## Day-3: Design library cell using Magic Layout and ngspice characterization
+
+# Section 3: Task Overview
+
+## Tasks to Complete
+
+1. Clone the custom inverter standard cell design from the specified GitHub repository.
+2. Load the custom inverter layout in Magic for examination and modification.
+3. Extract the SPICE netlist of the inverter in Magic.
+4. Edit the SPICE model file to prepare for simulation analysis.
+5. Perform post-layout simulations in NGSPICE.
+6. Identify and resolve any issues found in the DRC (Design Rule Check) section of the Magic tech file for the SkyWater process.
+
+## File Organization
+
+- **Tasks 1 to 5**: Files, reports, and logs are stored in the designated folder.
+- **Task 6**: Files, reports, and logs are available in the designated folder.
+
+## Initial Task
+
+Clone the custom inverter standard cell design from the GitHub repository.
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+git clone https://github.com/nickson-jose/vsdstdcelldesign
+cd vsdstdcelldesign
+cp /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech .
+ls
+magic -T sky130A.tech sky130_taninv.mag &
+```
+
+![image](https://github.com/user-attachments/assets/223bbcb9-d09a-458f-8cb7-1963711cc9fc)
+
+NMOS and PMOS identified
+
+![image](https://github.com/user-attachments/assets/a83a8c7e-9ae4-4389-aa83-ebb97e663ace)
+
+![image](https://github.com/user-attachments/assets/5efad971-36a2-4200-97dc-630e669859a8)
+
+Output Y connectivity to PMOS and NMOS drain verified:
+![image](https://github.com/user-attachments/assets/6442276a-7b45-4e90-9a2d-60f625b8b036)
+
+PMOS source connectivity to VDD (here VPWR) verified
+![image](https://github.com/user-attachments/assets/48eb8251-2fb3-4a3c-9b14-3a6ae3637fde)
+
+NMOS source connectivity to VSS (here VGND) verified
+![image](https://github.com/user-attachments/assets/0583fafa-4c0d-46e4-801a-debb58bf3220)
+
+Spice extraction of inverter in Magic. Run these in the tkcon window:
+
+```
+# Check current directory
+pwd
+
+# Extraction command to extract to .ext format
+extract all
+
+# Before converting ext to spice this command enable the parasitic extraction also
+ext2spice cthresh 0 rthresh 0
+
+# Converting to ext to spice
+ext2spice
+```
+![image](https://github.com/user-attachments/assets/12635452-b6e3-46b5-bdfd-dd290d685401)
+
+To view the spice file:
+
+```
+gedit sky130_taninv.spice
+```
+
+![image](https://github.com/user-attachments/assets/e8d20585-5f1c-415e-99eb-9044af838e8f)
+
+Modify the sky130_taninv.spice file to find the transient respone:
+
+```
+* SPICE3 file created from sky130_taninv.ext - technology: sky130A
+
+.option scale=0.01u
+.include ./libs/pshort.lib
+.include ./libs/nshort.lib
+
+//.subckt sky130_taninv A Y VPWR VGND
+M1000 Y A VGND VGND nshort_model.0 w=35 l=23
++  ad=1.44n pd=0.152m as=1.37n ps=0.148m
+M1001 Y A VPWR VPWR pshort_model.0 w=37 l=23
++  ad=1.44n pd=0.152m as=1.52n ps=0.156m
+
+VDD VPWR 0 3.3V
+VSS VGND 0 0V
+Va A VGND PULSE(0V 3.3V 0 0.1ns 0.1ns 2ns 4ns)
+
+C0 A VPWR 0.0774f
+C1 VPWR Y 0.117f
+C2 A Y 0.0754f
+C3 Y VGND 2f
+C4 A VGND 0.45f
+C5 VPWR VGND 0.781f
+//.ends
+
+.tran 1n 20n
+.control
+run
+.endc
+.end
+```
+
+Simulate the spice netlist
+
+```
+ngspice sky130_inv.spice
+```
+
+![image](https://github.com/user-attachments/assets/4df99bd4-1160-4c35-85fd-d624c6c9d6c2)
+
+Plot the waveform:
+
+```
+plot y vs time a
+```
+
+![image](https://github.com/user-attachments/assets/c62ee86e-75b1-4882-a131-92334a027141)
+
+![image](https://github.com/user-attachments/assets/f44b095d-10b9-4308-88c0-1d17bb09bae7)
+
+Using this transient response, we will now characterize the cell's slew rate and propagation delay:
+
+Rise Transition: Time taken for the output to rise from 20% to 80% of max value Fall Transition: Time taken for the output to fall from 80% to 20% of max value Cell Rise delay: difference in time(50% output rise) to time(50% input fall) Cell Fall delay: difference in time(50% output fall) to time(50% input rise)
+
+# Cell Characterization: Slew Rate and Propagation Delay
+
+To characterize the cell's transient response, we will measure its slew rate and propagation delay as follows:
+
+- **Rise Transition**  
+  The time required for the output to rise from 20% to 80% of its maximum value.
+
+- **Fall Transition**  
+  The time required for the output to fall from 80% to 20% of its maximum value.
+
+- **Cell Rise Delay**  
+  The time difference between the input falling to 50% of its amplitude and the output rising to 50%.
+
+- **Cell Fall Delay**  
+  The time difference between the input rising to 50% of its amplitude and the output falling to 50%.
+
+maxm value:3.3V
+
+20% screenshot
+![image](https://github.com/user-attachments/assets/b6409d9f-0fb5-4d7b-804e-70bce2d90917)
+
+80% Screenshot
+
+![image](https://github.com/user-attachments/assets/3f9e7c8e-696e-4eb9-9fb6-e7478a0cc7d5)
+
+50% Screenshot
+
+![image](https://github.com/user-attachments/assets/eafe2b82-ace5-4422-a636-ae52e91d4ddd)
+
+```
+Rise Transition : 2.24638 - 2.18242 =  0.06396 ns = 63.96 ps
+Fall Transition : 4.0955 - 4.05536 =  0.0419 ns = 41.9 ps
+Cell Rise Delay : 2.21144 - 2.15008 = 0.06136 ns = 61.36 ps
+Cell Fall Delay : 4.07807 - 4.05 =0.02 ns = 20 ps
+```
+Magic Tool options and DRC Rules:
+
+Go to home directory and run the below commands:
+
+```
+cd
+wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+tar xfz drc_tests.tgz
+cd drc_tests
+ls -al
+gvim .magicrc
+magic -d XR &
+```
+![image](https://github.com/user-attachments/assets/acaed5f5-7d79-4700-abd4-486e3a931095)
+
+Load the poly file by load poly.mag on tkcon window.
+
+![image](https://github.com/user-attachments/assets/ae6122f7-02ad-453e-b84b-8515293420f1)
+
+### Correction of Incorrectly Implemented `poly.9` Rule
+
+The `poly.9` rule was not implemented correctly, requiring a simple correction. Please refer to the screenshot of the poly rules for specific details on the intended rule structure and constraints.
+
+![image](https://github.com/user-attachments/assets/369b6c9d-79eb-40f0-a5bd-feac0626078f)
+
+Add the below commands in the sky130A.tech
+
+spacing npres alldiff 480 touching_illegal \
+
+"poly.resistor spacing to alldiff < %d (poly.9)"
+
+spacing npres allpolynonres 480 touching_illegal
+
+"poly.resistor spacing to allpolynonres < %d (poly.9)
+
+spacing xhrpoly, uhrpoly,xpc allpolynonres 480 touching illegal "xhrpoly/uhrpoly resistor spacing to allpolynonres < %d (poly.9)
