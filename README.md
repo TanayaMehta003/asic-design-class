@@ -4173,3 +4173,10 @@ run_floorplan
 ```
 
 ![image](https://github.com/user-attachments/assets/47e727c3-5172-4372-89c0-dd4c5424e65b)
+
+Run the below commands in a new terminal:
+
+```
+cd /Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/12-11_09-39/results/floorplan
+gedit picorv32a.floorplan.def
+```
