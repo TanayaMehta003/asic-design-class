@@ -4425,12 +4425,20 @@ The `poly.9` rule was not implemented correctly, requiring a simple correction. 
 
 Add the below commands in the sky130A.tech
 
-spacing npres alldiff 480 touching_illegal \
+![image](https://github.com/user-attachments/assets/2a9eb0d3-1db7-4b0e-8e1d-8ac0915ea34b)
 
-"poly.resistor spacing to alldiff < %d (poly.9)"
+![image](https://github.com/user-attachments/assets/99e5f9cc-ae0f-4095-a868-413db1c989ab)
 
-spacing npres allpolynonres 480 touching_illegal
+Run the commands in tkcon window:
 
-"poly.resistor spacing to allpolynonres < %d (poly.9)
+```
+tech load sky130A.tech
+drc check
+drc why
+```
 
-spacing xhrpoly, uhrpoly,xpc allpolynonres 480 touching illegal "xhrpoly/uhrpoly resistor spacing to allpolynonres < %d (poly.9)
+![image](https://github.com/user-attachments/assets/c6b7dca0-ae5d-4f6b-bed4-1b34407f2dcf)
+
+# Day-4: Pre-layout timing analysis and importance of good clock tree
+
+##
