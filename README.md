@@ -4210,6 +4210,13 @@ Diagonally equidistant Tap cells
 Command to run placement:
 
 ```
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+run_synthesis
+run_floorplan
 run_placement
 ```
 
