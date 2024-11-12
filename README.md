@@ -4127,3 +4127,49 @@ gedit 1-yosys_4.stat.rpt
 
 -Percentage of Flip Flops: 0.108429685* 100 = 10.84296854%
 ```
+## Day-2: Good floorplan vs bad floorplan and introduction to library cells
+
+### Utilization Factor and Aspect Ratio
+
+In IC floor planning, the utilization factor and aspect ratio are crucial parameters:
+
+- **Utilization Factor**: This is the ratio of the area occupied by the netlist to the total core area. While a perfect utilization of 1 (100%) is ideal, practical designs typically target a factor of 0.5 to 0.6. This allows space for buffer zones, routing channels, and future adjustments.
+
+Utilisation Factor =  Area occupied by netlist/Total area of core
+
+- **Aspect Ratio**: Defined as the height divided by the width, this parameter indicates the chip’s shape. An aspect ratio of 1 denotes a square layout, while other values result in a rectangular layout. The aspect ratio is chosen based on functional, packaging, and manufacturing needs.
+
+Aspect Ratio =  Height/ Width
+
+### Pre-placed Cells
+Pre-placed cells are critical functional blocks, such as memory units, custom processors, and analog circuits, that are manually positioned in fixed locations. These blocks are essential for the chip’s performance and remain stationary during placement and routing to maintain their functionality and layout integrity.
+
+### Decoupling Capacitors
+Decoupling capacitors are strategically placed near logic circuits to stabilize power supply voltages during transient events. They act as local energy reserves, helping to reduce voltage fluctuations, crosstalk, and electromagnetic interference (EMI), thereby ensuring reliable power delivery to sensitive circuits.
+
+### Power Planning
+Effective power planning involves creating a power and ground mesh to distribute VDD and VSS evenly across the chip. This ensures stable power delivery, minimizes voltage drops, and enhances overall efficiency. Multiple power and ground points help reduce the risk of instability and voltage drop issues, supporting the design’s power requirements effectively.
+
+### Pin Placement
+Pin placement, or I/O planning, is vital for functionality and reliability. Strategic pin assignment helps minimize signal degradation, preserve data integrity, and manage heat dissipation. Proper positioning of power and ground pins supports thermal management and enhances signal strength, contributing to overall system stability and manufacturability.
+
+### Floorplanning using OpenLANE
+
+To perform floorplanning using OpenLANE, follow these steps:
+
+1. **Open the VSD Virtual Box**: Ensure that the virtual machine is running.
+2. **Run the following commands**:
+
+   ```
+   cd Desktop/work/tools/openlane_working_dir/openlane
+   docker
+   ```
+```
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+run_synthesis
+run_floorplan
+```
+
+![image](https://github.com/user-attachments/assets/47e727c3-5172-4372-89c0-dd4c5424e65b)
