@@ -4947,7 +4947,7 @@ echo $::env(CTS_CLK_BUFFER_LIST)
 
 ![image](https://github.com/user-attachments/assets/0971551a-3a23-41fa-a4ba-355e1efd9906)
 
-## Day 5 - Final steps for RTL2GDS using tritonRoute and openSTA
+## **Day 5 - Final steps for RTL2GDS using tritonRoute and openSTA**
 
 ### Maze Routing and Lee's algorithm
 
