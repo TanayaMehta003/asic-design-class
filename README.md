@@ -4569,6 +4569,7 @@ run_synthesis
 
 ![image](https://github.com/user-attachments/assets/77811830-b77b-41f1-b057-c43f39d16346)
 
+
 Commands to view and change parameters to improve timing and run synthesis
 
 ```
@@ -4595,6 +4596,8 @@ Run floorplan using following command:
 ```
 run_floorplan
 ```
+![WhatsApp Image 2024-11-14 at 04 22 50_d486d74c](https://github.com/user-attachments/assets/0d6944e8-afca-4bf9-af9f-8df39aacbba0)
+
 
 ```
 init_floorplan
@@ -4622,6 +4625,10 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 ```
 ![image](https://github.com/user-attachments/assets/58895c40-1be4-40e0-9908-e6cc59a38b60)
 
+inverter: taninv
+![WhatsApp Image 2024-11-14 at 04 46 37_f00ce1a7](https://github.com/user-attachments/assets/f44b890e-0708-41c9-a0cb-742f2ea074e4)
+![WhatsApp Image 2024-11-14 at 04 47 02_b34378a6](https://github.com/user-attachments/assets/22b10ef1-8918-4717-b988-1057c98a1841)
+
 Custom inverter inserted in placement def
 
 ![image](https://github.com/user-attachments/assets/622b0de7-cdcc-4465-aff2-be297a15f735)
@@ -4629,6 +4636,7 @@ Custom inverter inserted in placement def
 Select the cell and type expand in tkcon window to view internal layers of cells
 
 ![image](https://github.com/user-attachments/assets/3e2658ae-5282-40bd-b1c9-749c11e1e7cc)
+![WhatsApp Image 2024-11-14 at 04 47 48_5f41c4ce](https://github.com/user-attachments/assets/540f4288-035e-48bf-96b8-7d3d3db9fe54)
 
 ## Post-Synthesis timing analysis with OpenSTA tool.
 
