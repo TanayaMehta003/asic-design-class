@@ -4742,3 +4742,26 @@ Commands to run STA:
 cd Desktop/work/tools/openlane_working_dir/openlane
 sta pre_sta.conf
 ```
+
+![image](https://github.com/user-attachments/assets/d8f78fd6-52ab-432f-acfe-903709633a6c)
+
+![image](https://github.com/user-attachments/assets/7c41e16a-710e-4f72-b314-75e33cc55d56)
+
+![image](https://github.com/user-attachments/assets/8143c826-33cf-4c54-9c70-59bbb198b9c2)
+
+Optimise synthesis.
+
+Go to new terminal and run the following commands:
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+./flow.tcl -interactive
+prep -design picorv32a -tag 13-11_13-41 -overwrite
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+set ::env(SYNTH_SIZING) 1
+set ::env(SYNTH_MAX_FANOUT) 4
+echo $::env(SYNTH_DRIVING_CELL)
+run_synthesis
+```
