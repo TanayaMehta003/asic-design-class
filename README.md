@@ -4438,7 +4438,232 @@ drc why
 ```
 
 ![image](https://github.com/user-attachments/assets/c6b7dca0-ae5d-4f6b-bed4-1b34407f2dcf)
+![image](https://github.com/user-attachments/assets/1708b6c0-5f74-44d8-8547-439ca6cde1fa)
+
+### Incorrectly implemented difftap.2 simple rule correction
+
+Screenshot of difftap rules
+
+Incorrectly implemented difftap.2 rule no drc violation even though spacing < 0.42u
+
+New commands inserted in sky130A.tech file to update drc
 
 # Day-4: Pre-layout timing analysis and importance of good clock tree
 
-##
+## Section 4: Custom Inverter Cell Integration and Validation
+
+### 1. Fix DRC Errors and Verify Layout Readiness
+   - **Objective**: Correct minor DRC (Design Rule Check) errors to ensure the layout aligns with standard requirements and is ready for integration.
+   - **Verification Conditions**:
+     - **Condition 1**: The input and output ports of the standard cell must align with the intersection of vertical and horizontal tracks.
+     - **Condition 2**: The width of the cell should be an odd multiple of the horizontal track pitch.
+     - **Condition 3**: The height of the cell should be an even multiple of the vertical track pitch.
+   - **Actions**:
+     - Save the finalized layout with a custom name.
+     - Open and verify the layout meets all required conditions.
+
+### 2. Generate and Copy LEF Files
+   - **Objective**: Generate a LEF (Library Exchange Format) file from the completed layout for use in the design flow.
+   - **Actions**:
+     - Generate the LEF file.
+     - Copy the generated LEF file and associated `.lib` files to the `src` directory of the `picorv32a` design.
+
+### 3. Update Configuration and Add New Files to OpenLane
+   - **Objective**: Update the configuration to incorporate the custom inverter and library files.
+   - **Actions**:
+     - Open `config.tcl`.
+     - Modify it to include the new library file and custom LEF file in the OpenLane flow.
+     - Run OpenLane synthesis, integrating the custom inverter cell.
+
+### 4. Reduce DRC and Other Violations
+   - **Objective**: Resolve any violations introduced by the custom inverter cell.
+   - **Actions**:
+     - Analyze new violations and adjust design parameters to mitigate them.
+     - Ensure synthesis completes successfully with the custom cell integrated.
+
+### 5. Proceed with Floorplanning and Placement
+   - **Objective**: Run floorplanning and placement to ensure the custom inverter is correctly placed.
+   - **Actions**:
+     - Begin floorplanning and placement once synthesis is complete and violations are addressed.
+     - Verify that the custom cell is recognized and placed correctly in the Place and Route (PnR) flow.
+
+### 6. Timing Analysis and Optimization
+   - **Objective**: Perform timing analysis and apply fixes to optimize design timing.
+   - **Actions**:
+     - Run a post-synthesis timing analysis using OpenSTA.
+     - Apply timing ECO (Engineering Change Order) fixes to remove any timing violations.
+     - Replace the old netlist with the updated, timing-corrected netlist.
+     - Implement the floorplan, placement, and clock tree synthesis (CTS).
+
+### 7. Post-CTS Timing Analysis
+   - **Objective**: Analyze timing performance post-CTS and explore potential optimizations.
+   - **Actions**:
+     - Perform a post-CTS timing analysis in OpenROAD.
+     - Remove `sky130_fd_sc_hd__clkbuf_1` cell from the `CTS_CLK_BUFFER_LIST` to assess timing performance without this buffer.
+
+## Commands and Tools
+- Use OpenLane and OpenROAD for synthesis, placement, and timing analysis.
+- Open the custom inverter layout to verify and modify as required to meet integration conditions.
+
+Commands to extract tracks.info file:
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+cd ../../pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/
+less tracks.info
+```
+
+![image](https://github.com/user-attachments/assets/b60e9371-8418-48fd-9d1e-4054f0f2f2cf)
+
+Commands to open the custom inverter layout
+
+```
+# Change directory to vsdstdcelldesign
+cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+
+# Command to open custom inverter layout in magic
+magic -T sky130A.tech sky130_taninv.mag &
+```
+
+![image](https://github.com/user-attachments/assets/5a310200-ccec-4abd-9582-342fa3fa3b78)
+
+
+Commands for tkcon window to set grid as tracks of locali layer
+```
+# Get syntax for grid command
+help grid
+
+# Set grid values accordingly
+grid 0.46um 0.34um 0.23um 0.17um
+```
+The grid lines indicate where routing for the local interconnect layer is allowed, with spacing between grid lines representing the required wire pitch. The layout below demonstrates that these guidelines are adhered to.
+
+Condition 1 verified
+![image](https://github.com/user-attachments/assets/b138b7e8-44b8-4cf3-8d21-9dc02f1506dd)
+
+Condition 2 verified
+
+![image](https://github.com/user-attachments/assets/b2f60dd1-9443-48be-979f-3d92ee4723e7)
+
+Type the following command in tkcon window:
+
+```
+lef write
+```
+
+![image](https://github.com/user-attachments/assets/0735f65f-71a3-44e3-bf9e-e818caaa57d1)
+
+Screenshot of newly created lef file
+
+![image](https://github.com/user-attachments/assets/2266dc24-ff94-4848-ad7f-7f111ef9e52d)
+
+Copy the newly generated lef and associated required lib files to 'picorv32a' design 'src' directory. Commands to copy necessary files to 'picorv32a' design 'src' directory
+
+```
+cp sky130_taninv.lef ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+cp libs/sky130_fd_sc_hd__* ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+```
+![image](https://github.com/user-attachments/assets/5cc32f2c-7229-4e94-baf6-5ca2a4e9e618)
+
+Edit 'config.tcl' to change lib file and add the new extra lef into the openlane flow. Commands to be added to config.tcl to include custom cell in the openlane flow
+
+```
+set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
+set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+
+set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+```
+
+Run openlane flow synthesis:
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+```
+
+```
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+run_synthesis
+```
+
+![image](https://github.com/user-attachments/assets/ef2112e6-700e-42b7-a5d8-228caea662cc)
+
+![image](https://github.com/user-attachments/assets/48a6be4d-0c94-4b7a-9604-3b320035ec9b)
+
+![image](https://github.com/user-attachments/assets/77811830-b77b-41f1-b057-c43f39d16346)
+
+Commands to view and change parameters to improve timing and run synthesis
+
+```
+prep -design picorv32a -tag 24-03_10-03 -overwrite
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+echo $::env(SYNTH_STRATEGY)
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+echo $::env(SYNTH_BUFFERING)
+echo $::env(SYNTH_SIZING)
+set ::env(SYNTH_SIZING) 1
+echo $::env(SYNTH_DRIVING_CELL)
+run_synthesis
+```
+![image](https://github.com/user-attachments/assets/9501f822-6bae-4aa6-92bc-f6b50854c9b2)
+
+![image](https://github.com/user-attachments/assets/067da430-c7dd-4f9b-979f-783200372f1d)
+
+![image](https://github.com/user-attachments/assets/3ef70de4-bce7-4f3a-b0fa-b91b90c6b81e)
+
+
+Run floorplan using following command:
+
+```
+run_floorplan
+```
+
+```
+init_floorplan
+place_io
+tap_decap_or
+```
+![image](https://github.com/user-attachments/assets/53ab6716-1da4-41fb-9bf7-4c76c77a6678)
+
+![image](https://github.com/user-attachments/assets/1eea5d4f-e2ab-4681-8222-844473ccd886)
+
+![image](https://github.com/user-attachments/assets/43cdee28-c7a9-4324-b331-cc93e93b567d)
+
+![image](https://github.com/user-attachments/assets/7cc3dcfc-1b03-4955-a956-1652b83c1021)
+
+![image](https://github.com/user-attachments/assets/3cb9c068-6a89-45af-851f-4121b8f89c45)
+
+![image](https://github.com/user-attachments/assets/737989da-f8a6-4f90-823b-8a117783795f)
+
+Open a new terminal and run the below commands to load placement def in magic
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/13-11_12-31/results/placement/
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+
+```
+![image](https://github.com/user-attachments/assets/58895c40-1be4-40e0-9908-e6cc59a38b60)
+
+Custom inverter inserted in placement def
+
+![image](https://github.com/user-attachments/assets/622b0de7-cdcc-4465-aff2-be297a15f735)
+
+Select the cell and type expand in tkcon window to view internal layers of cells
+
+![image](https://github.com/user-attachments/assets/3e2658ae-5282-40bd-b1c9-749c11e1e7cc)
+
+## Post-Synthesis timing analysis with OpenSTA tool.
+
+Since we are getting 0 wns after improved timing run, we will be doing the timing analysis on initial run of synthesis which has lots of violations and no parameters added to improve timing.
+
+Commands to invoke the OpenLANE flow include new lef and perform synthesis:
+
