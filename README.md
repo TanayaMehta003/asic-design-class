@@ -4787,7 +4787,7 @@ OR gate of drive strength 2 is driving 3 fanouts
 Run the following commands to optimise timing:
 
 ```
-report_net -connections _13111_
-replace_cell _16171_ sky130_fd_sc_hd__or3_2
+report_net -connections _12196_
+replace_cell _15215_ sky130_fd_sc_hd__or2_2
 report_checks -fields {net cap slew input_pins} -digits 4
 ```
