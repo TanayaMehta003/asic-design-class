@@ -4221,7 +4221,7 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 
 ## Day-3: Design library cell using Magic Layout and ngspice characterization
 
-## Tasks to Complete
+## Steps
 
 1. Clone the custom inverter standard cell design from the specified GitHub repository.
 2. Load the custom inverter layout in Magic for examination and modification.
@@ -4229,13 +4229,6 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 4. Edit the SPICE model file to prepare for simulation analysis.
 5. Perform post-layout simulations in NGSPICE.
 6. Identify and resolve any issues found in the DRC (Design Rule Check) section of the Magic tech file for the SkyWater process.
-
-## File Organization
-
-- **Tasks 1 to 5**: Files, reports, and logs are stored in the designated folder.
-- **Task 6**: Files, reports, and logs are available in the designated folder.
-
-## Initial Task
 
 Clone the custom inverter standard cell design from the GitHub repository.
 
@@ -4250,7 +4243,7 @@ magic -T sky130A.tech sky130_taninv.mag &
 
 ![image](https://github.com/user-attachments/assets/223bbcb9-d09a-458f-8cb7-1963711cc9fc)
 
-NMOS and PMOS identified
+NMOS and PMOS 
 
 ![image](https://github.com/user-attachments/assets/a83a8c7e-9ae4-4389-aa83-ebb97e663ace)
 
