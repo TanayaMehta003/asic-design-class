@@ -4419,7 +4419,7 @@ drc why
 
 # Day-4: Pre-layout timing analysis and importance of good clock tree
 
-## Section 4: Custom Inverter Cell Integration and Validation
+Custom Inverter Cell Integration and Validation
 
 ### 1. Fix DRC Errors and Verify Layout Readiness
    - **Objective**: Correct minor DRC (Design Rule Check) errors to ensure the layout aligns with standard requirements and is ready for integration.
