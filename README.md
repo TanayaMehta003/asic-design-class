@@ -4416,13 +4416,6 @@ drc why
 ![image](https://github.com/user-attachments/assets/c6b7dca0-ae5d-4f6b-bed4-1b34407f2dcf)
 ![image](https://github.com/user-attachments/assets/1708b6c0-5f74-44d8-8547-439ca6cde1fa)
 
-### Incorrectly implemented difftap.2 simple rule correction
-
-Screenshot of difftap rules
-
-Incorrectly implemented difftap.2 rule no drc violation even though spacing < 0.42u
-
-New commands inserted in sky130A.tech file to update drc
 
 # Day-4: Pre-layout timing analysis and importance of good clock tree
 
