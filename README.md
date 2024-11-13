@@ -4766,30 +4766,28 @@ echo $::env(SYNTH_DRIVING_CELL)
 run_synthesis
 ```
 
-# Design
-set ::env(DESIGN_NAME) "picorv32a"
+![image](https://github.com/user-attachments/assets/29d96444-2941-4dd7-87ed-b848d2d36ec5)
 
-set ::env(VERILOG_FILES) "./designs/picorv32a/src/picorv32a.v"
-set ::env(SDC_FILE) "./designs/picorv32a/src/picorv32a.sdc"
+Commands to run STA:
 
-set ::env(CLOCK_PERIOD) "5.000"
-set ::env(CLOCK_PORT) "clk"
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+sta pre_sta.conf
+```
+![image](https://github.com/user-attachments/assets/6f4efc72-ef0d-42df-b478-6853cbe47207)
 
+![image](https://github.com/user-attachments/assets/095adea8-956a-4ecb-817c-a5d9c97ab041)
 
-set ::env(CLOCK_NET) $::env(CLOCK_PORT)
+Basic timing ECO
 
-set ::env(FP_CORE_UTIL) 65
-set ::env(FP_IO_VMETAL) 4
-set ::env(FP_IO_HMETAL) 3
+OR gate of drive strength 2 is driving 3 fanouts
 
-set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
-set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
-set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
-set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+![image](https://github.com/user-attachments/assets/ac74a406-2c5a-43dc-b6b8-a5965da4a8d0)
 
-set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+Run the following commands to optimise timing:
 
-set filename $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/$::env(PDK)_$::env(STD_CELL_LIBRARY)_config.tcl
-if { [file exists $filename] == 1} {
-	source $filename
-}
+```
+report_net -connections _13111_
+replace_cell _16171_ sky130_fd_sc_hd__or3_2
+report_checks -fields {net cap slew input_pins} -digits 4
+```
