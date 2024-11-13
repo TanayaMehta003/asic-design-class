@@ -4791,3 +4791,295 @@ report_net -connections _12196_
 replace_cell _15215_ sky130_fd_sc_hd__or2_2
 report_checks -fields {net cap slew input_pins} -digits 4
 ```
+![image](https://github.com/user-attachments/assets/faed46d6-d772-40dc-9aa1-083c29254233)
+
+![image](https://github.com/user-attachments/assets/bfff3257-5043-476d-886f-ea7610ee2860)
+
+![image](https://github.com/user-attachments/assets/415b258b-4b67-422d-9b56-0a85eb000815)
+
+The timing analysis shows improvements, with the **Total Negative Slack (TNS)** reduced from **-403.54** to **-402.45** and the **Worst Negative Slack (WNS)** reduced from **-5.59** to **-5.44**.
+
+## Clock Tree Synthesis (CTS) and Signal Integrity
+
+Clock Tree Synthesis (CTS) techniques are selected based on specific design requirements:
+
+- **Balanced Tree CTS**: Utilizes a balanced, binary-like tree structure to ensure equal path lengths, which minimizes clock skew. This approach provides moderate power efficiency.
+  
+- **H-tree CTS**: Implements an "H"-shaped structure, which is effective for covering large areas while enhancing power efficiency.
+- 
+![image](https://github.com/user-attachments/assets/695bb4d1-8064-4528-8442-63d0cc58b2b9)
+
+### Clock Tree Synthesis (CTS) Techniques
+
+Various CTS techniques are used to manage clock distribution, with each offering unique advantages depending on design needs:
+
+- **Star CTS**: Distributes the clock from a central point to reduce skew. However, it requires additional buffering near the clock source.
+  
+- **Global-Local CTS**: Combines star and tree topologies, using a global tree structure across clock domains and local trees within domains. This approach balances global and local timing.
+  
+- **Mesh CTS**: Employs a grid-like pattern, making it suitable for structured designs that need simplicity and skew reduction.
+  
+- **Adaptive CTS**: Dynamically adjusts based on timing and congestion. Although it adds complexity, it provides flexibility to meet timing constraints.
+
+### Crosstalk
+
+Crosstalk is interference that arises from overlapping electromagnetic fields between adjacent circuits, resulting in unwanted signal coupling. In VLSI design, crosstalk can cause data corruption, timing issues, and increased power consumption. Mitigation strategies include:
+
+- Optimized layout and routing to reduce adjacent signal interference
+- Shielding critical signal paths
+- Using clock gating techniques to reduce dynamic power and minimize crosstalk effects.
+
+![image](https://github.com/user-attachments/assets/6141aaf4-6abc-4195-83b3-ac4343615616)
+
+### Clock Net Shielding
+
+Clock net shielding is a technique used to prevent glitches by isolating the clock network. It involves placing shield wires, connected to either **VDD** or **GND**, around the clock signals. These shield lines do not switch, thus reducing interference by isolating the clock network from other signals.
+
+Key aspects of clock net shielding include:
+
+- **Dedicated Routing Layers**: Use of specific layers for clock routing to further reduce interference with other signals.
+- **Clock Buffers**: Placement of buffers within the clock network to maintain signal integrity across different sections of the design.
+- **Clock Domain Isolation**: By isolating different clock domains, cross-domain interference is minimized, reducing the risk of metastability and helping maintain synchronization between domains.
+  
+![image](https://github.com/user-attachments/assets/68eb26b1-9f14-439e-aefc-01f77d6e57b6)
+
+
+To insert this updated netlist to PnR flow and we can use write_verilog and overwrite the synthesis netlist but before that we are going to make a copy of the old old netlist:
+
+Run the following commands:
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/13-11_13-41/results/synthesis/
+ls
+cp picorv32a.synthesis.v picorv32a.synthesis_old.v
+ls
+```
+
+![image](https://github.com/user-attachments/assets/9156d032-491e-4c96-a0da-aa587f440be0)
+
+Verified that the netlist is overwritten
+
+![image](https://github.com/user-attachments/assets/e4e6c364-dc36-4431-a774-5e583c968114)
+
+Run the following commands:
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+./flow.tcl -interactive
+prep -design picorv32a -tag 13-11_13-41 -overwrite
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+set ::env(SYNTH_SIZING) 1
+run_synthesis
+init_floorplan
+place_io
+tap_decap_or
+run_placement
+run_cts
+```
+
+![image](https://github.com/user-attachments/assets/e2905a70-00a3-4beb-80b5-a6450e032ee8)
+
+![image](https://github.com/user-attachments/assets/a26f7b79-047f-4070-934b-4ec2c8e0af98)
+
+![image](https://github.com/user-attachments/assets/078e4c0e-4323-4f27-b419-f619a6a2fd4d)
+
+## Post-CTS OpenROAD timing analysis.
+
+Commands to be run in OpenLANE flow to do OpenROAD timing analysis with integrated OpenSTA in OpenROAD
+
+```
+openroad
+read_lef /openLANE_flow/designs/picorv32a/runs/13-11_13-41/tmp/merged.lef
+read_def /openLANE_flow/designs/picorv32a/runs/13-11_13-41/results/cts/picorv32a.cts.def
+write_db pico_cts.db
+read_db pico_cts.db
+read_verilog /openLANE_flow/designs/picorv32a/runs/13-11_13-41/results/synthesis/picorv32a.synthesis_cts.v
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+link_design picorv32a
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+set_propagated_clock [all_clocks]
+report_checks -path_delay min_max -fields {slew trans net cap input_pins} -format full_clock_expanded -digits 4
+exit
+
+```
+
+![image](https://github.com/user-attachments/assets/8b248ebe-6810-4668-b3e0-07b4c0a7cd62)
+
+![image](https://github.com/user-attachments/assets/cfea6227-d708-406f-bea5-a0d160788901)
+
+![image](https://github.com/user-attachments/assets/6605cc8f-c186-42fc-847d-a49b09dd65a3)
+
+![image](https://github.com/user-attachments/assets/0308461e-2c99-4d27-a53b-443929e0328f)
+
+
+## Explore post-CTS OpenROAD timing analysis by removing 'sky130_fd_sc_hd__clkbuf_1' cell from clock buffer list variable 'CTS_CLK_BUFFER_LIST'.
+
+```
+echo $::env(CTS_CLK_BUFFER_LIST)
+set ::env(CTS_CLK_BUFFER_LIST) [lreplace $::env(CTS_CLK_BUFFER_LIST) 0 0]
+echo $::env(CTS_CLK_BUFFER_LIST)
+echo $::env(CURRENT_DEF)
+set ::env(CURRENT_DEF) /openLANE_flow/designs/picorv32a/runs/25-03_18-52/results/placement/picorv32a.placement.def
+run_cts
+echo $::env(CTS_CLK_BUFFER_LIST)
+openroad
+read_lef /openLANE_flow/designs/picorv32a/runs/13-11_13-41/tmp/merged.lef
+read_def /openLANE_flow/designs/picorv32a/runs/13-11_13-41/results/cts/picorv32a.cts.def
+write_db pico_cts1.db
+read_db pico_cts.db
+read_verilog /openLANE_flow/designs/picorv32a/runs/13-11_13-41/results/synthesis/picorv32a.synthesis_cts.v
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+link_design picorv32a
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+set_propagated_clock [all_clocks]
+report_checks -path_delay min_max -fields {slew transd net cap input_pins} -format full_clock_expanded -digits 4
+report_clock_skew -hold
+report_clock_skew -setup
+exit
+echo $::env(CTS_CLK_BUFFER_LIST)
+set ::env(CTS_CLK_BUFFER_LIST) [linsert $::env(CTS_CLK_BUFFER_LIST) 0 sky130_fd_sc_hd__clkbuf_1]
+echo $::env(CTS_CLK_BUFFER_LIST)
+```
+![image](https://github.com/user-attachments/assets/6dd8698d-89ee-4923-998a-d9130819aa63)
+
+![image](https://github.com/user-attachments/assets/0971551a-3a23-41fa-a4ba-355e1efd9906)
+
+## Day 5 - Final steps for RTL2GDS using tritonRoute and openSTA
+
+### Maze Routing and Lee's algorithm
+
+### Routing in Physical Design
+
+Routing establishes physical connections between pins on a routing grid, ensuring signal paths across the design. Algorithms such as **Maze Routing** (e.g., the Lee algorithm) are commonly employed to find efficient paths.
+
+#### Lee Algorithm Overview
+
+The **Lee algorithm** is a classic routing method that begins at a source pin and assigns incremental labels to adjacent cells, expanding until it reaches the target pin. It prioritizes **L-shaped routes** for simplicity but will use **zigzag paths** if needed to reach the destination.
+
+- **Advantages**: The Lee algorithm is effective for finding the shortest path between two pins.
+- **Limitations**: For large-scale designs, it can be slow, as it explores each grid cell incrementally, leading to increased computational load.
+
+Due to these limitations, faster alternatives are often preferred for complex routing tasks to manage time and resource efficiency in large designs.
+
+![image](https://github.com/user-attachments/assets/28bbd18e-fcb4-4690-926b-27c5a05948e4)
+
+## Perform generation of Power Distribution Network (PDN) and explore the PDN layout.
+
+![image](https://github.com/user-attachments/assets/28d6057b-1e19-48b3-b6ca-b30d90153e46)
+
+Commands:
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+```
+
+```
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+set ::env(SYNTH_SIZING) 1
+run_synthesis
+init_floorplan
+place_io
+tap_decap_or
+run_placement
+unset ::env(LIB_CTS)
+run_cts
+gen_pdn 
+```
+
+![image](https://github.com/user-attachments/assets/685fe370-94bb-46f6-848a-5091560c9bff)
+
+
+![image](https://github.com/user-attachments/assets/9c037f24-8a88-4b1f-96bf-41a6d6d2a78a)
+
+**Commands to load PDN def in magic in another terminal**
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/13-11_17-54/tmp/floorplan/
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read 14-pdn.def &
+```
+
+screenshot pdn
+![image](https://github.com/user-attachments/assets/6ed786ef-b39b-49d1-bbf3-8e10f5267adf)
+
+![image](https://github.com/user-attachments/assets/db694da9-a3ac-4c09-8065-62ce543c39d4)
+
+![image](https://github.com/user-attachments/assets/67b58375-a055-4d56-89cc-ccc209a21957)
+
+![image](https://github.com/user-attachments/assets/14445597-50c7-4094-96db-cf14c3c9f3be)
+
+## Perfrom detailed routing using TritonRoute and explore the routed layout.
+
+Command:
+
+```
+echo $::env(CURRENT_DEF)
+echo $::env(ROUTING_STRATEGY)
+run_routing
+
+```
+![image](https://github.com/user-attachments/assets/b72fb237-3a27-4f92-8155-63ec37dd1d7d)
+
+![image](https://github.com/user-attachments/assets/edcfe2cb-b04c-422f-b977-42ee1c9fa2a8)
+
+### Load routed def in magic
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/13-11_17-54/results/routing/
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.def &
+
+```
+
+Expanded layout showing custom inverter sky130_taninv
+
+![image](https://github.com/user-attachments/assets/e61ee14c-a835-4665-9ed1-67f284fd01ec)
+
+Fast route guide in openlane/designs/picorv32a/runs/13-11_17-54/tmp/routing directory
+
+![image](https://github.com/user-attachments/assets/21c13d24-1c06-444e-9635-d91eaf8a68dc)
+
+### Post-Route parasitic extraction using SPEF extractor.
+
+Commands:
+
+```
+cd Desktop/work/tools/SPEF_EXTRACTOR
+python3 main.py /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/13-11_17-54/tmp/merged.lef /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/13-11_17-54/results/routing/picorv32a.def
+```
+
+![image](https://github.com/user-attachments/assets/1037325d-d21f-4aa1-ae6c-e2764a09560b)
+
+Post-Route OpenSTA timing analysis with the extracted parasitics of the route.
+
+Commands:
+
+```
+openroad
+read_lef /openLANE_flow/designs/picorv32a/runs/13-11_17-54/tmp/merged.lef
+read_def /openLANE_flow/designs/picorv32a/runs/13-11_17-54/results/routing/picorv32a.def
+write_db pico_route.db
+read_db pico_route.db
+read_verilog /openLANE_flow/designs/picorv32a/runs/13-11_17-54/results/synthesis/picorv32a.synthesis_preroute.v
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+link_design picorv32a
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+set_propagated_clock [all_clocks]
+read_spef /openLANE_flow/designs/picorv32a/runs/13-11_17-54/results/routing/picorv32a.spef
+report_checks -path_delay min_max -fields {slew trans net cap input_pins} -format full_clock_expanded -digits 4
+exit
+```
+
+![image](https://github.com/user-attachments/assets/736bb128-a7dd-4b1d-ba3b-2ad30c445297)
+
+![image](https://github.com/user-attachments/assets/9b3d2540-104b-49ad-b703-2282fc7ba240)
+
+![image](https://github.com/user-attachments/assets/c35e9ba6-5c90-44ed-aefc-f5fea12b0d64)
+
