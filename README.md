@@ -3976,21 +3976,6 @@ Creates the GDSII file containing the complete layout details needed for chip fa
 ### Antenna Checks
 - **Tools Used**: Magic (for antenna checks).
 
-## OpenLANE Directory structure
-
-```
-├── OOpenLane             -> directory where the tool can be invoked (run docker first)
-│   ├── designs          -> All designs must be extracted from this folder
-│   │   │   ├── picorv32a -> Design used as case study for this workshop
-│   |   |   ├── ...
-|   |   ├── ...
-├── pdks                 -> contains pdk related files 
-│   ├── skywater-pdk     -> all Skywater 130nm PDKs
-│   ├── open-pdks        -> contains scripts that makes the commerical PDK (which is normally just compatible to commercial tools) to also be compatible with the open-source EDA tool
-│   ├── sky130A          -> pdk variant made especially compatible for open-source tools
-│   │   │  ├── libs.ref  -> files specific to node process (timing lib, cell lef, tech lef) for example is `sky130_fd_sc_hd` (Sky130nm Foundry Standard Cell High Density)  
-│   │   │  ├── libs.tech -> files specific for the tool (klayout,netgen,magic...) 
-```
 ## Implementation
 
 ## Synthesis in Openlane
@@ -4235,8 +4220,6 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 ![image](https://github.com/user-attachments/assets/801e2bf3-66ab-4089-8ff0-72d65ca0629c)
 
 ## Day-3: Design library cell using Magic Layout and ngspice characterization
-
-# Section 3: Task Overview
 
 ## Tasks to Complete
 
