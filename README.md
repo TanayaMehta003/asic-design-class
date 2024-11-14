@@ -4320,7 +4320,7 @@ run
 Simulate the spice netlist
 
 ```
-ngspice sky130_inv.spice
+ngspice sky130_taninv.spice
 ```
 
 ![image](https://github.com/user-attachments/assets/4df99bd4-1160-4c35-85fd-d624c6c9d6c2)
