@@ -4625,15 +4625,21 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 ```
 ![image](https://github.com/user-attachments/assets/58895c40-1be4-40e0-9908-e6cc59a38b60)
 
+Custom inverter inserted in placement def
 inverter: taninv
+
+![WhatsApp Image 2024-11-14 at 04 47 02_650a002f](https://github.com/user-attachments/assets/e8564dcc-db1e-4c85-8d05-707ce9389f58)
+
 ![WhatsApp Image 2024-11-14 at 04 46 37_f00ce1a7](https://github.com/user-attachments/assets/f44b890e-0708-41c9-a0cb-742f2ea074e4)
 ![WhatsApp Image 2024-11-14 at 04 47 02_b34378a6](https://github.com/user-attachments/assets/22b10ef1-8918-4717-b988-1057c98a1841)
 
-Custom inverter inserted in placement def
-
-![image](https://github.com/user-attachments/assets/622b0de7-cdcc-4465-aff2-be297a15f735)
+![WhatsApp Image 2024-11-14 at 17 15 11_ded699e1](https://github.com/user-attachments/assets/34888362-2ee7-4ea2-b795-77453845b6a0)
 
 Select the cell and type expand in tkcon window to view internal layers of cells
+
+![WhatsApp Image 2024-11-14 at 04 47 48_731a2bd6](https://github.com/user-attachments/assets/881bda06-4088-4682-b5e8-858d2585f43c)
+
+![WhatsApp Image 2024-11-14 at 17 15 11_604a0db3](https://github.com/user-attachments/assets/2705653c-8a06-47f6-826f-c3e1f626a78a)
 
 ![image](https://github.com/user-attachments/assets/3e2658ae-5282-40bd-b1c9-749c11e1e7cc)
 ![WhatsApp Image 2024-11-14 at 04 47 48_5f41c4ce](https://github.com/user-attachments/assets/540f4288-035e-48bf-96b8-7d3d3db9fe54)
