@@ -4641,7 +4641,6 @@ Select the cell and type expand in tkcon window to view internal layers of cells
 
 ![WhatsApp Image 2024-11-14 at 17 15 11_604a0db3](https://github.com/user-attachments/assets/2705653c-8a06-47f6-826f-c3e1f626a78a)
 
-![image](https://github.com/user-attachments/assets/3e2658ae-5282-40bd-b1c9-749c11e1e7cc)
 ![WhatsApp Image 2024-11-14 at 04 47 48_5f41c4ce](https://github.com/user-attachments/assets/540f4288-035e-48bf-96b8-7d3d3db9fe54)
 
 ## Post-Synthesis timing analysis with OpenSTA tool.
