@@ -14,6 +14,7 @@
 10. [TASK-10](#TASK-10)
 11. [TASK-11](#TASK-11)
 12. [TASK-12](#TASK-12)
+13. [TASK-13](#TASK-13)
 # **TASK 1:**
 
 ### **Compiling the C program using GCC and RISC-V**
@@ -5065,3 +5066,6 @@ exit
 
 ![image](https://github.com/user-attachments/assets/c35e9ba6-5c90-44ed-aefc-f5fea12b0d64)
 
+
+
+# **TASK-13**
