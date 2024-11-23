@@ -5155,4 +5155,23 @@ yosys -help
 openroad -help
 exit
 ```
+![Screenshot from 2024-11-23 22-48-51](https://github.com/user-attachments/assets/868e27ee-bef2-4355-831a-6b15058f0b2b)
 
+![Screenshot from 2024-11-23 22-49-59](https://github.com/user-attachments/assets/b61b7269-b7b2-4162-82a7-21f24437fd23)
+
+Flow structure
+
+
+```
+cd flow/
+gvim Makefile
+cd designs
+cd nandgate45
+cd designs/src/gcd
+gvim config.mk
+```
+![Screenshot from 2024-11-23 22-53-20](https://github.com/user-attachments/assets/20f62ffe-e3c3-4f7f-baa1-7862e93aee34)
+
+![Screenshot from 2024-11-23 22-58-40](https://github.com/user-attachments/assets/2e72e503-ffa1-46aa-b2ee-7951760a2141)
+
+![Screenshot from 2024-11-23 23-01-20](https://github.com/user-attachments/assets/67df2d0c-a090-4c10-a471-f2ebcba38141)
