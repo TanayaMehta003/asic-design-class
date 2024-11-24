@@ -5150,7 +5150,7 @@ sudo ./setup.sh
 ### Verify Installation
 
 ```
-source ./setup_env.sh
+source ./env.sh
 yosys -help
 openroad -help
 exit
@@ -5184,5 +5184,45 @@ gvim config.mk
 ![Screenshot from 2024-11-23 22-58-40](https://github.com/user-attachments/assets/2e72e503-ffa1-46aa-b2ee-7951760a2141)
 
 ![Screenshot from 2024-11-23 23-01-20](https://github.com/user-attachments/assets/67df2d0c-a090-4c10-a471-f2ebcba38141)
+
+## OpenROAD_SK4 - Automated RTL2GDS Flow: 
+
+### OpenROAD_SK4_L6 - Default Config File Setup
+
+```
+/ORF/OpenROAD-flow-scripts/flow$ cd platforms
+cd nangate45
+gvim config.mk
+```
+
+![Screenshot from 2024-11-24 22-51-14](https://github.com/user-attachments/assets/9d5c3fd3-7b08-42c4-87a8-3b6edc0ad5fd)
+
+```
+more ../sky130hd/config.mk
+```
+
+![Screenshot from 2024-11-24 22-59-32](https://github.com/user-attachments/assets/a2781a06-d737-48e2-a9d0-ba025cc1bbe4)
+
+### OpenROAD_SK4_L7 - Default ORFS Flow Using Make Command
+
+```
+ORF/OpenROAD-flow-scripts$ source env.sh
+cd flow
+make
+gvim Makefile
+```
+SET-UP
+
+![Screenshot from 2024-11-24 23-13-32](https://github.com/user-attachments/assets/869ca12a-71a6-479f-9ebc-8114c5419d6e)
+
+ROUTING
+
+![Screenshot from 2024-11-24 23-18-21](https://github.com/user-attachments/assets/9baefc6b-b180-49ad-ae31-fbd4178c8fa6)
+
+
+
+
+### OpenROAD_SK3 - Flow Structure
+OpenROAD_SK3_L4 - ORFS Directory Structure And File Formats
 
 
