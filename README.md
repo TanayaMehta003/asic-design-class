@@ -5159,8 +5159,17 @@ exit
 
 ![Screenshot from 2024-11-23 22-49-59](https://github.com/user-attachments/assets/b61b7269-b7b2-4162-82a7-21f24437fd23)
 
-Flow structure
 
+```
+make gui_final
+```
+
+
+![Screenshot from 2024-11-24 21-27-58](https://github.com/user-attachments/assets/2fbe94e3-7b63-406a-85d8-f89e0fad7ba0)
+
+### Flow structure
+
+### ORFS Directory Structure and File formats
 
 ```
 cd flow/
@@ -5175,3 +5184,5 @@ gvim config.mk
 ![Screenshot from 2024-11-23 22-58-40](https://github.com/user-attachments/assets/2e72e503-ffa1-46aa-b2ee-7951760a2141)
 
 ![Screenshot from 2024-11-23 23-01-20](https://github.com/user-attachments/assets/67df2d0c-a090-4c10-a471-f2ebcba38141)
+
+
