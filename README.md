@@ -5258,3 +5258,7 @@ Commands for floorplan:
 ```
 make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk floorplan
 ```
+![Screenshot from 2024-11-25 18-53-33](https://github.com/user-attachments/assets/2e1b0783-8fe3-4454-8632-35b472ba2648)
+
+![Screenshot from 2024-11-25 18-54-14](https://github.com/user-attachments/assets/a248cfe5-515d-4e7e-a990-f19029956b0e)
+
