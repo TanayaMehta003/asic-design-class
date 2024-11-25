@@ -5226,3 +5226,35 @@ ROUTING
 OpenROAD_SK3_L4 - ORFS Directory Structure And File Formats
 
 
+Commands for synthesis:
+
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk synth
+```
+![Screenshot from 2024-11-25 17-26-25](https://github.com/user-attachments/assets/032f979d-5a91-4b2c-8b88-2d24f078e1da)
+
+![Screenshot from 2024-11-25 17-27-05](https://github.com/user-attachments/assets/ab678f83-7635-4486-95f6-378c9d5e1c88)
+
+Synthesis netlist:
+
+![Screenshot from 2024-11-25 17-28-52](https://github.com/user-attachments/assets/6929a168-6ceb-40b5-a930-fea619ff55db)
+
+Synthesis log:
+
+![Screenshot from 2024-11-25 17-32-17](https://github.com/user-attachments/assets/a9a333b9-08c6-4a9a-91e0-f0c434857e6d)
+
+Synthesis Check:
+
+![Screenshot from 2024-11-25 17-36-59](https://github.com/user-attachments/assets/140d7c28-f182-4329-ba89-cf4839438147)
+
+Synthesis Stats:
+
+![Screenshot from 2024-11-25 17-41-03](https://github.com/user-attachments/assets/11f5fa27-f961-407a-aafd-9c63bb8e9465)
+
+![Screenshot from 2024-11-25 17-41-59](https://github.com/user-attachments/assets/368a402d-40aa-4638-a0fc-5b3801c25cfa)
+
+Commands for floorplan:
+
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk floorplan
+```
