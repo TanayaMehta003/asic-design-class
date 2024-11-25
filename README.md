@@ -5172,60 +5172,11 @@ make gui_final
 ### ORFS Directory Structure and File formats
 
 ```
-cd flow/
-gvim Makefile
-cd designs
-cd nandgate45
-cd designs/src/gcd
-gvim config.mk
-```
-![Screenshot from 2024-11-23 22-53-20](https://github.com/user-attachments/assets/20f62ffe-e3c3-4f7f-baa1-7862e93aee34)
-
-![Screenshot from 2024-11-23 22-58-40](https://github.com/user-attachments/assets/2e72e503-ffa1-46aa-b2ee-7951760a2141)
-
-![Screenshot from 2024-11-23 23-01-20](https://github.com/user-attachments/assets/67df2d0c-a090-4c10-a471-f2ebcba38141)
-
-## OpenROAD_SK4 - Automated RTL2GDS Flow: 
-
-### OpenROAD_SK4_L6 - Default Config File Setup
-
-```
-/ORF/OpenROAD-flow-scripts/flow$ cd platforms
-cd nangate45
-gvim config.mk
-```
-
-![Screenshot from 2024-11-24 22-51-14](https://github.com/user-attachments/assets/9d5c3fd3-7b08-42c4-87a8-3b6edc0ad5fd)
-
-```
-more ../sky130hd/config.mk
-```
-
-![Screenshot from 2024-11-24 22-59-32](https://github.com/user-attachments/assets/a2781a06-d737-48e2-a9d0-ba025cc1bbe4)
-
-### OpenROAD_SK4_L7 - Default ORFS Flow Using Make Command
-
-```
 ORF/OpenROAD-flow-scripts$ source env.sh
 cd flow
 make
 gvim Makefile
 ```
-SET-UP
-
-![Screenshot from 2024-11-24 23-13-32](https://github.com/user-attachments/assets/869ca12a-71a6-479f-9ebc-8114c5419d6e)
-
-ROUTING
-
-![Screenshot from 2024-11-24 23-18-21](https://github.com/user-attachments/assets/9baefc6b-b180-49ad-ae31-fbd4178c8fa6)
-
-
-
-
-### OpenROAD_SK3 - Flow Structure
-OpenROAD_SK3_L4 - ORFS Directory Structure And File Formats
-
-
 Commands for synthesis:
 
 ```
@@ -5258,7 +5209,52 @@ Commands for floorplan:
 ```
 make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk floorplan
 ```
-![Screenshot from 2024-11-25 18-53-33](https://github.com/user-attachments/assets/2e1b0783-8fe3-4454-8632-35b472ba2648)
 
-![Screenshot from 2024-11-25 18-54-14](https://github.com/user-attachments/assets/a248cfe5-515d-4e7e-a990-f19029956b0e)
+![Screenshot from 2024-11-25 23-08-27](https://github.com/user-attachments/assets/a008e5ca-43b7-4c96-af84-e0ff867c0417)
+
+![Screenshot from 2024-11-25 23-07-47](https://github.com/user-attachments/assets/c2a0cde2-25d0-4330-b2dd-89ae892f761c)
+
+
+```
+make gui_floorplan
+```
+![Screenshot from 2024-11-25 23-06-31](https://github.com/user-attachments/assets/85515b4b-d0c5-46dc-8729-fcb96488e6d4)
+![Screenshot from 2024-11-25 23-57-53](https://github.com/user-attachments/assets/00ee8468-8309-4c90-93c2-f757e610b2ba)
+![Screenshot from 2024-11-25 23-58-22](https://github.com/user-attachments/assets/481e71c9-0fd7-463e-afaf-049a1a3e276a)
+
+
+FLOORPLAN_LOG
+
+![Screenshot from 2024-11-25 23-10-40](https://github.com/user-attachments/assets/2fb7aabc-0926-46e1-a6f6-6851bbe0b9f2)
+
+Commands for placement:
+
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk place
+```
+![Screenshot from 2024-11-26 00-01-03](https://github.com/user-attachments/assets/8641b14b-f8e5-4a35-836e-2627e1b7f1aa)
+![Screenshot from 2024-11-26 00-07-54](https://github.com/user-attachments/assets/0e15a44b-6cfa-469e-9568-efb66f1e5879)
+
+```
+make gui_place
+```
+![Screenshot from 2024-11-26 00-07-18](https://github.com/user-attachments/assets/c74bdf7c-1455-4853-a88a-cd9f4a528f84)
+
+Commands for cts:
+
+![Screenshot from 2024-11-26 00-13-01](https://github.com/user-attachments/assets/7d9ca9fe-3c9a-4604-bdf5-65e678a08c59)
+
+![Screenshot from 2024-11-26 00-13-27](https://github.com/user-attachments/assets/6f344dd9-1695-4971-a9be-485747c54ecd)
+
+```
+make gui_cts
+```
+
+![Screenshot from 2024-11-26 00-14-34](https://github.com/user-attachments/assets/cf981f35-8eec-4be5-b259-9b63b3246799)
+
+Commands for route:
+
+![Screenshot from 2024-11-26 00-33-55](https://github.com/user-attachments/assets/04a9f1e6-96fe-48d2-ba55-23cc855fab93)
+![Screenshot from 2024-11-26 00-35-04](https://github.com/user-attachments/assets/dbd93c47-0a21-4178-ad84-13dc0b71506d)
+
 
