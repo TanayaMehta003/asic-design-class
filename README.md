@@ -1,4 +1,4 @@
-# asic-design-class
+![Screenshot from 2024-11-26 17-51-51](https://github.com/user-attachments/assets/1257e095-560a-4c6a-95b4-22b31f71f92d)# asic-design-class
 
 ## CONTENTS
 
@@ -5177,6 +5177,31 @@ cd flow
 make
 gvim Makefile
 ```
+
+Run the below commands:
+```
+cd OpenROAD-flow-scripts
+source env.sh
+cd flow
+```
+
+Contraints file
+
+```
+set PERIOD 9.35
+set_units -time ns
+create_clock [get_ports {clk}] -name clk -period $PERIOD
+set_clock_uncertainty -setup  [expr $PERIOD * 0.05] [get_clocks clk]
+set_clock_transition [expr $PERIOD * 0.05] [get_clocks clk]
+set_clock_uncertainty -hold [expr $PERIOD * 0.08] [get_clocks clk]
+set_input_transition [expr $PERIOD * 0.08] [get_ports ENb_CP]
+set_input_transition [expr $PERIOD * 0.08] [get_ports ENb_VCO]
+set_input_transition [expr $PERIOD * 0.08] [get_ports REF]
+set_input_transition [expr $PERIOD * 0.08] [get_ports VCO_IN]
+set_input_transition [expr $PERIOD * 0.08] [get_ports VREFH]
+```
+
+
 Commands for synthesis:
 
 ```
@@ -5218,10 +5243,19 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk floorplan
 ```
 make gui_floorplan
 ```
-![Screenshot from 2024-11-25 23-06-31](https://github.com/user-attachments/assets/85515b4b-d0c5-46dc-8729-fcb96488e6d4)
-![Screenshot from 2024-11-25 23-57-53](https://github.com/user-attachments/assets/00ee8468-8309-4c90-93c2-f757e610b2ba)
-![Screenshot from 2024-11-25 23-58-22](https://github.com/user-attachments/assets/481e71c9-0fd7-463e-afaf-049a1a3e276a)
+![Screenshot from 2024-11-26 17-37-04](https://github.com/user-attachments/assets/8192bfd1-f21d-402a-abe9-18d256365398)
 
+DAC:
+![Screenshot from 2024-11-26 17-38-21](https://github.com/user-attachments/assets/299e8368-177f-4f60-a2af-746f8bdbff37)
+
+PLL:
+![Screenshot from 2024-11-26 17-38-55](https://github.com/user-attachments/assets/8d9c8274-fa3d-4131-9f26-93cb1110060e)
+
+Power density:
+![Screenshot from 2024-11-26 17-39-36](https://github.com/user-attachments/assets/895b0185-7141-42fa-bce4-c12dc4de2f6a)
+
+Routing congestion:
+![Screenshot from 2024-11-26 17-40-23](https://github.com/user-attachments/assets/2e60ba24-a801-452f-9fc3-5e7b51233514)
 
 FLOORPLAN_LOG
 
@@ -5242,18 +5276,24 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk place
 ```
 make gui_place
 ```
-![Screenshot from 2024-11-26 00-07-18](https://github.com/user-attachments/assets/c74bdf7c-1455-4853-a88a-cd9f4a528f84)
-![Screenshot from 2024-11-26 02-43-58](https://github.com/user-attachments/assets/9eefa08e-c0c5-44b1-bc55-36076af5ac19)
+![Screenshot from 2024-11-26 17-46-52](https://github.com/user-attachments/assets/463eb292-1991-450c-9c6e-3f72b1cf594b)
 
-Heatmap:
-![Screenshot from 2024-11-26 14-22-48](https://github.com/user-attachments/assets/13db176d-a8f6-400b-993b-163eafff28a7)
+Congestion:
+![Screenshot from 2024-11-26 13-59-19](https://github.com/user-attachments/assets/60a377c2-fb4b-40a9-b517-080f705b490b)
 
-![Screenshot from 2024-11-26 14-23-28](https://github.com/user-attachments/assets/6bdd9157-ee31-4bc6-bf72-d0f5cf92c6a8)
+Placement density:
+![Screenshot from 2024-11-26 17-47-43](https://github.com/user-attachments/assets/3b5d7afa-01f8-4318-b144-4d87a870fd34)
 
-![Screenshot from 2024-11-26 14-23-51](https://github.com/user-attachments/assets/93eae320-154d-40f0-ac3e-b19e60caf1f5)
+Power density:
+![Screenshot from 2024-11-26 17-48-08](https://github.com/user-attachments/assets/ccf548bd-364b-4eb9-8f58-43b44daa233f)
+
+![Screenshot from 2024-11-26 17-48-57](https://github.com/user-attachments/assets/6bd1ac72-2ca0-45da-93c8-9471b477b5d1)
+
+![Screenshot from 2024-11-26 17-49-50](https://github.com/user-attachments/assets/0f8d2dfd-a7ff-4df5-afbb-f29fd04e9fbe)
 
 Placement report:
-![Screenshot from 2024-11-26 13-59-19](https://github.com/user-attachments/assets/60a377c2-fb4b-40a9-b517-080f705b490b)
+
+![Screenshot from 2024-11-26 17-50-47](https://github.com/user-attachments/assets/4c5a645d-b7c8-4164-ae7f-222bc31aa2bc)
 
 Commands for cts:
 
@@ -5268,11 +5308,16 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk cts
 ```
 make gui_cts
 ```
+![Screenshot from 2024-11-26 17-52-43](https://github.com/user-attachments/assets/1cbfbca5-3659-4578-b9d5-6c72d7f09941)
 
-![Screenshot from 2024-11-26 00-14-34](https://github.com/user-attachments/assets/cf981f35-8eec-4be5-b259-9b63b3246799)
-![Screenshot from 2024-11-26 02-24-28](https://github.com/user-attachments/assets/89ee1723-f878-4e0a-9ffb-87ae5d150b16)
+placement density:
+![Screenshot from 2024-11-26 17-53-07](https://github.com/user-attachments/assets/8068bc23-c0e7-4799-bade-0af6a6b0a89c)
 
-![Screenshot from 2024-11-26 02-45-29](https://github.com/user-attachments/assets/162aaae8-5f76-44eb-9c45-8b7a5501180a)
+Power density:
+![Screenshot from 2024-11-26 17-53-54](https://github.com/user-attachments/assets/e59a8e8a-3462-4c51-806b-f382922a8525)
+
+Cts report:
+![Screenshot from 2024-11-26 17-51-51](https://github.com/user-attachments/assets/ca8fb2e0-1437-4f58-8cc9-bf00c610d8f5)
 
 Commands for route:
 
@@ -5281,3 +5326,11 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk route
 ```
 
 ![Screenshot from 2024-11-26 14-00-24](https://github.com/user-attachments/assets/7091e4eb-c355-4d9b-a09a-4fb550c9c888)
+
+QoR Report:
+
+```
+make metadata
+```
+![Screenshot from 2024-11-26 17-20-39](https://github.com/user-attachments/assets/b8bd7ec2-dda3-41ad-aa10-1d6ccdb9586c)
+![Screenshot from 2024-11-26 17-20-58](https://github.com/user-attachments/assets/65b7fc22-3375-4907-890f-522d05f78b04)
