@@ -5326,11 +5326,19 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk route
 ```
 
 ![Screenshot from 2024-11-26 14-00-24](https://github.com/user-attachments/assets/7091e4eb-c355-4d9b-a09a-4fb550c9c888)
+![Screenshot from 2024-11-26 23-11-27](https://github.com/user-attachments/assets/b19dd96b-37ca-4cb8-be9a-ed6ab065547a)
 
-QoR Report:
+![Screenshot from 2024-11-26 22-59-56](https://github.com/user-attachments/assets/bd2de211-c7c2-4fcf-b3c2-1141ac3e3088)
 
-```
-make metadata
-```
-![Screenshot from 2024-11-26 17-20-39](https://github.com/user-attachments/assets/b8bd7ec2-dda3-41ad-aa10-1d6ccdb9586c)
-![Screenshot from 2024-11-26 17-20-58](https://github.com/user-attachments/assets/65b7fc22-3375-4907-890f-522d05f78b04)
+Final Placement
+![Screenshot from 2024-11-26 23-08-49](https://github.com/user-attachments/assets/16d9a4db-53a4-44e8-9295-10294631d838)
+
+Placement density
+![Screenshot from 2024-11-26 23-07-56](https://github.com/user-attachments/assets/c2eaaeec-cf51-47dc-a3d1-27b9552a84d0)
+
+Estimated congestion
+![Screenshot from 2024-11-26 23-09-27](https://github.com/user-attachments/assets/5dbac165-8eb0-4e7b-a386-32fef249051e)
+
+Route congestion
+
+![Screenshot from 2024-11-26 23-10-26](https://github.com/user-attachments/assets/7fdf1668-0dbd-4358-9e03-173178bb30d1)
