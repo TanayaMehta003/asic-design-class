@@ -5245,6 +5245,13 @@ make gui_place
 ![Screenshot from 2024-11-26 00-07-18](https://github.com/user-attachments/assets/c74bdf7c-1455-4853-a88a-cd9f4a528f84)
 ![Screenshot from 2024-11-26 02-43-58](https://github.com/user-attachments/assets/9eefa08e-c0c5-44b1-bc55-36076af5ac19)
 
+Heatmap:
+![Screenshot from 2024-11-26 14-22-48](https://github.com/user-attachments/assets/13db176d-a8f6-400b-993b-163eafff28a7)
+
+![Screenshot from 2024-11-26 14-23-28](https://github.com/user-attachments/assets/6bdd9157-ee31-4bc6-bf72-d0f5cf92c6a8)
+
+![Screenshot from 2024-11-26 14-23-51](https://github.com/user-attachments/assets/93eae320-154d-40f0-ac3e-b19e60caf1f5)
+
 Placement report:
 ![Screenshot from 2024-11-26 13-59-19](https://github.com/user-attachments/assets/60a377c2-fb4b-40a9-b517-080f705b490b)
 
